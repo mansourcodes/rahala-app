@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-settings',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsPage implements OnInit {
 
+  hhh = environment.AuthConstents.AUTH;
   constructor() { }
 
   ngOnInit() {
