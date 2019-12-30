@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Trip } from '../models/trip.model';
+import { BehaviorSubject } from 'rxjs';
+import { take, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripsService {
-  // TODO: make observalSubject
-  private _trips: Trip[] = [
+  // TODO: make http request
+  private tripsBehSub = new BehaviorSubject<Trip[]>([
     new Trip(
       '1',
       'R232',
@@ -55,16 +57,20 @@ export class TripsService {
       '02-02-2020',
       '9'
     )
-  ];
+  ]);
 
   get trips() {
-    return [...this._trips];
+    return this.tripsBehSub.asObservable();
   }
 
-  getTrip(id: string): Trip {
-    return this._trips.find(trip => {
-      return trip.id === id;
-    });
-  }
   constructor() {}
+
+  getTrip(id: string) {
+    return this.trips.pipe(
+      take(1),
+      map(trips => {
+        return { ...trips.find(trip => trip.id === id) };
+      })
+    );
+  }
 }

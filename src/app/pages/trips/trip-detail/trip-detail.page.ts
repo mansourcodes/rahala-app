@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Trip } from 'src/app/services/models/trip.model';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { TripsService } from 'src/app/services/providers/trips.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-trip-detail',
   templateUrl: './trip-detail.page.html',
   styleUrls: ['./trip-detail.page.scss']
 })
-export class TripDetailPage implements OnInit {
+export class TripDetailPage implements OnInit, OnDestroy {
   trip: Trip;
+  private tripSub: Subscription;
+
   constructor(
     private route: ActivatedRoute,
     private navCtrl: NavController,
@@ -20,11 +23,20 @@ export class TripDetailPage implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('tripId')) {
-        this.navCtrl.navigateBack('/tabs');
+        this.navCtrl.navigateBack('/trips');
         return;
       }
-      this.trip = this.tripsService.getTrip(paramMap.get('tripId'));
-      console.log(this.trip);
+      this.tripSub = this.tripsService
+        .getTrip(paramMap.get('tripId'))
+        .subscribe(trip => {
+          this.trip = trip;
+        });
     });
+  }
+
+  ngOnDestroy() {
+    if (this.tripSub) {
+      this.tripSub.unsubscribe();
+    }
   }
 }
