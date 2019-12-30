@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>trips</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2">
+        <ion-list>
+          <ion-card
+            *ngFor="let trip of loadedTrips"
+            [routerLink]='["/","trips",trip.id]'
+          >
+            <ion-card-header>
+              {{trip.name}}
+            </ion-card-header>
+            <ion-card-subtitle>{{trip.travelDate}}</ion-card-subtitle>
+
+            <ion-card-content>
+              <p>{{trip.numOfDays}}</p>
+            </ion-card-content>
+            <ion-button color="primary">
+              next
+            </ion-button>
+          </ion-card>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
