@@ -4,6 +4,7 @@ import {
   RouterModule,
   Routes
 } from '@angular/router';
+import { AuthGuard } from './services/common/auth.guard';
 
 const routes: Routes = [
   {
@@ -19,16 +20,22 @@ const routes: Routes = [
         loadChildren: () =>
           import('./pages/trips/trips.module').then(
             m => m.TripsPageModule
-          )
+          ),
+        canLoad: [AuthGuard]
       },
       {
         path: ':tripId',
         loadChildren: () =>
           import('./pages/trips/trip-detail/trip-detail.module').then(
             m => m.TripDetailPageModule
-          )
+          ),
+        canLoad: [AuthGuard]
       }
     ]
+  },
+  {
+    path: 'slides',
+    loadChildren: () => import('./pages/slides/slides.module').then(m => m.SlidesPageModule)
   }
 ];
 @NgModule({
@@ -39,4 +46,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

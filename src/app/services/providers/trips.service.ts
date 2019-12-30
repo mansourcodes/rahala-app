@@ -63,7 +63,7 @@ export class TripsService {
     return this.tripsBehSub.asObservable();
   }
 
-  constructor() {}
+  constructor() { }
 
   getTrip(id: string) {
     return this.trips.pipe(

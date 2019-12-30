@@ -6,11 +6,15 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class HttpService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   post(serviceName: string, data: any) {
-    const headers = new HttpHeaders();
-    const options = { headers: headers, withCredintials: false };
+    let options = {
+      headers: {
+        'Content-Type': "application/json"
+      },
+      withCredintials: false
+    };
 
     const url = environment.apiURL + serviceName;
 
