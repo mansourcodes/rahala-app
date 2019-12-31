@@ -39,3 +39,5 @@ export class Trip {
     public exCustomThings?: string
   ) {}
 }
+
+export interface TripInterface extends Trip {}

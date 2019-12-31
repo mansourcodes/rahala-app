@@ -136,7 +136,7 @@ export class AuthService implements OnDestroy {
     }, duration);
   }
 
-  //TODO: expires_at is a date, check!!
+  // TODO: expires_at is a date, check!!
   private setUserData(userData: AuthResponseData) {
     const expirationTime = new Date(userData.expires_at);
     const user = new User(
