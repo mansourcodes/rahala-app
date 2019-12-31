@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { AuthResponseData } from 'src/app/services/models/auth-respons.interface';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  post(serviceName: string, data: any) {
-    let options = {
+  post(serviceName: string, data: any): any {
+    const options = {
       headers: {
-        'Content-Type': "application/json"
+        'Content-Type': 'application/json'
       },
       withCredintials: false
     };
 
     const url = environment.apiURL + serviceName;
-
+    console.log('http post:' + serviceName);
     return this.http.post(url, JSON.stringify(data), options);
   }
 }
