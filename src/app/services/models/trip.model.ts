@@ -1,7 +1,4 @@
 export class Trip {
-
-
-
   constructor(
     public id: string,
     public code: string,

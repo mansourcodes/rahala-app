@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { TripsService } from 'src/app/services/providers/trips.service';
 import { Trip } from 'src/app/services/models/trip.model';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/services/common/auth.service';
+import { IonInfiniteScroll } from '@ionic/angular';
 
 @Component({
   selector: 'app-trips',
@@ -10,12 +10,16 @@ import { AuthService } from 'src/app/services/common/auth.service';
   styleUrls: ['./trips.page.scss']
 })
 export class TripsPage implements OnInit, OnDestroy {
+  @ViewChild(IonInfiniteScroll, { static: true }) infiniteScroll: IonInfiniteScroll;
+
+  isLoading = true;
+  current_page = 1;
   loadedTrips: Trip[];
   private tripsSub: Subscription;
 
+
   constructor(
     private tripService: TripsService,
-    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -25,9 +29,35 @@ export class TripsPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
-    this.tripService.fetchTrips().subscribe(() => {
-      ;; // TODO : loading spring
+    this.isLoading = true;
+    this.tripService.fetchTrips({ page: this.current_page }).subscribe(() => {
+      this.isLoading = false;
+      this.current_page++;
     });
+  }
+
+  // TODO: append data to loadedTrips
+  loadMoreTrips(event) {
+
+    this.tripService.fetchTrips({ page: this.current_page }).subscribe(() => {
+      event.target.complete();
+      this.current_page++;
+      // setTimeout(() => {
+      //   event.target.complete();
+      // }, 2000);
+
+
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+      // if (3 == 1000) {
+      //   event.target.disabled = true;
+      // }
+    });
+
+  }
+
+  toggleInfiniteScroll() {
+    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 
   ngOnDestroy() {

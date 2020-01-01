@@ -75,17 +75,19 @@ export class TripsService {
     private authService: AuthService
   ) { }
 
-  fetchTrips() {
+  fetchTrips(query?) {
+
+    let nextPageTrips: Trip[];
+    if (!query.page) query.page = 1;
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
         return this.http.get<{ data: TripInterface[] }>(
-          environment.apiURL + `trips`,
+          environment.apiURL + `trips?page=${query.page}`,
           { headers: { Authorization: token } }
         );
       }),
       map(resData => {
-
         const trips = [];
         for (const key in resData.data) {
           if (resData.data.hasOwnProperty(key)) {
@@ -108,8 +110,13 @@ export class TripsService {
         return trips;
         // return [];
       }),
+      switchMap(trips => {
+        nextPageTrips = trips;
+        return this.trips;
+      }),
+      take(1),
       tap(trips => {
-        this._trips.next(trips);
+        this._trips.next(trips.concat(nextPageTrips));
       })
     );
   }
