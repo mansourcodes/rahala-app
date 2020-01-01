@@ -13,12 +13,13 @@ import { Subscription } from 'rxjs';
 export class TripDetailPage implements OnInit, OnDestroy {
   trip: Trip;
   private tripSub: Subscription;
+  isLoading = true;
 
   constructor(
     private route: ActivatedRoute,
     private navCtrl: NavController,
     private tripsService: TripsService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
@@ -30,6 +31,7 @@ export class TripDetailPage implements OnInit, OnDestroy {
         .getTrip(paramMap.get('tripId'))
         .subscribe(trip => {
           this.trip = trip;
+          this.isLoading = false;
         });
     });
   }

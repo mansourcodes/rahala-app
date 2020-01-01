@@ -16,11 +16,17 @@ export class TripsPage implements OnInit, OnDestroy {
   constructor(
     private tripService: TripsService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.tripsSub = this.tripService.trips.subscribe(trips => {
       this.loadedTrips = trips;
+    });
+  }
+
+  ionViewWillEnter() {
+    this.tripService.fetchTrips().subscribe(() => {
+      ;; // TODO : loading spring
     });
   }
 

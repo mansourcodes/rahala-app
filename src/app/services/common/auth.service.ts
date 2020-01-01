@@ -1,11 +1,11 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { HttpService } from './http.service';
 import { StorageService } from './storage.service';
 import { map, tap } from 'rxjs/operators';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
 import { AuthResponseData } from 'src/app/services/models/auth-respons.interface';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -51,9 +51,9 @@ export class AuthService implements OnDestroy {
   }
 
   constructor(
-    private httpService: HttpService,
+    private http: HttpClient,
     private storageService: StorageService
-  ) {}
+  ) { }
 
   // TODO : function need to be tested
   autoLogin() {
@@ -93,8 +93,8 @@ export class AuthService implements OnDestroy {
 
   // TODO: fix return invalid data from server
   signup(email: string, password: string) {
-    return this.httpService
-      .post('auth/signup', {
+    return this.http
+      .post(environment.apiURL + 'auth/signup', {
         name: email,
         email,
         password,
@@ -105,8 +105,8 @@ export class AuthService implements OnDestroy {
 
   // TODO: fix return invalid data from server
   login(email: string, password: string) {
-    return this.httpService
-      .post('auth/login', {
+    return this.http
+      .post(environment.apiURL + 'auth/login', {
         email,
         password
       })

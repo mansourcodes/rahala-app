@@ -3,15 +3,15 @@ export class User {
     private _token: string,
     private tokenType: string,
     private expiresAt: Date,
-    public id?: string,
-    public email?: string
-  ) {}
+    public id: string,
+    public email: string
+  ) { }
 
   get token() {
     if (!this.expiresAt || this.expiresAt <= new Date()) {
       return null;
     }
-    return this._token;
+    return this.tokenType + ' ' + this._token;
   }
 
   get tokenDuration() {

@@ -4,11 +4,13 @@
       <ion-back-button defaultHref="/trips"></ion-back-button>
     </ion-buttons>
 
-    <ion-title>{{trip.name}}</ion-title>
+    <ion-title>{{isLoading ? 'Loading...' : trip.name}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  what! {{trip.travelBy}} <br />
-  {{trip.travelDate}}
+  <div *ngIf="!isLoading">
+    what! {{trip.travelBy}} <br />
+    {{trip.travelDate}} {{trip | json}}
+  </div>
 </ion-content>

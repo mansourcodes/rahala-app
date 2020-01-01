@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Trip, TripInterface } from '../models/trip.model';
 import { BehaviorSubject, of } from 'rxjs';
 import { take, map, tap, delay, switchMap } from 'rxjs/operators';
-import { HttpService } from '../common/http.service';
 import { AuthService } from '../common/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 // [
 //   new Trip(
@@ -56,6 +57,8 @@ import { AuthService } from '../common/auth.service';
 //   )
 // ]
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -68,35 +71,36 @@ export class TripsService {
   }
 
   constructor(
-    private httpService: HttpService,
+    private http: HttpClient,
     private authService: AuthService
-  ) {}
+  ) { }
 
   fetchTrips() {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.httpService.get<{ [key: string]: TripInterface }>(
-          'trips',
-          { token }
+        return this.http.get<{ data: TripInterface[] }>(
+          environment.apiURL + `trips`,
+          { headers: { Authorization: token } }
         );
       }),
       map(resData => {
+
         const trips = [];
-        for (const key in resData) {
-          if (resData.hasOwnProperty(key)) {
+        for (const key in resData.data) {
+          if (resData.data.hasOwnProperty(key)) {
             trips.push(
               new Trip(
-                resData[key].id,
-                resData[key].code,
-                resData[key].createdDate,
-                resData[key].clientId,
-                resData[key].name,
-                resData[key].cities,
-                resData[key].travelBy,
-                resData[key].foodOptions,
-                resData[key].travelDate,
-                resData[key].numOfDays
+                resData.data[key].id,
+                resData.data[key].code,
+                resData.data[key].created_date,
+                resData.data[key].client_id,
+                resData.data[key].name,
+                resData.data[key].cities,
+                resData.data[key].travel_by,
+                resData.data[key].food_options,
+                resData.data[key].travel_date,
+                resData.data[key].num_of_days
               )
             );
           }
@@ -110,39 +114,33 @@ export class TripsService {
     );
   }
 
-  getPlace(id: string) {
+  getTrip(id: string) {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.httpService.get<TripInterface>(`trip/${id}`, {
-          token
-        });
+        return this.http.get<{ data: TripInterface }>(
+          environment.apiURL + `trips/${id}`,
+          { headers: { Authorization: token } }
+        );
       }),
-      map(tripData => {
+      map(tripResponse => {
+
         return new Trip(
-          tripData.id,
-          tripData.code,
-          tripData.createdDate,
-          tripData.clientId,
-          tripData.name,
-          tripData.cities,
-          tripData.travelBy,
-          tripData.foodOptions,
-          tripData.travelDate,
-          tripData.numOfDays
+          tripResponse.data.id,
+          tripResponse.data.code,
+          tripResponse.data.created_date,
+          tripResponse.data.client_id,
+          tripResponse.data.name,
+          tripResponse.data.cities,
+          tripResponse.data.travel_by,
+          tripResponse.data.food_options,
+          tripResponse.data.travel_date,
+          tripResponse.data.num_of_days
         );
       })
     );
   }
 
-  getTrip(id: string) {
-    return this.trips.pipe(
-      take(1),
-      map(trips => {
-        return { ...trips.find(trip => trip.id === id) };
-      })
-    );
-  }
 }
 
 // TODO: fix all form udemy
