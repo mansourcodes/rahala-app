@@ -19,7 +19,7 @@ export class TripsPage implements OnInit, OnDestroy {
   private tripsSub: Subscription;
   private listMetaSub: Subscription;
 
-  // TODO: add filters
+  // TODO: add filters  
 
   constructor(
     private tripService: TripsService,
