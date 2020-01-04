@@ -19,6 +19,7 @@ export class TripsPage implements OnInit, OnDestroy {
   private tripsSub: Subscription;
   private listMetaSub: Subscription;
 
+  // TODO: add filters
 
   constructor(
     private tripService: TripsService,
@@ -49,7 +50,6 @@ export class TripsPage implements OnInit, OnDestroy {
       }
     });
   }
-
 
   ngOnDestroy() {
     if (this.tripsSub) {

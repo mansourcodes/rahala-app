@@ -64,7 +64,6 @@ import { LaravelResponseMeta, LaravelResponseMetaInterface } from '../models/Lar
   providedIn: 'root'
 })
 export class TripsService {
-  // TODO: make http request
   private _trips = new BehaviorSubject<Trip[]>([]);
   private _meta = new BehaviorSubject<LaravelResponseMeta>(new LaravelResponseMeta(1));
 
@@ -171,5 +170,3 @@ export class TripsService {
   }
 
 }
-
-// TODO: fix all form udemy
