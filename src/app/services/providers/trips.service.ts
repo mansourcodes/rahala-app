@@ -5,6 +5,7 @@ import { take, map, tap, delay, switchMap } from 'rxjs/operators';
 import { AuthService } from '../common/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { LaravelResponseMeta, LaravelResponseMetaInterface } from '../models/LaravelResponseMeta.model'
 
 // [
 //   new Trip(
@@ -65,9 +66,14 @@ import { environment } from 'src/environments/environment';
 export class TripsService {
   // TODO: make http request
   private _trips = new BehaviorSubject<Trip[]>([]);
+  private _meta = new BehaviorSubject<LaravelResponseMeta>(new LaravelResponseMeta(1));
 
   get trips() {
     return this._trips.asObservable();
+  }
+
+  get meta() {
+    return this._meta.asObservable();
   }
 
   constructor(
@@ -78,16 +84,31 @@ export class TripsService {
   fetchTrips(query?) {
 
     let nextPageTrips: Trip[];
+    let resMeta: LaravelResponseMeta;
     if (!query.page) query.page = 1;
+
+
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.get<{ data: TripInterface[] }>(
+        return this.http.get<{ data: TripInterface[], links, meta: LaravelResponseMetaInterface }>(
           environment.apiURL + `trips?page=${query.page}`,
           { headers: { Authorization: token } }
         );
       }),
       map(resData => {
+
+        const meta = new LaravelResponseMeta(
+          resData.meta.current_page,
+          resData.meta.from,
+          resData.meta.last_page,
+          resData.meta.path,
+          resData.meta.per_page,
+          resData.meta.to,
+          resData.meta.total
+        )
+        this._meta.next(meta);
+
         const trips = [];
         for (const key in resData.data) {
           if (resData.data.hasOwnProperty(key)) {
@@ -117,6 +138,7 @@ export class TripsService {
       take(1),
       tap(trips => {
         this._trips.next(trips.concat(nextPageTrips));
+        return resMeta;
       })
     );
   }

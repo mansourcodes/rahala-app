@@ -3,6 +3,7 @@ import { TripsService } from 'src/app/services/providers/trips.service';
 import { Trip } from 'src/app/services/models/trip.model';
 import { Subscription } from 'rxjs';
 import { IonInfiniteScroll } from '@ionic/angular';
+import { LaravelResponseMeta } from 'src/app/services/models/LaravelResponseMeta.model';
 
 @Component({
   selector: 'app-trips',
@@ -13,9 +14,10 @@ export class TripsPage implements OnInit, OnDestroy {
   @ViewChild(IonInfiniteScroll, { static: true }) infiniteScroll: IonInfiniteScroll;
 
   isLoading = true;
-  current_page = 1;
   loadedTrips: Trip[];
+  listMeta: LaravelResponseMeta;
   private tripsSub: Subscription;
+  private listMetaSub: Subscription;
 
 
   constructor(
@@ -26,43 +28,35 @@ export class TripsPage implements OnInit, OnDestroy {
     this.tripsSub = this.tripService.trips.subscribe(trips => {
       this.loadedTrips = trips;
     });
+    this.listMetaSub = this.tripService.meta.subscribe(meta => {
+      this.listMeta = meta;
+    });
   }
 
   ionViewWillEnter() {
     this.isLoading = true;
-    this.tripService.fetchTrips({ page: this.current_page }).subscribe(() => {
+    this.tripService.fetchTrips({ page: this.listMeta.currentPage }).subscribe(() => {
       this.isLoading = false;
-      this.current_page++;
     });
   }
 
-  // TODO: append data to loadedTrips
   loadMoreTrips(event) {
-
-    this.tripService.fetchTrips({ page: this.current_page }).subscribe(() => {
+    this.tripService.fetchTrips({ page: this.listMeta.currentPage + 1 }).subscribe(resMeta => {
       event.target.complete();
-      this.current_page++;
-      // setTimeout(() => {
-      //   event.target.complete();
-      // }, 2000);
 
-
-      // App logic to determine if all data is loaded
-      // and disable the infinite scroll
-      // if (3 == 1000) {
-      //   event.target.disabled = true;
-      // }
+      if (this.listMeta.currentPage == this.listMeta.lastPage) {
+        event.target.disabled = true;
+      }
     });
-
   }
 
-  toggleInfiniteScroll() {
-    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
-  }
 
   ngOnDestroy() {
     if (this.tripsSub) {
       this.tripsSub.unsubscribe();
+    }
+    if (this.listMetaSub) {
+      this.listMetaSub.unsubscribe();
     }
   }
 }

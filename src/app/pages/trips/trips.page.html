@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>trips: next page:{{current_page }}</ion-title>
+    <ion-title>trips: next page: </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,10 +8,13 @@
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2">
-        <div *ngIf="isLoading" text-center>
+        <div *ngIf="isLoading" class="ion-text-center">
           <ion-spinner color="primary"></ion-spinner>
         </div>
-        <div text-center *ngIf="!isLoading && loadedTrips.length <= 0">
+        <div
+          class="ion-text-center"
+          *ngIf="!isLoading && loadedTrips.length <= 0"
+        >
           <p>No offers found! Please create one first!</p>
           <ion-button color="primary" routerLink="/places/tabs/offers/new"
             >Offer New Place</ion-button
