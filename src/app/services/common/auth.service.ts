@@ -55,15 +55,15 @@ export class AuthService implements OnDestroy {
     private storageService: StorageService
   ) { }
 
-  // TODO : function need to be tested
   autoLogin() {
     return from(
       this.storageService.get(environment.AuthConstents.AUTH)
     ).pipe(
       map(storedData => {
-        if (!storedData) {
+        if (!storedData || !storedData.token) {
           return null;
         }
+        debugger;
 
         const parsedData = storedData;
         const expirationTime = new Date(parsedData.expiresAt);
@@ -80,6 +80,7 @@ export class AuthService implements OnDestroy {
         return user;
       }),
       tap(user => {
+
         if (user) {
           this._user.next(user);
           this.autoLogout(user.tokenDuration);
@@ -91,7 +92,6 @@ export class AuthService implements OnDestroy {
     );
   }
 
-  // TODO: fix return invalid data from server
   signup(email: string, password: string) {
     return this.http
       .post(environment.apiURL + 'auth/signup', {
@@ -103,7 +103,6 @@ export class AuthService implements OnDestroy {
       .pipe(tap(this.setUserData.bind(this)));
   }
 
-  // TODO: fix return invalid data from server
   login(email: string, password: string) {
     return this.http
       .post(environment.apiURL + 'auth/login', {

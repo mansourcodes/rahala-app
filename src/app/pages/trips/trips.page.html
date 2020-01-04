@@ -20,24 +20,27 @@
             >Offer New Place</ion-button
           >
         </div>
-        <ion-list *ngIf="!isLoading && loadedTrips.length > 0">
-          <ion-card
-            *ngFor="let trip of loadedTrips"
-            [routerLink]='["/","trips",trip.id]'
-          >
-            <ion-card-header>
-              {{trip.name}}
-            </ion-card-header>
-            <ion-card-subtitle>{{trip.id}}</ion-card-subtitle>
 
-            <ion-card-content>
-              <p>{{trip.desc}}</p>
-            </ion-card-content>
-            <ion-button color="primary">
-              next
-            </ion-button>
-          </ion-card>
-        </ion-list>
+        <div *ngIf="!isLoading && loadedTrips.length > 0">
+          <ion-virtual-scroll [items]="loadedTrips" approxItemHeight="182px">
+            <ion-card
+              *virtualItem="let trip"
+              [routerLink]='["/","trips",trip.id]'
+            >
+              <ion-card-header>
+                {{trip.name}}
+              </ion-card-header>
+              <ion-card-subtitle>{{trip.id}}</ion-card-subtitle>
+
+              <ion-card-content>
+                <p>{{trip.desc}}</p>
+              </ion-card-content>
+              <ion-button color="primary">
+                next
+              </ion-button>
+            </ion-card>
+          </ion-virtual-scroll>
+        </div>
 
         <ion-infinite-scroll
           threshold="15%"
