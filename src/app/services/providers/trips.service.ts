@@ -90,6 +90,7 @@ export class TripsService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
+        console.log(token);
         return this.http.get<{ data: TripInterface[], links, meta: LaravelResponseMetaInterface }>(
           environment.apiURL + `trips?page=${query.page}`,
           { headers: { Authorization: token } }

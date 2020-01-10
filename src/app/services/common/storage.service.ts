@@ -7,7 +7,7 @@ const { Storage } = Plugins;
   providedIn: 'root'
 })
 export class StorageService {
-  constructor() {}
+  constructor() { }
 
   // TODO : encrypt & decrypt value wiht ATOB
   // https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding
@@ -29,7 +29,11 @@ export class StorageService {
   async get(storageKey: string) {
     const ret = await Storage.get({ key: storageKey });
     if (ret.value) {
-      return JSON.parse(this.decrypt(ret.value));
+      try {
+        return JSON.parse(this.decrypt(ret.value));
+      } catch (e) {
+        return false;
+      }
     } else {
       return false;
     }

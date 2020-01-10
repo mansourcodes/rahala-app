@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiURL: "http://api.rahala-online.com/api/",
+  // apiURL: "http://localhost/git/rahala-api/public/api/",
 
 
   AuthConstents: {

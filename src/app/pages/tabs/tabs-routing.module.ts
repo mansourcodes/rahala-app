@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { AuthGuard } from '../../services/common/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,7 +16,8 @@ const routes: Routes = [
             loadChildren: () =>
               import('../search/search.module').then(m => m.SearchPageModule)
           }
-        ]
+        ],
+        canLoad: [AuthGuard]
       },
       {
         path: 'explore',
@@ -25,7 +27,8 @@ const routes: Routes = [
             loadChildren: () =>
               import('../explore/explore.module').then(m => m.ExplorePageModule)
           }
-        ]
+        ],
+        canLoad: [AuthGuard]
       },
       {
         path: 'saved',
@@ -35,7 +38,8 @@ const routes: Routes = [
             loadChildren: () =>
               import('../saved/saved.module').then(m => m.SavedPageModule)
           }
-        ]
+        ],
+        canLoad: [AuthGuard]
       },
       {
         path: 'settings',
@@ -45,14 +49,27 @@ const routes: Routes = [
             loadChildren: () =>
               import('../settings/settings.module').then(m => m.SettingsPageModule)
           }
-        ]
+        ],
+        canLoad: [AuthGuard]
+      },
+      {
+        path: 'trips',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../trips/trips.module').then(m => m.TripsPageModule)
+          },
+        ],
+        canLoad: [AuthGuard]
       },
       {
         path: '',
         redirectTo: '/tabs/search',
         pathMatch: 'full'
       }
-    ]
+    ],
+    canLoad: [AuthGuard]
   },
   {
     path: '',

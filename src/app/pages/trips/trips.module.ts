@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-
 import { TripsPageRoutingModule } from './trips-routing.module';
+
 
 import { TripsPage } from './trips.page';
 
@@ -17,4 +17,4 @@ import { TripsPage } from './trips.page';
   ],
   declarations: [TripsPage]
 })
-export class TripsPageModule {}
+export class TripsPageModule { }

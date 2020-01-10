@@ -15,7 +15,7 @@ export class SlidesPage implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     // TODO: make email related to Device info to make login next installed
@@ -24,11 +24,11 @@ export class SlidesPage implements OnInit {
 
     this.authService.autoLogin().subscribe(isLogin => {
       if (isLogin) {
-        this.router.navigateByUrl('trips');
+        this.router.navigateByUrl('tabs/search');
         return;
       }
       this.authService.login(email, password).subscribe(() => {
-        this.router.navigateByUrl('trips');
+        this.router.navigateByUrl('tabs/search');
       });
     });
   }

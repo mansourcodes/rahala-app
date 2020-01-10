@@ -1,11 +1,60 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>search</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content
+  (swiperight)="changeTravelBy('right')"
+  (swipeleft)="changeTravelBy('left')"
+>
+  <form [formGroup]="searchForm">
+    <br />
+    <br />
+    <br />
+    <br />
+    <ion-list>
+      <ion-radio-group #radioGroup>
+        <ion-item
+          *ngFor="let TravelByRadioItem of TravelByRadioList"
+          lines="none"
+          class="travel-by-radio-on-item"
+          (ionSelect)="radioSelect($event)"
+          (click)="changeTravelBy(TravelByRadioItem.value)"
+        >
+          <ion-label>{{TravelByRadioItem.text}}</ion-label>
+          <ion-radio
+            slot="start"
+            value="{{TravelByRadioItem.value}}"
+            checked="{{TravelByRadioItem.checked}}"
+          ></ion-radio>
+        </ion-item>
+      </ion-radio-group>
 
-<ion-content>
-  search
-
-  <input >
+      <ion-item>
+        <ion-label position="floating">City</ion-label>
+        <ion-input
+          type="text"
+          formControlName="city"
+          (click)="openCityPicker()"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">dateFrom</ion-label>
+        <ion-datetime
+          displayFormat="DD/MM/YYYY"
+          min="2020-01-09"
+          max="2025-12-09"
+          formControlName="dateFrom"
+        ></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">dateTo</ion-label>
+        <ion-datetime
+          displayFormat="DD/MM/YYYY"
+          min="2020-01-09"
+          max="2025-12-09"
+          formControlName="dateTo"
+        ></ion-datetime>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block" (click)="onSearch()">
+      <ion-icon slot="end" name="search"></ion-icon>
+      Search
+    </ion-button>
+  </form>
 </ion-content>

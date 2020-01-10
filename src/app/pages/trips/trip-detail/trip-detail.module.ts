@@ -17,4 +17,4 @@ import { TripDetailPage } from './trip-detail.page';
   ],
   declarations: [TripDetailPage]
 })
-export class TripDetailPageModule {}
+export class TripDetailPageModule { }

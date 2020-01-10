@@ -13,7 +13,7 @@
         </div>
         <div
           class="ion-text-center"
-          *ngIf="!isLoading && loadedTrips.length <= 0"
+          *ngIf="!isLoading && loadedTrips.length == 0"
         >
           <p>No offers found! Please create one first!</p>
           <ion-button color="primary" routerLink="/places/tabs/offers/new"
@@ -23,17 +23,14 @@
 
         <div *ngIf="!isLoading && loadedTrips.length > 0">
           <ion-virtual-scroll [items]="loadedTrips" approxItemHeight="182px">
-            <ion-card
-              *virtualItem="let trip"
-              [routerLink]='["/","trips",trip.id]'
-            >
+            <ion-card *virtualItem="let trip">
               <ion-card-header>
                 {{trip.name}}
               </ion-card-header>
               <ion-card-subtitle>{{trip.id}}</ion-card-subtitle>
 
               <ion-card-content>
-                <p>{{trip.desc}}</p>
+                <p>{{trip.cities}}</p>
               </ion-card-content>
               <ion-button color="primary">
                 next
