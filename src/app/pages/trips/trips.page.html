@@ -1,10 +1,91 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>trips: next page: </ion-title>
+  <ion-toolbar color="secondary">
+    <ion-searchbar placeholder="Search..."></ion-searchbar>
+  </ion-toolbar>
+
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-button color="light" (click)="openFiltersManu()">
+        <ion-icon slot="start" name="ios-funnel"></ion-icon>
+        Filter
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button fill="solid" color="light">
+        Help
+        <ion-icon slot="end" name="help-circle"></ion-icon>
+      </ion-button>
+      <ion-chip color="light">
+        <ion-label>Button Chip</ion-label>
+        <ion-icon name="close-circle"></ion-icon>
+      </ion-chip>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-menu side="start" menuId="filterManu" content-id="content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Filters</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-label>Food Options</ion-label>
+        <ion-select
+          multiple="true"
+          cancelText="Nah"
+          okText="Okay!"
+          placeholder="Select One"
+          [(ngModel)]="filtersForm.foodOptions"
+        >
+          <ion-select-option *ngFor="let item of foodOptionsList"
+            >{{item.val}}x</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Number of Days</ion-label>
+        <ion-range
+          min="3"
+          max="16"
+          step="1"
+          [(ngModel)]="filtersForm.numOfDays"
+          snaps
+          dual-knobs
+          pin
+          color="secondary"
+        >
+          <ion-label slot="start">3</ion-label>
+          <ion-label slot="end">16</ion-label>
+        </ion-range>
+      </ion-item>
+    </ion-list>
+    <ion-button color="success" expand="block" (click)="closeFiltersManu()">
+      <ion-icon slot="start" name="ios-funnel"></ion-icon>
+      Done
+    </ion-button>
+    {{filtersForm |json}} {{selectedFoodOptions |json}}
+  </ion-content>
+</ion-menu>
+
+<ion-content id="content" class="ion-padding">
+  <ion-chip color="secondary">
+    <ion-label color="dark">Secondary w/ Dark label</ion-label>
+  </ion-chip>
+
+  <ion-chip>
+    <ion-icon name="pin"></ion-icon>
+    <ion-label>Default</ion-label>
+  </ion-chip>
+
+  <ion-chip>
+    <ion-icon name="heart" color="dark"></ion-icon>
+    <ion-label>Default</ion-label>
+  </ion-chip>
+
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2">
@@ -22,8 +103,8 @@
         </div>
 
         <div *ngIf="!isLoading && loadedTrips.length > 0">
-          <ion-virtual-scroll [items]="loadedTrips" approxItemHeight="182px">
-            <ion-card *virtualItem="let trip">
+          <ion-virtual-scroll [items]="loadedTrips " approxItemHeight="182px">
+            <ion-card *virtualItem="let trip ">
               <ion-card-header>
                 {{trip.name}}
               </ion-card-header>

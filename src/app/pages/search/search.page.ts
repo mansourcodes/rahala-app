@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PickerController, LoadingController, ToastController, IonRadioGroup } from '@ionic/angular';
 import { PickerOptions } from '@ionic/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import 'hammerjs';
 import { environment } from 'src/environments/environment';
 
@@ -148,9 +148,15 @@ export class SearchPage implements OnInit {
       })
       .then(loadingEl => {
         loadingEl.present();
+
+        let navigationExtras: NavigationExtras = {
+          queryParams: {
+            filters: JSON.stringify(this.searchForm.value)
+          }
+        }
         this.searchForm.reset();
         loadingEl.dismiss();
-        this.router.navigate(['/tabs/trips']);
+        this.router.navigate(['/tabs/trips'], navigationExtras);
       });
   }
 

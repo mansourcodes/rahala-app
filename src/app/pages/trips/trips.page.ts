@@ -2,8 +2,10 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { TripsService } from 'src/app/services/providers/trips.service';
 import { Trip } from 'src/app/services/models/trip.model';
 import { Subscription } from 'rxjs';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, MenuController } from '@ionic/angular';
 import { LaravelResponseMeta } from 'src/app/services/models/LaravelResponseMeta.model';
+import { NgOption } from "@ng-select/ng-select";
+
 
 @Component({
   selector: 'app-trips',
@@ -19,10 +21,21 @@ export class TripsPage implements OnInit, OnDestroy {
   private tripsSub: Subscription;
   private listMetaSub: Subscription;
 
-  // TODO: add filters  
+  // TODO: apply filters on loadedTrips
+  public filtersForm = {
+    numOfDays: { lower: 3, upper: 16 },
+    foodOptions: []
+  };
+
+  public foodOptionsList = [
+    { id: 1, val: 'Pepperoni', selected: true },
+    { id: 2, val: 'Sausage', selected: true },
+    { id: 3, val: 'Mushroom', selected: true }
+  ];
 
   constructor(
     private tripService: TripsService,
+    private menu: MenuController
   ) { }
 
   ngOnInit() {
@@ -51,6 +64,14 @@ export class TripsPage implements OnInit, OnDestroy {
     });
   }
 
+  openFiltersManu() {
+    this.menu.open('filterManu');
+  }
+
+  closeFiltersManu() {
+    this.menu.close('filterManu');
+  }
+
   ngOnDestroy() {
     if (this.tripsSub) {
       this.tripsSub.unsubscribe();
@@ -59,4 +80,6 @@ export class TripsPage implements OnInit, OnDestroy {
       this.listMetaSub.unsubscribe();
     }
   }
+
+
 }
