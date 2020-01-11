@@ -43,7 +43,7 @@ export class SearchPage implements OnInit {
     public pickerCtrl: PickerController,
     private router: Router,
     private loadingCtrl: LoadingController,
-    public toastController: ToastController
+    private toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -134,8 +134,6 @@ export class SearchPage implements OnInit {
 
   onSearch() {
     if (!this.searchForm.valid) {
-
-      console.log(this.searchForm.value);
       this.toastController.create({
         message: 'Missing Information!',
         duration: 2000

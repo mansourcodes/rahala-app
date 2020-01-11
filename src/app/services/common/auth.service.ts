@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
 import { AuthResponseData } from 'src/app/services/models/auth-respons.interface';
 import { HttpClient } from '@angular/common/http';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +53,8 @@ export class AuthService implements OnDestroy {
 
   constructor(
     private http: HttpClient,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private toastController: ToastController
   ) { }
 
   autoLogin() {
@@ -60,11 +62,9 @@ export class AuthService implements OnDestroy {
       this.storageService.get(environment.AuthConstents.AUTH)
     ).pipe(
       map(storedData => {
-        if (!storedData || !storedData.token) {
+        if (!storedData || !storedData.accessToken) {
           return null;
         }
-        debugger;
-
         const parsedData = storedData;
         const expirationTime = new Date(parsedData.expiresAt);
         if (expirationTime <= new Date()) {
@@ -84,6 +84,12 @@ export class AuthService implements OnDestroy {
         if (user) {
           this._user.next(user);
           this.autoLogout(user.tokenDuration);
+          this.toastController.create({
+            message: 'AutoLogin:' + user.email,
+            duration: 2000
+          }).then(toastEl => {
+            toastEl.present();
+          })
         }
       }),
       map(user => {
@@ -105,11 +111,19 @@ export class AuthService implements OnDestroy {
 
   login(email: string, password: string) {
     return this.http
-      .post(environment.apiURL + 'auth/login', {
+      .post<User>(environment.apiURL + 'auth/login', {
         email,
         password
       })
-      .pipe(tap(this.setUserData.bind(this)));
+      .pipe(tap(resData => {
+        this.setUserData.bind(this)
+        this.toastController.create({
+          message: 'Login:' + resData.email,
+          duration: 2000
+        }).then(toastEl => {
+          toastEl.present();
+        })
+      }));
   }
 
   logout() {

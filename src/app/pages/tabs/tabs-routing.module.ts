@@ -14,10 +14,10 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../search/search.module').then(m => m.SearchPageModule)
+              import('../search/search.module').then(m => m.SearchPageModule),
+            canLoad: [AuthGuard]
           }
-        ],
-        canLoad: [AuthGuard]
+        ]
       },
       {
         path: 'explore',
@@ -25,10 +25,10 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../explore/explore.module').then(m => m.ExplorePageModule)
+              import('../explore/explore.module').then(m => m.ExplorePageModule),
+            canLoad: [AuthGuard]
           }
-        ],
-        canLoad: [AuthGuard]
+        ]
       },
       {
         path: 'saved',
@@ -36,10 +36,10 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../saved/saved.module').then(m => m.SavedPageModule)
+              import('../saved/saved.module').then(m => m.SavedPageModule),
+            canLoad: [AuthGuard]
           }
-        ],
-        canLoad: [AuthGuard]
+        ]
       },
       {
         path: 'settings',
@@ -47,10 +47,10 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../settings/settings.module').then(m => m.SettingsPageModule)
+              import('../settings/settings.module').then(m => m.SettingsPageModule),
+            canLoad: [AuthGuard]
           }
-        ],
-        canLoad: [AuthGuard]
+        ]
       },
       {
         path: 'trips',
@@ -58,18 +58,17 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../trips/trips.module').then(m => m.TripsPageModule)
+              import('../trips/trips.module').then(m => m.TripsPageModule),
+            canLoad: [AuthGuard]
           },
-        ],
-        canLoad: [AuthGuard]
+        ]
       },
       {
         path: '',
         redirectTo: '/tabs/search',
         pathMatch: 'full'
       }
-    ],
-    canLoad: [AuthGuard]
+    ]
   },
   {
     path: '',

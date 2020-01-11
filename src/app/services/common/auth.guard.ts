@@ -11,7 +11,7 @@ export class AuthGuard implements CanLoad {
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   canLoad(
     route: Route,
@@ -28,6 +28,8 @@ export class AuthGuard implements CanLoad {
       }),
       tap(isAuthenticated => {
         if (!isAuthenticated) {
+          console.log(window.location.pathname)
+          //TODO: redirect to the targted page before auth
           this.router.navigateByUrl('/slides');
         }
       })

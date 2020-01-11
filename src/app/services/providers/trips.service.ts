@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Trip, TripInterface } from '../models/trip.model';
-import { BehaviorSubject, of } from 'rxjs';
-import { take, map, tap, delay, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, of, throwError } from 'rxjs';
+import { take, map, tap, delay, switchMap, retry, catchError } from 'rxjs/operators';
 import { AuthService } from '../common/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -90,10 +90,15 @@ export class TripsService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        console.log(token);
+        if (!token) {
+          throw new Error('No user found!');
+        }
         return this.http.get<{ data: TripInterface[], links, meta: LaravelResponseMetaInterface }>(
           environment.apiURL + `trips?page=${query.page}`,
           { headers: { Authorization: token } }
+        ).pipe(
+          retry(1),
+          catchError(this.handleError)
         );
       }),
       map(resData => {
@@ -170,4 +175,16 @@ export class TripsService {
     );
   }
 
+  handleError(error) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    window.alert(errorMessage);
+    return throwError(errorMessage);
+  }
 }
