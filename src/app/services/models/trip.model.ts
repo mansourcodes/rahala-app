@@ -10,7 +10,7 @@ export class Trip {
     public travelBy: string,
     public foodOptions: string,
     public travelDate: string,
-    public numOfDays: string,
+    public numOfDays: number,
 
     public adultPrice?: string,
     public teenPrice?: string,
@@ -54,7 +54,7 @@ export interface TripInterface {
   code: string;
   travel_by: string;
   travel_date: string;
-  num_of_days: string;
+  num_of_days: number;
   num_of_nights: string;
   return_date: string;
   travel_time: string;

@@ -11,10 +11,6 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="primary">
-      <ion-button fill="solid" color="light">
-        Help
-        <ion-icon slot="end" name="help-circle"></ion-icon>
-      </ion-button>
       <ion-chip color="light">
         <ion-label>Button Chip</ion-label>
         <ion-icon name="close-circle"></ion-icon>
@@ -25,7 +21,7 @@
 
 <ion-menu side="start" menuId="filterManu" content-id="content">
   <ion-header>
-    <ion-toolbar color="primary">
+    <ion-toolbar color="secondary">
       <ion-title>Filters</ion-title>
     </ion-toolbar>
   </ion-header>
@@ -39,8 +35,11 @@
           okText="Okay!"
           placeholder="Select One"
           [(ngModel)]="filtersForm.foodOptions"
+          (ngModelChange)="onFilterUpdate()"
         >
-          <ion-select-option *ngFor="let item of foodOptionsList"
+          <ion-select-option
+            *ngFor="let item of foodOptionsList"
+            selected="{{item.selected}}"
             >{{item.val}}x</ion-select-option
           >
         </ion-select>
@@ -53,6 +52,7 @@
           max="16"
           step="1"
           [(ngModel)]="filtersForm.numOfDays"
+          (ngModelChange)="onFilterUpdate()"
           snaps
           dual-knobs
           pin
@@ -72,6 +72,7 @@
 </ion-menu>
 
 <ion-content id="content" class="ion-padding">
+  {{routerQueryParams | json}}
   <ion-chip color="secondary">
     <ion-label color="dark">Secondary w/ Dark label</ion-label>
   </ion-chip>
@@ -94,7 +95,7 @@
         </div>
         <div
           class="ion-text-center"
-          *ngIf="!isLoading && loadedTrips.length == 0"
+          *ngIf="!isLoading && relevantTrips.length == 0"
         >
           <p>No offers found! Please create one first!</p>
           <ion-button color="primary" routerLink="/places/tabs/offers/new"
@@ -102,8 +103,8 @@
           >
         </div>
 
-        <div *ngIf="!isLoading && loadedTrips.length > 0">
-          <ion-virtual-scroll [items]="loadedTrips " approxItemHeight="182px">
+        <div *ngIf="!isLoading && relevantTrips.length > 0">
+          <ion-virtual-scroll [items]="relevantTrips " approxItemHeight="182px">
             <ion-card *virtualItem="let trip ">
               <ion-card-header>
                 {{trip.name}}

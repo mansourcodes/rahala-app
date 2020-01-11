@@ -4,7 +4,7 @@ import { Trip } from 'src/app/services/models/trip.model';
 import { Subscription } from 'rxjs';
 import { IonInfiniteScroll, MenuController } from '@ionic/angular';
 import { LaravelResponseMeta } from 'src/app/services/models/LaravelResponseMeta.model';
-import { NgOption } from "@ng-select/ng-select";
+import { ActivatedRoute, Params } from '@angular/router';
 
 
 @Component({
@@ -17,7 +17,11 @@ export class TripsPage implements OnInit, OnDestroy {
 
   isLoading = true;
   loadedTrips: Trip[];
+  relevantTrips: Trip[];
   listMeta: LaravelResponseMeta;
+  routerQueryParams: Params;
+
+  private routerQueryParamsSub: Subscription;
   private tripsSub: Subscription;
   private listMetaSub: Subscription;
 
@@ -35,20 +39,39 @@ export class TripsPage implements OnInit, OnDestroy {
 
   constructor(
     private tripService: TripsService,
-    private menu: MenuController
+    private menu: MenuController,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.tripsSub = this.tripService.trips.subscribe(trips => {
       this.loadedTrips = trips;
+      this.relevantTrips = this.loadedTrips;
     });
     this.listMetaSub = this.tripService.meta.subscribe(meta => {
       this.listMeta = meta;
     });
+    this.routerQueryParamsSub = this.route.queryParams.subscribe(params => {
+      this.routerQueryParams = params;
+    });
+  }
+
+  onFilterUpdate() {
+    this.relevantTrips = this.loadedTrips.filter(
+      trip => {
+        if (trip.numOfDays >= this.filtersForm.numOfDays.lower &&
+          trip.numOfDays <= this.filtersForm.numOfDays.upper
+        ) {
+          return true;
+        }
+        return false;
+      }
+    );
   }
 
   ionViewWillEnter() {
     this.isLoading = true;
+    //TODO: apply routerQueryParams 
     this.tripService.fetchTrips({ page: this.listMeta.currentPage }).subscribe(() => {
       this.isLoading = false;
     });
@@ -57,7 +80,7 @@ export class TripsPage implements OnInit, OnDestroy {
   loadMoreTrips(event) {
     this.tripService.fetchTrips({ page: this.listMeta.currentPage + 1 }).subscribe(resMeta => {
       event.target.complete();
-
+      this.onFilterUpdate();
       if (this.listMeta.currentPage == this.listMeta.lastPage) {
         event.target.disabled = true;
       }
@@ -78,6 +101,9 @@ export class TripsPage implements OnInit, OnDestroy {
     }
     if (this.listMetaSub) {
       this.listMetaSub.unsubscribe();
+    }
+    if (this.routerQueryParamsSub) {
+      this.routerQueryParamsSub.unsubscribe();
     }
   }
 
