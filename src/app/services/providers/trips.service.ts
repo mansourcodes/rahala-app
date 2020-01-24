@@ -3,9 +3,12 @@ import { Trip, TripInterface } from '../models/trip.model';
 import { BehaviorSubject, of, throwError } from 'rxjs';
 import { take, map, tap, delay, switchMap, retry, catchError } from 'rxjs/operators';
 import { AuthService } from '../common/auth.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LaravelResponseMeta, LaravelResponseMetaInterface } from '../models/LaravelResponseMeta.model'
+import { Client } from '../models/client.model';
+import { searchFromInterface } from 'src/app/services/models/searchForm.model'
+import { isDate, isString } from 'util';
 
 // [
 //   new Trip(
@@ -80,12 +83,11 @@ export class TripsService {
     private authService: AuthService
   ) { }
 
-  fetchTrips(query?) {
+  fetchTrips(query?: searchFromInterface) {
 
     let nextPageTrips: Trip[];
     let resMeta: LaravelResponseMeta;
     if (!query.page) query.page = 1;
-
 
     return this.authService.token.pipe(
       take(1),
@@ -93,9 +95,30 @@ export class TripsService {
         if (!token) {
           throw new Error('No user found!');
         }
+        let params = new HttpParams()
+        if (query.page) params.append('page', query.page.toString());
+        if (query.travelBy && query.travelBy != 'all') params.append('travel_by', query.travelBy);
+        if (query.city && query.city != 'all') params.append('cities', query.city);
+
+        if (query.dateFrom && query.dateTo) {
+          console.log(isString(query.dateFrom));
+
+          if (isString(query.dateFrom)) {
+            query.dateFrom = new Date(query.dateFrom);
+          }
+          if (isString(query.dateTo)) {
+            query.dateTo = new Date(query.dateTo);
+          }
+          const dateRange = query.dateFrom.toISOString().slice(0, 10) + ',' + query.dateTo.toISOString().slice(0, 10);
+          params.append('travel_date', dateRange);
+          params.append('return_date', dateRange);
+        }
+
+        //TODO: params not appending valus 
+        console.log(params);
         return this.http.get<{ data: TripInterface[], links, meta: LaravelResponseMetaInterface }>(
-          environment.apiURL + `trips?page=${query.page}`,
-          { headers: { Authorization: token } }
+          environment.apiURL + `trips`
+          , { params, headers: { Authorization: token } }
         ).pipe(
           retry(1),
           catchError(this.handleError)
@@ -122,7 +145,15 @@ export class TripsService {
                 resData.data[key].id,
                 resData.data[key].code,
                 resData.data[key].created_date,
-                resData.data[key].client_id,
+                new Client(
+                  resData.data[key].client.id,
+                  resData.data[key].client.client_name,
+                  resData.data[key].client.client_alian,
+                  resData.data[key].client.logo_img,
+                  resData.data[key].client.contact_wp_1,
+                  resData.data[key].client.contact_wp_2,
+                  resData.data[key].client.locations
+                ),
                 resData.data[key].name,
                 resData.data[key].cities,
                 resData.data[key].travel_by,
@@ -163,7 +194,15 @@ export class TripsService {
           tripResponse.data.id,
           tripResponse.data.code,
           tripResponse.data.created_date,
-          tripResponse.data.client_id,
+          new Client(
+            tripResponse.data.client.id,
+            tripResponse.data.client.client_name,
+            tripResponse.data.client.client_alian,
+            tripResponse.data.client.logo_img,
+            tripResponse.data.client.contact_wp_1,
+            tripResponse.data.client.contact_wp_2,
+            tripResponse.data.client.locations
+          ),
           tripResponse.data.name,
           tripResponse.data.cities,
           tripResponse.data.travel_by,

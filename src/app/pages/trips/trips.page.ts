@@ -19,7 +19,7 @@ export class TripsPage implements OnInit, OnDestroy {
   loadedTrips: Trip[];
   relevantTrips: Trip[];
   listMeta: LaravelResponseMeta;
-  routerQueryParams: Params;
+  searchTerms: any;
 
   private routerQueryParamsSub: Subscription;
   private tripsSub: Subscription;
@@ -31,6 +31,7 @@ export class TripsPage implements OnInit, OnDestroy {
     foodOptions: []
   };
 
+  //TODO: get foodoptions list
   public foodOptionsList = [
     { id: 1, val: 'Pepperoni', selected: true },
     { id: 2, val: 'Sausage', selected: true },
@@ -41,9 +42,13 @@ export class TripsPage implements OnInit, OnDestroy {
     private tripService: TripsService,
     private menu: MenuController,
     private route: ActivatedRoute
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
+    this.routerQueryParamsSub = this.route.queryParams.subscribe(params => {
+      this.searchTerms = JSON.parse(params.searchTerms);
+    });
     this.tripsSub = this.tripService.trips.subscribe(trips => {
       this.loadedTrips = trips;
       this.relevantTrips = this.loadedTrips;
@@ -51,13 +56,11 @@ export class TripsPage implements OnInit, OnDestroy {
     this.listMetaSub = this.tripService.meta.subscribe(meta => {
       this.listMeta = meta;
     });
-    this.routerQueryParamsSub = this.route.queryParams.subscribe(params => {
-      this.routerQueryParams = params;
-    });
   }
 
   onFilterUpdate() {
     this.relevantTrips = this.loadedTrips.filter(
+      //TODO: filter by food options
       trip => {
         if (trip.numOfDays >= this.filtersForm.numOfDays.lower &&
           trip.numOfDays <= this.filtersForm.numOfDays.upper
@@ -72,7 +75,9 @@ export class TripsPage implements OnInit, OnDestroy {
   ionViewWillEnter() {
     this.isLoading = true;
     //TODO: apply routerQueryParams 
-    this.tripService.fetchTrips({ page: this.listMeta.currentPage }).subscribe(() => {
+    let query = { ...this.searchTerms };
+    query.page = this.listMeta.currentPage;
+    this.tripService.fetchTrips(query).subscribe(() => {
       this.isLoading = false;
     });
   }

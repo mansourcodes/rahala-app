@@ -4,22 +4,32 @@
   </ion-toolbar>
 
   <ion-toolbar color="secondary">
-    <ion-buttons slot="start">
+    <!-- <ion-buttons slot="start">
       <ion-button color="light" (click)="openFiltersManu()">
         <ion-icon slot="start" name="ios-funnel"></ion-icon>
         Filter
       </ion-button>
-    </ion-buttons>
-    <ion-buttons slot="primary">
+    </ion-buttons> -->
+    <ion-buttons slot="primary" *ngIf="searchTerms">
       <ion-chip color="light">
-        <ion-label>Button Chip</ion-label>
+        <ion-label>{{searchTerms.travelBy}}</ion-label>
+        <ion-icon name="close-circle"></ion-icon>
+      </ion-chip>
+      <ion-chip color="light">
+        <ion-label>{{searchTerms.city}}</ion-label>
+        <ion-icon name="close-circle"></ion-icon>
+      </ion-chip>
+      <ion-chip color="light">
+        <ion-label
+          >{{searchTerms.dateFrom}} -> {{searchTerms.dateTo}}</ion-label
+        >
         <ion-icon name="close-circle"></ion-icon>
       </ion-chip>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-menu side="start" menuId="filterManu" content-id="content">
+<ion-menu side="start" type="overlay" menuId="filterManu" content-id="content">
   <ion-header>
     <ion-toolbar color="secondary">
       <ion-title>Filters</ion-title>
@@ -67,29 +77,18 @@
       <ion-icon slot="start" name="ios-funnel"></ion-icon>
       Done
     </ion-button>
-    {{filtersForm |json}} {{selectedFoodOptions |json}}
+    {{filtersForm |json}}
   </ion-content>
 </ion-menu>
 
-<ion-content id="content" class="ion-padding">
-  {{routerQueryParams | json}}
-  <ion-chip color="secondary">
-    <ion-label color="dark">Secondary w/ Dark label</ion-label>
-  </ion-chip>
+<ion-content id="content" class="ion-padding background">
+  <!-- <ion-chip color="secondary">
+    <ion-label color="dark">only break fast</ion-label>
+  </ion-chip> -->
 
-  <ion-chip>
-    <ion-icon name="pin"></ion-icon>
-    <ion-label>Default</ion-label>
-  </ion-chip>
-
-  <ion-chip>
-    <ion-icon name="heart" color="dark"></ion-icon>
-    <ion-label>Default</ion-label>
-  </ion-chip>
-
-  <ion-grid>
+  <ion-grid class="ion-no-padding">
     <ion-row>
-      <ion-col size="12" size-sm="8" offset-sm="2">
+      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-no-padding">
         <div *ngIf="isLoading" class="ion-text-center">
           <ion-spinner color="primary"></ion-spinner>
         </div>
@@ -97,26 +96,97 @@
           class="ion-text-center"
           *ngIf="!isLoading && relevantTrips.length == 0"
         >
-          <p>No offers found! Please create one first!</p>
-          <ion-button color="primary" routerLink="/places/tabs/offers/new"
-            >Offer New Place</ion-button
-          >
+          <p>No Trips found!</p>
         </div>
 
         <div *ngIf="!isLoading && relevantTrips.length > 0">
           <ion-virtual-scroll [items]="relevantTrips " approxItemHeight="182px">
-            <ion-card *virtualItem="let trip ">
-              <ion-card-header>
-                {{trip.name}}
-              </ion-card-header>
-              <ion-card-subtitle>{{trip.id}}</ion-card-subtitle>
-
+            <ion-card
+              *virtualItem="let trip "
+              class="card ion-no-margin ion-margin-bottom"
+            >
+              <!-- <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-button>
+                    <ion-icon slot="icon-only" name="more"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-toolbar> -->
+              <ion-row class="vertical-align-content ion-padding-top">
+                <ion-col class="ion-no-padding">
+                  <div class="ion-text-center w-100">
+                    <ion-thumbnail size="4" class="client-logo">
+                      <ion-img [src]="trip.client.logoUrl"></ion-img>
+                    </ion-thumbnail>
+                  </div>
+                </ion-col>
+                <ion-col size="2" class="ion-no-padding">
+                  <div class="ion-text-center w-100">
+                    <ion-icon
+                      size="large"
+                      color="primary"
+                      [src]="trip.travelByIcon"
+                    ></ion-icon>
+                  </div>
+                </ion-col>
+                <ion-col class="ion-no-padding">
+                  <div class="city-name ion-text-center w-100">
+                    <span *ngFor="let city of trip.cities">
+                      {{city}}
+                    </span>
+                  </div>
+                </ion-col>
+              </ion-row>
               <ion-card-content>
-                <p>{{trip.cities}}</p>
+                <div class="trip-name">
+                  <span>{{trip.name}}</span>
+                </div>
               </ion-card-content>
-              <ion-button color="primary">
-                next
-              </ion-button>
+
+              <ion-footer>
+                <ion-toolbar>
+                  <ion-buttons slot="start">
+                    <ion-button class="small-padding">
+                      {{trip.travelDate}}
+                      <ion-icon
+                        size="small"
+                        slot="start"
+                        color="primary"
+                        src="assets/icon/calendar.svg"
+                      ></ion-icon>
+                    </ion-button>
+                    <ion-button class="small-padding">
+                      {{trip.numOfDays}} Days
+                      <ion-icon
+                        size="small"
+                        slot="start"
+                        color="primary"
+                        src="assets/icon/day.svg"
+                      ></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-footer>
+              <ion-footer>
+                <ion-toolbar>
+                  <ion-buttons slot="start">
+                    <ion-button class="small-padding">
+                      <ion-icon
+                        size="small"
+                        slot="icon-only"
+                        color="primary"
+                        [src]="trip.foodOptionIcon"
+                      ></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                  <ion-buttons slot="end">
+                    <ion-button>
+                      123 BHD
+                      <ion-icon slot="end" name="ios-arrow-down"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-footer>
             </ion-card>
           </ion-virtual-scroll>
         </div>

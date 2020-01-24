@@ -148,10 +148,9 @@ export class SearchPage implements OnInit {
       })
       .then(loadingEl => {
         loadingEl.present();
-
         let navigationExtras: NavigationExtras = {
           queryParams: {
-            filters: JSON.stringify(this.searchForm.value)
+            searchTerms: JSON.stringify(this.searchForm.value)
           }
         }
         this.searchForm.reset();
