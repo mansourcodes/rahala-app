@@ -168,7 +168,6 @@ export class SearchPage implements OnInit {
     this.searchForm.patchValue({ travelBy: event.detail.value })
   }
 
-
   changeTravelBy(value: string) {
     let index = 0;
     if (value == 'right' || value == 'left') {
@@ -195,6 +194,8 @@ export class SearchPage implements OnInit {
       }
     }
     this.radioGroup.value = value;
+
+
   }
 
 }

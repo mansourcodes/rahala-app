@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 import { IonInfiniteScroll, MenuController } from '@ionic/angular';
 import { LaravelResponseMeta } from 'src/app/services/models/LaravelResponseMeta.model';
 import { ActivatedRoute, Params } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { SearchFrom, SearchFromInterface } from 'src/app/services/models/searchForm.model';
 
 
 @Component({
@@ -46,8 +48,32 @@ export class TripsPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.routerQueryParamsSub = this.route.queryParams.subscribe(params => {
-      this.searchTerms = JSON.parse(params.searchTerms);
+    this.routerQueryParamsSub = this.route.queryParams.pipe(map(paramsString => {
+      let searchTermsObj: SearchFromInterface;
+      try {
+        searchTermsObj = JSON.parse(paramsString.searchTerms);
+      } catch (error) {
+        searchTermsObj = {
+          travelBy: 'all',
+          city: 'all',
+          dateFrom: '1970-01-01',
+          dateTo: '2090-01-01'
+
+        }
+      }
+
+      const searchTerms = new SearchFrom(
+        searchTermsObj.travelBy,
+        searchTermsObj.city,
+        new Date(searchTermsObj.dateFrom),
+        new Date(searchTermsObj.dateTo),
+        1
+      );
+
+      return searchTerms;
+
+    })).subscribe(searchTerms => {
+      this.searchTerms = searchTerms;
     });
     this.tripsSub = this.tripService.trips.subscribe(trips => {
       this.loadedTrips = trips;
@@ -83,7 +109,7 @@ export class TripsPage implements OnInit, OnDestroy {
   }
 
   loadMoreTrips(event) {
-    this.tripService.fetchTrips({ page: this.listMeta.currentPage + 1 }).subscribe(resMeta => {
+    this.tripService.fetchTrips(this.searchTerms).subscribe(resMeta => {
       event.target.complete();
       this.onFilterUpdate();
       if (this.listMeta.currentPage == this.listMeta.lastPage) {
@@ -98,6 +124,10 @@ export class TripsPage implements OnInit, OnDestroy {
 
   closeFiltersManu() {
     this.menu.close('filterManu');
+  }
+
+  getTravelByIcon(TravelBy: string) {
+    return Trip.travelByIcon(TravelBy);
   }
 
   ngOnDestroy() {

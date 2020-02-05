@@ -33,23 +33,36 @@
           (click)="openCityPicker()"
         ></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label position="floating">dateFrom</ion-label>
-        <ion-datetime
-          displayFormat="DD/MM/YYYY"
-          min="2020-01-09"
-          max="2025-12-09"
+      <ion-item button="true" (click)="pickerDateFrom.open()">
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="pickerDateFrom"
+        ></mat-datepicker-toggle>
+        {{searchForm.value.dateFrom | date:'fullDate'}}
+        <input
+          [hidden]="true"
+          matInput
+          (focus)="pickerDateFrom.open()"
+          [matDatepicker]="pickerDateFrom"
+          placeholder="Choose a date"
           formControlName="dateFrom"
-        ></ion-datetime>
+        />
+        <mat-datepicker touchUi #pickerDateFrom></mat-datepicker>
       </ion-item>
-      <ion-item>
-        <ion-label position="floating">dateTo</ion-label>
-        <ion-datetime
-          displayFormat="DD/MM/YYYY"
-          min="2020-01-09"
-          max="2025-12-09"
+      <ion-item button="true" (click)="pickerDateTo.open()">
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="pickerDateTo"
+        ></mat-datepicker-toggle>
+        {{searchForm.value.dateTo | date:'fullDate'}}
+        <input
+          [hidden]="true"
+          matInput
+          [matDatepicker]="pickerDateTo"
+          placeholder="Choose a date"
           formControlName="dateTo"
-        ></ion-datetime>
+        />
+        <mat-datepicker touchUi #pickerDateTo></mat-datepicker>
       </ion-item>
     </ion-list>
     <ion-button expand="block" (click)="onSearch()">

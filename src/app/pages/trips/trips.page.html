@@ -13,17 +13,19 @@
     <ion-buttons slot="primary" *ngIf="searchTerms">
       <ion-chip color="light">
         <ion-label>{{searchTerms.travelBy}}</ion-label>
-        <ion-icon name="close-circle"></ion-icon>
+        <ion-icon [src]="getTravelByIcon(searchTerms.travelBy)"></ion-icon>
       </ion-chip>
       <ion-chip color="light">
         <ion-label>{{searchTerms.city}}</ion-label>
-        <ion-icon name="close-circle"></ion-icon>
+        <ion-icon name="pin"></ion-icon>
       </ion-chip>
       <ion-chip color="light">
         <ion-label
-          >{{searchTerms.dateFrom}} -> {{searchTerms.dateTo}}</ion-label
+          >{{searchTerms.dateFromString}}
+          <ion-icon name="md-arrow-round-forward"></ion-icon>
+          {{searchTerms.dateToString}}</ion-label
         >
-        <ion-icon name="close-circle"></ion-icon>
+        <ion-icon name="md-calendar"></ion-icon>
       </ion-chip>
     </ion-buttons>
   </ion-toolbar>
@@ -102,7 +104,9 @@
         <div *ngIf="!isLoading && relevantTrips.length > 0">
           <ion-virtual-scroll [items]="relevantTrips " approxItemHeight="182px">
             <ion-card
+              button="true"
               *virtualItem="let trip "
+              [routerLink]="'/trips/' + trip.id"
               class="card ion-no-margin ion-margin-bottom"
             >
               <!-- <ion-toolbar>
@@ -115,7 +119,7 @@
               <ion-row class="vertical-align-content ion-padding-top">
                 <ion-col class="ion-no-padding">
                   <div class="ion-text-center w-100">
-                    <ion-thumbnail size="4" class="client-logo">
+                    <ion-thumbnail class="client-logo">
                       <ion-img [src]="trip.client.logoUrl"></ion-img>
                     </ion-thumbnail>
                   </div>
@@ -146,13 +150,13 @@
               <ion-footer>
                 <ion-toolbar>
                   <ion-buttons slot="start">
-                    <ion-button class="small-padding">
+                    <ion-button disabled="false" class="small-padding">
                       {{trip.travelDate}}
                       <ion-icon
                         size="small"
                         slot="start"
                         color="primary"
-                        src="assets/icon/calendar.svg"
+                        name="md-calendar"
                       ></ion-icon>
                     </ion-button>
                     <ion-button class="small-padding">

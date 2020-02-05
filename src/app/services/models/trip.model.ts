@@ -13,6 +13,9 @@ export class Trip {
     public foodOptions: string,
     public travelDate: string,
     public numOfDays: number,
+    public numOfNights?: string,
+    public returnDate?: string,
+    public desc?: string,
 
     public adultPrice?: string,
     public teenPrice?: string,
@@ -21,10 +24,7 @@ export class Trip {
     public infantPrice?: string,
 
     public tripPath?: string,
-    public desc?: string,
 
-    public numOfNights?: string,
-    public returnDate?: string,
     public travelTime?: string,
 
     public trippersLimit?: string,
@@ -51,6 +51,25 @@ export class Trip {
 
     let iconName = "bus.svg";
     switch (this.travelBy) {
+      case 'BUS':
+        iconName = "bus.svg";
+        break;
+      case 'FLIGHT':
+        iconName = "flight.svg";
+        break;
+      case 'OTHER':
+      default:
+        iconName = "busandflight.svg";
+        break;
+    }
+
+    return "assets/icon/" + iconName;
+  }
+
+  static travelByIcon(travelBy) {
+
+    let iconName = "bus.svg";
+    switch (travelBy) {
       case 'BUS':
         iconName = "bus.svg";
         break;

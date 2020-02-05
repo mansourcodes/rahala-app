@@ -1,16 +1,102 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header no-border>
+  <ion-toolbar class="background-dark">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/trips"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/trips"></ion-back-button>
     </ion-buttons>
-
-    <ion-title>{{isLoading ? 'Loading...' : trip.name}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div *ngIf="!isLoading">
-    what! {{trip.travelBy}} <br />
-    {{trip.travelDate}} {{trip | json}}
+<ion-content *ngIf="!isLoading">
+  <div class="ion-padding background-dark">
+    <ion-text color="light">
+      <h3>{{trip.client.clientName}}</h3>
+    </ion-text>
+    <ion-text color="light">
+      <h1>{{trip.name}}</h1>
+    </ion-text>
+
+    <ion-buttons slot="primary">
+      <ion-chip color="light">
+        <ion-icon name="pin"></ion-icon>
+        <ion-label>{{trip.cities}}</ion-label>
+      </ion-chip>
+    </ion-buttons>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col class="ion-padding">
+          <ion-icon
+            size="large"
+            color="light"
+            src="assets/icon/day.svg"
+          ></ion-icon>
+          <ion-text class="icon-label" color="light">
+            <div class="ion-no-padding">Days</div>
+          </ion-text>
+          <ion-text color="light">
+            <p>{{trip.numOfDays}} Days / {{trip.numOfNights}} Nights</p>
+          </ion-text>
+        </ion-col>
+        <ion-col class="ion-padding">
+          <ion-icon
+            size="large"
+            color="light"
+            [src]="trip.foodOptionIcon"
+          ></ion-icon>
+          <ion-text class="icon-label" color="light">
+            <div class="ion-no-padding">foodOptions</div>
+          </ion-text>
+          <ion-text color="light">
+            <p>{{trip.foodOptions}}</p>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="ion-padding">
+          <ion-icon
+            size="large"
+            color="light"
+            [src]="trip.travelByIcon"
+          ></ion-icon>
+          <ion-text class="icon-label" color="light">
+            <div class="ion-no-padding">travel by</div>
+          </ion-text>
+          <ion-text color="light">
+            <p>{{trip.travelBy}}</p>
+          </ion-text>
+        </ion-col>
+        <ion-col class="ion-padding">
+          <ion-icon size="large" color="light" name="md-calendar"></ion-icon>
+          <ion-text class="icon-label" color="light">
+            <div class="ion-no-padding">travel date</div>
+          </ion-text>
+          <ion-text color="light">
+            <p>
+              {{trip.travelDate}} <br />
+              {{trip.returnDate}}
+            </p>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
+
+  <div class="ion-padding">
+    <ion-thumbnail size="large" class="client-logo">
+      <ion-img [src]="trip.client.logoUrl"></ion-img>
+    </ion-thumbnail>
+    <ion-text class="ion-text-center">
+      <h3>{{trip.client.clientName}}</h3>
+    </ion-text>
+    <ion-button>
+      <ion-icon name="call"></ion-icon>
+      {{trip.client.contactWp1}}
+    </ion-button>
+    <ion-button>
+      <ion-icon name="call"></ion-icon>
+      {{trip.client.contactWp2}}
+    </ion-button>
+  </div>
+
+  {{trip.desc}}
 </ion-content>
