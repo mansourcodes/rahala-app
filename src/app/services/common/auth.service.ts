@@ -18,6 +18,8 @@ export class AuthService implements OnDestroy {
   get userIsAuthenticated(): Observable<boolean> {
     return this._user.asObservable().pipe(
       map(user => {
+        console.log(user);
+
         if (user) {
           return !!user.token;
         } else {
@@ -53,8 +55,7 @@ export class AuthService implements OnDestroy {
 
   constructor(
     private http: HttpClient,
-    private storageService: StorageService,
-    private toastController: ToastController
+    private storageService: StorageService
   ) { }
 
   autoLogin() {
@@ -84,12 +85,6 @@ export class AuthService implements OnDestroy {
         if (user) {
           this._user.next(user);
           this.autoLogout(user.tokenDuration);
-          this.toastController.create({
-            message: 'AutoLogin:' + user.email,
-            duration: 2000
-          }).then(toastEl => {
-            toastEl.present();
-          })
         }
       }),
       map(user => {
@@ -100,7 +95,7 @@ export class AuthService implements OnDestroy {
 
   signup(email: string, password: string) {
     return this.http
-      .post(environment.apiURL + 'auth/signup', {
+      .post<AuthResponseData>(environment.apiURL + 'auth/signup', {
         name: email,
         email,
         password,
@@ -111,19 +106,12 @@ export class AuthService implements OnDestroy {
 
   login(email: string, password: string) {
     return this.http
-      .post<User>(environment.apiURL + 'auth/login', {
+      .post<AuthResponseData>(environment.apiURL + 'auth/login', {
         email,
         password
       })
-      .pipe(tap(resData => {
-        this.setUserData.bind(this)
-        this.toastController.create({
-          message: 'Login:' + resData.email,
-          duration: 2000
-        }).then(toastEl => {
-          toastEl.present();
-        })
-      }));
+      .pipe(
+        tap(this.setUserData.bind(this)));
   }
 
   logout() {
@@ -158,6 +146,9 @@ export class AuthService implements OnDestroy {
       userData.id,
       userData.email
     );
+    console.log('setUserData');
+    console.log(user);
+
     this._user.next(user);
     this.autoLogout(user.tokenDuration);
     this.storeAuthData(
