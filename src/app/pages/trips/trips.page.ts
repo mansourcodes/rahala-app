@@ -7,6 +7,7 @@ import { LaravelResponseMeta } from 'src/app/services/models/LaravelResponseMeta
 import { ActivatedRoute, Params } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { SearchFrom, SearchFromInterface } from 'src/app/services/models/searchForm.model';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -60,6 +61,11 @@ export class TripsPage implements OnInit, OnDestroy {
           dateTo: '2090-01-01'
 
         }
+      }
+
+      if (!environment.production) {
+        searchTermsObj.dateFrom = '1970-01-01';
+        searchTermsObj.dateTo = '2090-01-01';
       }
 
       const searchTerms = new SearchFrom(

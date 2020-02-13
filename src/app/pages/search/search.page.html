@@ -26,7 +26,7 @@
       </ion-radio-group>
 
       <ion-item>
-        <ion-label position="floating">City</ion-label>
+        <ion-label position="floating">الوجهة</ion-label>
         <ion-input
           type="text"
           formControlName="city"
@@ -67,9 +67,9 @@
     </ion-list>
     <ion-button expand="block" (click)="onSearch()">
       <ion-icon slot="end" name="search"></ion-icon>
-      Search
+      بحث
     </ion-button>
   </form>
 
-  {{searchForm.value | json}}
+  {{ searchForm.value | json}}
 </ion-content>

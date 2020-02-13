@@ -24,15 +24,15 @@ export class SearchPage implements OnInit {
   // TODO: set right values
   TravelByRadioList = [
     {
-      text: 'all',
+      text: 'الكل',
       value: 'all',
       checked: true,
     }, {
-      text: 'flight',
+      text: 'طيران',
       value: 'flight',
       checked: false,
     }, {
-      text: 'bus',
+      text: 'باص',
       value: 'bus',
       checked: false,
     },
@@ -45,6 +45,13 @@ export class SearchPage implements OnInit {
     private loadingCtrl: LoadingController,
     private toastController: ToastController
   ) { }
+
+
+  ionViewDidEnter() {
+    this.searchForm.patchValue({
+      travelBy: 'all'
+    })
+  }
 
   ngOnInit() {
     this.searchForm = new FormGroup({
@@ -84,14 +91,14 @@ export class SearchPage implements OnInit {
     let opts: PickerOptions = {
       buttons: [
         {
-          text: 'Cancel',
+          text: 'إلغاء',
           role: 'cancel',
           handler: value => {
             pickerAction = 'cancel';
           }
         },
         {
-          text: 'Done',
+          text: 'تم',
           role: 'done',
           handler: value => {
             pickerAction = 'done';
@@ -103,15 +110,15 @@ export class SearchPage implements OnInit {
           name: 'city',
           options: [ // TODO: get cities from API
             {
-              text: 'Shyannetown',
+              text: 'مشهد',
               value: 'Shyannetown'
             },
             {
-              text: 'Port Rachelleville',
+              text: 'كربلاء',
               value: 'Port Rachelleville'
             },
             {
-              text: 'port rachelleville',
+              text: 'المدينة',
               value: 'port rachelleville'
             },
           ]
@@ -135,7 +142,7 @@ export class SearchPage implements OnInit {
   onSearch() {
     if (!this.searchForm.valid) {
       this.toastController.create({
-        message: 'Missing Information!',
+        message: 'معلومات ناقصة!',
         duration: 2000
       }).then(toastEl => {
         toastEl.present();
