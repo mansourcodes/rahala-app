@@ -18,8 +18,6 @@ export class AuthService implements OnDestroy {
   get userIsAuthenticated(): Observable<boolean> {
     return this._user.asObservable().pipe(
       map(user => {
-        console.log(user);
-
         if (user) {
           return !!user.token;
         } else {
@@ -146,8 +144,7 @@ export class AuthService implements OnDestroy {
       userData.id,
       userData.email
     );
-    console.log('setUserData');
-    console.log(user);
+
 
     this._user.next(user);
     this.autoLogout(user.tokenDuration);

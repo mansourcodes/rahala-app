@@ -5,7 +5,12 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+<div *ngIf="isLoading" class="ion-padding background-dark ion-text-center">
+  <ion-spinner name="bubbles"></ion-spinner>
 
+  <br /> <br /> <br /> <br /> <br /> <br /> <br />
+  <br /> <br /> <br /> <br /> <br /> <br /> <br />
+</div>
 <ion-content *ngIf="!isLoading">
   <div class="ion-padding background-dark">
     <ion-text color="light">
@@ -16,20 +21,16 @@
     </ion-text>
 
     <ion-buttons slot="primary">
-      <ion-chip color="light">
+      <ion-chip *ngFor="let city of trip.cities" color="light">
         <ion-icon name="pin"></ion-icon>
-        <ion-label>{{trip.cities}}</ion-label>
+        <ion-label>{{city}}</ion-label>
       </ion-chip>
     </ion-buttons>
 
     <ion-grid>
       <ion-row>
         <ion-col class="ion-padding">
-          <ion-icon
-            size="large"
-            color="light"
-            src="assets/icon/day.svg"
-          ></ion-icon>
+          <ion-icon size="large" color="light" src="assets/icon/day.svg"></ion-icon>
           <ion-text class="icon-label" color="light">
             <div class="ion-no-padding">Days</div>
           </ion-text>
@@ -38,11 +39,7 @@
           </ion-text>
         </ion-col>
         <ion-col class="ion-padding">
-          <ion-icon
-            size="large"
-            color="light"
-            [src]="trip.foodOptionIcon"
-          ></ion-icon>
+          <ion-icon size="large" color="light" [src]="trip.foodOptionIcon"></ion-icon>
           <ion-text class="icon-label" color="light">
             <div class="ion-no-padding">foodOptions</div>
           </ion-text>
@@ -53,11 +50,7 @@
       </ion-row>
       <ion-row>
         <ion-col class="ion-padding">
-          <ion-icon
-            size="large"
-            color="light"
-            [src]="trip.travelByIcon"
-          ></ion-icon>
+          <ion-icon size="large" color="light" [src]="trip.travelByIcon"></ion-icon>
           <ion-text class="icon-label" color="light">
             <div class="ion-no-padding">travel by</div>
           </ion-text>
@@ -78,25 +71,47 @@
           </ion-text>
         </ion-col>
       </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-text>
+            {{trip.desc}}
+          </ion-text>
+          <br /> <br /> <br />
+        </ion-col>
+      </ion-row>
     </ion-grid>
   </div>
 
-  <div class="ion-padding">
-    <ion-thumbnail size="large" class="client-logo">
+  <div>
+    <ion-avatar size="large" class="client-logo">
       <ion-img [src]="trip.client.logoUrl"></ion-img>
-    </ion-thumbnail>
+    </ion-avatar>
     <ion-text class="ion-text-center">
       <h3>{{trip.client.clientName}}</h3>
     </ion-text>
-    <ion-button>
-      <ion-icon name="call"></ion-icon>
-      {{trip.client.contactWp1}}
-    </ion-button>
-    <ion-button>
-      <ion-icon name="call"></ion-icon>
-      {{trip.client.contactWp2}}
-    </ion-button>
+
+
+    <ion-list>
+      <ion-item (click)="contact('whatsapp',trip.client.contactWp1)" detail button lines="full">
+        <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
+        <ion-label>
+          <h3>{{trip.client.contactWp1}}</h3>
+          <p>إتصال و واتساب</p>
+        </ion-label>
+      </ion-item>
+      <ion-item detail button lines="full">
+        <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
+        <ion-label>
+          <h3>{{trip.client.contactWp2}}</h3>
+          <p>إتصال و واتساب</p>
+        </ion-label>
+      </ion-item>
+
+
+
+    </ion-list>
+
   </div>
 
-  {{trip.desc}}
+
 </ion-content>

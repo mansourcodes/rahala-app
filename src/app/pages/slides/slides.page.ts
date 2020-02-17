@@ -58,7 +58,6 @@ export class SlidesPage implements OnInit {
             this.router.navigateByUrl('tabs/search');
           },
           errRes => {
-            console.log(errRes);
             loadingEl.dismiss();
             const code = errRes.error.message;
             let message = 'Could not sign you up, please try again.';
@@ -78,6 +77,7 @@ export class SlidesPage implements OnInit {
 
   startLogin() {
     // TODO: make email related to Device info to make login next installed
+    // https://cordova.apache.org/docs/en/1.7.0/cordova/device/device.uuid.html
     const email = 'guest1@hi.com';
     const password = email;
     this.authenticate(email, password);
