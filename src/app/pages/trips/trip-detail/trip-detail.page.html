@@ -13,12 +13,25 @@
 </div>
 <ion-content *ngIf="!isLoading">
   <div class="ion-padding background-dark">
-    <ion-text color="light">
-      <h3>{{trip.client.clientName}}</h3>
-    </ion-text>
-    <ion-text color="light">
-      <h1>{{trip.name}}</h1>
-    </ion-text>
+
+    <ion-list class="ion-no-padding">
+      <ion-item lines="none" class="ion-no-padding">
+        <ion-avatar slot="start">
+          <ion-img [src]="trip.client.logoUrl"></ion-img>
+        </ion-avatar>
+        <ion-label>
+          <h3>{{trip.client.clientName}}</h3>
+        </ion-label>
+      </ion-item>
+
+      <ion-item lines="none" class="ion-no-padding">
+
+        <ion-label class="ion-text-wrap">
+          <h1>{{trip.name}}</h1>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
 
     <ion-buttons slot="primary">
       <ion-chip *ngFor="let city of trip.cities" color="light">
@@ -30,45 +43,22 @@
     <ion-grid>
       <ion-row>
         <ion-col class="ion-padding">
-          <ion-icon size="large" color="light" src="assets/icon/day.svg"></ion-icon>
-          <ion-text class="icon-label" color="light">
-            <div class="ion-no-padding">Days</div>
-          </ion-text>
-          <ion-text color="light">
-            <p>{{trip.numOfDays}} Days / {{trip.numOfNights}} Nights</p>
-          </ion-text>
+          <option-card [optionIcon]="'assets/icon/day.svg'" [optionLabel]="'مدة الرحلة'"
+            [optionValue]="trip.numOfDays +'أيام /'+ trip.numOfNights +'ليالي'"></option-card>
         </ion-col>
         <ion-col class="ion-padding">
-          <ion-icon size="large" color="light" [src]="trip.foodOptionIcon"></ion-icon>
-          <ion-text class="icon-label" color="light">
-            <div class="ion-no-padding">foodOptions</div>
-          </ion-text>
-          <ion-text color="light">
-            <p>{{trip.foodOptions}}</p>
-          </ion-text>
+          <option-card [optionIcon]="trip.foodOptionIcon" [optionLabel]="'الوجبات'"
+            [optionValue]="trip.foodOptionsLabel"></option-card>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col class="ion-padding">
-          <ion-icon size="large" color="light" [src]="trip.travelByIcon"></ion-icon>
-          <ion-text class="icon-label" color="light">
-            <div class="ion-no-padding">travel by</div>
-          </ion-text>
-          <ion-text color="light">
-            <p>{{trip.travelBy}}</p>
-          </ion-text>
+          <option-card [optionIcon]="trip.travelByIcon" [optionLabel]="'طريقة السفر'"
+            [optionValue]="trip.travelByLabel"></option-card>
         </ion-col>
         <ion-col class="ion-padding">
-          <ion-icon size="large" color="light" name="md-calendar"></ion-icon>
-          <ion-text class="icon-label" color="light">
-            <div class="ion-no-padding">travel date</div>
-          </ion-text>
-          <ion-text color="light">
-            <p>
-              {{trip.travelDate}} <br />
-              {{trip.returnDate}}
-            </p>
-          </ion-text>
+          <option-card [optionIcon]="'md-calendar'" [optionLabel]="'تاريخ السفر'"
+            [optionValue]="trip.travelDate+ '\n' + trip.returnDate"></option-card>
         </ion-col>
       </ion-row>
       <ion-row>

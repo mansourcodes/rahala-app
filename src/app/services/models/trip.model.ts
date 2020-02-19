@@ -1,6 +1,10 @@
 import { Client, ClientInterface } from './client.model';
+import { environment } from 'src/environments/environment';
 
 export class Trip {
+
+
+
   constructor(
     public id: string,
     public code: string,
@@ -41,6 +45,14 @@ export class Trip {
     public exCustomThings?: string,
   ) { }
 
+
+  get foodOptionsLabel() {
+    return environment.foodOptions[this.foodOptions];
+  }
+
+  get travelByLabel() {
+    return environment.travelBy[this.travelBy];
+  }
 
   get cities() {
     const citiesArray = this._cities.split(',');

@@ -1,6 +1,9 @@
 .background-dark {
   background-color: var(--ion-color-dark);
   --ion-background-color: var(--ion-color-dark);
+}
+
+.background-dark * {
   color: var(--ion-color-light);
 }
 
@@ -9,9 +12,6 @@ ion-toolbar {
   color: var(--ion-color-light);
 }
 
-.icon-label {
-  line-height: 0;
-}
 
 .client-logo {
   margin: auto;
@@ -20,4 +20,7 @@ ion-toolbar {
   max-width: 6em !important;
   max-height: 6em !important;
   margin-top: -3em;
+  background-color:#bfbfbf;
+  min-width: 6em;
+  min-height: 6em;
 }
