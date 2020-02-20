@@ -20,11 +20,9 @@
         <ion-icon name="pin"></ion-icon>
       </ion-chip>
       <ion-chip color="light">
-        <ion-label
-          >{{searchTerms.dateFromString}}
+        <ion-label>{{searchTerms.dateFromString}}
           <ion-icon name="md-arrow-round-forward"></ion-icon>
-          {{searchTerms.dateToString}}</ion-label
-        >
+          {{searchTerms.dateToString}}</ion-label>
         <ion-icon name="md-calendar"></ion-icon>
       </ion-chip>
     </ion-buttons>
@@ -41,35 +39,17 @@
     <ion-list>
       <ion-item>
         <ion-label>Food Options</ion-label>
-        <ion-select
-          multiple="true"
-          cancelText="Nah"
-          okText="Okay!"
-          placeholder="Select One"
-          [(ngModel)]="filtersForm.foodOptions"
-          (ngModelChange)="onFilterUpdate()"
-        >
-          <ion-select-option
-            *ngFor="let item of foodOptionsList"
-            selected="{{item.selected}}"
-            >{{item.val}}x</ion-select-option
-          >
+        <ion-select multiple="true" cancelText="Nah" okText="Okay!" placeholder="Select One"
+          [(ngModel)]="filtersForm.foodOptions" (ngModelChange)="onFilterUpdate()">
+          <ion-select-option *ngFor="let item of foodOptionsList" selected="{{item.selected}}">{{item.val}}x
+          </ion-select-option>
         </ion-select>
       </ion-item>
 
       <ion-item>
         <ion-label>Number of Days</ion-label>
-        <ion-range
-          min="3"
-          max="16"
-          step="1"
-          [(ngModel)]="filtersForm.numOfDays"
-          (ngModelChange)="onFilterUpdate()"
-          snaps
-          dual-knobs
-          pin
-          color="secondary"
-        >
+        <ion-range min="3" max="16" step="1" [(ngModel)]="filtersForm.numOfDays" (ngModelChange)="onFilterUpdate()"
+          snaps dual-knobs pin color="secondary">
           <ion-label slot="start">3</ion-label>
           <ion-label slot="end">16</ion-label>
         </ion-range>
@@ -94,43 +74,26 @@
         <div *ngIf="isLoading" class="ion-text-center">
           <ion-spinner color="primary"></ion-spinner>
         </div>
-        <div
-          class="ion-text-center"
-          *ngIf="!isLoading && relevantTrips.length == 0"
-        >
+        <div class="ion-text-center" *ngIf="!isLoading && relevantTrips.length == 0">
           <p>No Trips found!</p>
         </div>
 
         <div *ngIf="!isLoading && relevantTrips.length > 0">
           <ion-virtual-scroll [items]="relevantTrips " approxItemHeight="182px">
-            <ion-card
-              button="true"
-              *virtualItem="let trip "
-              [routerLink]="'/trips/' + trip.id"
-              class="card ion-no-margin ion-margin-bottom"
-            >
-              <!-- <ion-toolbar>
-                <ion-buttons slot="start">
-                  <ion-button>
-                    <ion-icon slot="icon-only" name="more"></ion-icon>
-                  </ion-button>
-                </ion-buttons>
-              </ion-toolbar> -->
+            <ion-card button="true" *virtualItem="let trip " [routerLink]="'/trips/' + trip.id"
+              class="card ion-no-margin ion-margin-bottom">
+
               <ion-row class="vertical-align-content ion-padding-top">
                 <ion-col class="ion-no-padding">
                   <div class="ion-text-center w-100">
-                    <ion-thumbnail class="client-logo">
-                      <ion-img [src]="trip.client.logoUrl"></ion-img>
-                    </ion-thumbnail>
+
+                    <client-avatar [client]="trip.client" [type]="'avatar'"></client-avatar>
+
                   </div>
                 </ion-col>
                 <ion-col size="2" class="ion-no-padding">
                   <div class="ion-text-center w-100">
-                    <ion-icon
-                      size="large"
-                      color="primary"
-                      [src]="trip.travelByIcon"
-                    ></ion-icon>
+                    <ion-icon size="large" color="primary" [src]="trip.travelByIcon"></ion-icon>
                   </div>
                 </ion-col>
                 <ion-col class="ion-no-padding">
@@ -152,21 +115,11 @@
                   <ion-buttons slot="start">
                     <ion-button disabled="false" class="small-padding">
                       {{trip.travelDate}}
-                      <ion-icon
-                        size="small"
-                        slot="start"
-                        color="primary"
-                        name="md-calendar"
-                      ></ion-icon>
+                      <ion-icon size="small" slot="start" color="primary" name="md-calendar"></ion-icon>
                     </ion-button>
                     <ion-button class="small-padding">
                       {{trip.numOfDays}} أيام
-                      <ion-icon
-                        size="small"
-                        slot="start"
-                        color="primary"
-                        src="assets/icon/day.svg"
-                      ></ion-icon>
+                      <ion-icon size="small" slot="start" color="primary" src="assets/icon/day.svg"></ion-icon>
                     </ion-button>
                   </ion-buttons>
                 </ion-toolbar>
@@ -175,12 +128,7 @@
                 <ion-toolbar>
                   <ion-buttons slot="start">
                     <ion-button class="small-padding">
-                      <ion-icon
-                        size="small"
-                        slot="icon-only"
-                        color="primary"
-                        [src]="trip.foodOptionIcon"
-                      ></ion-icon>
+                      <ion-icon size="small" slot="icon-only" color="primary" [src]="trip.foodOptionIcon"></ion-icon>
                     </ion-button>
                   </ion-buttons>
                   <ion-buttons slot="end">
@@ -195,14 +143,8 @@
           </ion-virtual-scroll>
         </div>
 
-        <ion-infinite-scroll
-          threshold="15%"
-          (ionInfinite)="loadMoreTrips($event)"
-        >
-          <ion-infinite-scroll-content
-            loadingSpinner="bubbles"
-            loadingText="Loading more data..."
-          >
+        <ion-infinite-scroll threshold="15%" (ionInfinite)="loadMoreTrips($event)">
+          <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
           </ion-infinite-scroll-content>
         </ion-infinite-scroll>
       </ion-col>

@@ -1,0 +1,28 @@
+<div *ngIf="type == 'list'">
+  <ion-list class="ion-no-padding">
+    <ion-item lines="none" class="ion-no-padding">
+      <ion-avatar slot="start">
+        <ion-img [src]="client.logoUrl"></ion-img>
+      </ion-avatar>
+      <ion-label color="light">
+        <h3>{{client.clientName}}</h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</div>
+
+<div *ngIf="type == 'profile'">
+  <ion-avatar size="large" class="client-logo">
+    <ion-img [src]="client.logoUrl"></ion-img>
+  </ion-avatar>
+  <ion-text class="ion-text-center">
+    <h3>{{client.clientName}}</h3>
+  </ion-text>
+</div>
+
+
+<div *ngIf="type == 'avatar'">
+  <ion-avatar size="large" class="client-logo">
+    <ion-img [src]="client.logoUrl"></ion-img>
+  </ion-avatar>
+</div>

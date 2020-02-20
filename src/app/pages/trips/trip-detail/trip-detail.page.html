@@ -14,6 +14,8 @@
 <ion-content *ngIf="!isLoading">
   <div class="ion-padding background-dark">
 
+    <client-avatar [client]="trip.client" [type]="'list'"></client-avatar>
+
     <ion-list class="ion-no-padding">
       <ion-item lines="none" class="ion-no-padding">
         <ion-avatar slot="start">
@@ -73,33 +75,12 @@
   </div>
 
   <div>
-    <ion-avatar size="large" class="client-logo">
-      <ion-img [src]="trip.client.logoUrl"></ion-img>
-    </ion-avatar>
-    <ion-text class="ion-text-center">
-      <h3>{{trip.client.clientName}}</h3>
-    </ion-text>
 
 
-    <ion-list>
-      <ion-item (click)="contact('whatsapp',trip.client.contactWp1)" detail button lines="full">
-        <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
-        <ion-label>
-          <h3>{{trip.client.contactWp1}}</h3>
-          <p>إتصال و واتساب</p>
-        </ion-label>
-      </ion-item>
-      <ion-item detail button lines="full">
-        <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
-        <ion-label>
-          <h3>{{trip.client.contactWp2}}</h3>
-          <p>إتصال و واتساب</p>
-        </ion-label>
-      </ion-item>
+    <client-avatar [client]="trip.client" [type]="'profile'"></client-avatar>
 
+    <client-card [client]="trip.client" tripName="trip.name + ' ' + trip.code"></client-card>
 
-
-    </ion-list>
 
   </div>
 

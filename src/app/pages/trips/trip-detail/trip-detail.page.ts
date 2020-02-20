@@ -4,8 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { TripsService } from 'src/app/services/providers/trips.service';
 import { Subscription } from 'rxjs';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-trip-detail',
@@ -21,7 +19,6 @@ export class TripDetailPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private navCtrl: NavController,
     private tripsService: TripsService,
-    private iab: InAppBrowser
   ) { }
 
   ngOnInit() {
@@ -39,14 +36,6 @@ export class TripDetailPage implements OnInit, OnDestroy {
     });
   }
 
-  contact(target, contact) {
-
-    if (target === 'whatsapp') {
-      const message = environment.whatsappText.replace('[trip_name]', this.trip.name + ' ' + this.trip.code);
-      const apiCall = environment.whatsappApi + `?phone=` + contact + `&text=` + message;
-      const browser = this.iab.create(apiCall, '_blank');
-    }
-  }
 
   ngOnDestroy() {
     if (this.tripSub) {
