@@ -58,9 +58,8 @@ export class TripsPage implements OnInit, OnDestroy {
           travelBy: 'all',
           city: 'all',
           dateFrom: '1970-01-01',
-          dateTo: '2090-01-01'
-
-        }
+          dateTo: '2090-01-01',
+        };
       }
 
       if (!environment.production) {
@@ -107,18 +106,19 @@ export class TripsPage implements OnInit, OnDestroy {
   ionViewWillEnter() {
     this.isLoading = true;
     //TODO: apply routerQueryParams 
-    let query = { ...this.searchTerms };
+    const query = { ...this.searchTerms };
     query.page = this.listMeta.currentPage;
     this.tripService.fetchTrips(query).subscribe(() => {
       this.isLoading = false;
     });
   }
 
+  // TODO: fix bug - when one trip only , loaded again after scralling
   loadMoreTrips(event) {
     this.tripService.fetchTrips(this.searchTerms).subscribe(resMeta => {
       event.target.complete();
       this.onFilterUpdate();
-      if (this.listMeta.currentPage == this.listMeta.lastPage) {
+      if (this.listMeta.currentPage === this.listMeta.lastPage) {
         event.target.disabled = true;
       }
     });
