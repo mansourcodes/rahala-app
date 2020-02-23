@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: SettingsPage
+  },  {
+    path: 'general-settings',
+    loadChildren: () => import('./general-settings/general-settings.module').then( m => m.GeneralSettingsPageModule)
   }
+
 ];
 
 @NgModule({

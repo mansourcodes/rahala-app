@@ -4,7 +4,7 @@ import { Trip } from 'src/app/services/models/trip.model';
 import { Subscription } from 'rxjs';
 import { IonInfiniteScroll, MenuController } from '@ionic/angular';
 import { LaravelResponseMeta } from 'src/app/services/models/LaravelResponseMeta.model';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { SearchFrom, SearchFromInterface } from 'src/app/services/models/searchForm.model';
 import { environment } from 'src/environments/environment';
@@ -62,6 +62,7 @@ export class TripsPage implements OnInit, OnDestroy {
         };
       }
 
+      //TODO: delete this test code
       if (!environment.production) {
         searchTermsObj.dateFrom = '1970-01-01';
         searchTermsObj.dateTo = '2090-01-01';

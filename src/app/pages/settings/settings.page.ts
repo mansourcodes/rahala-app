@@ -8,10 +8,11 @@ import { environment } from 'src/environments/environment';
 })
 export class SettingsPage implements OnInit {
 
-  hhh = environment.AuthConstents.AUTH;
+  public version = environment.version;
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

@@ -7,58 +7,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LaravelResponseMeta, LaravelResponseMetaInterface } from '../models/LaravelResponseMeta.model'
 import { Client } from '../models/client.model';
-import { SearchFrom } from 'src/app/services/models/searchForm.model'
-
-// [
-//   new Trip(
-//     '1',
-//     'R232',
-//     '02-02-2020',
-//     '1',
-//     'Travel to maka 02022020 bu bus',
-//     'Manama',
-//     'BUS',
-//     'All',
-//     '02-02-2020',
-//     '9'
-//   ),
-//   new Trip(
-//     '4',
-//     'R232',
-//     '02-02-2020',
-//     '1',
-//     'Travel to maka 02022020 bu bus',
-//     'Manama',
-//     'BUS',
-//     'All',
-//     '02-02-2020',
-//     '9'
-//   ),
-//   new Trip(
-//     '3',
-//     'R232',
-//     '02-02-2020',
-//     '1',
-//     'Travel to maka 02022020 bu bus',
-//     'Manama',
-//     'BUS',
-//     'All',
-//     '02-02-2020',
-//     '9'
-//   ),
-//   new Trip(
-//     '2',
-//     'R232',
-//     '02-02-2020',
-//     '1',
-//     'Travel to maka 02022020 bu bus',
-//     'Manama',
-//     'BUS',
-//     'All',
-//     '02-02-2020',
-//     '9'
-//   )
-// ]
+import { SearchFrom } from 'src/app/services/models/searchForm.model';
 
 
 
@@ -86,7 +35,7 @@ export class TripsService {
 
     let nextPageTrips: Trip[];
     let resMeta: LaravelResponseMeta;
-    if (!query.page) query.page = 1;
+    if (!query.page) { query.page = 1; }
 
     return this.authService.token.pipe(
       take(1),
@@ -95,9 +44,9 @@ export class TripsService {
           throw new Error('No user found!');
         }
         let params = new HttpParams();
-        if (query.page) params = params.append('page', query.page.toString());
-        if (query.travelBy && query.travelBy != 'all') params = params.append('travel_by', query.travelBy);
-        if (query.city && query.city != 'all') params = params.append('cities', query.city);
+        if (query.page) { params = params.append('page', query.page.toString()); }
+        if (query.travelBy && query.travelBy !== 'all') { params = params.append('travel_by', query.travelBy); }
+        if (query.city && query.city !== 'all') { params = params.append('cities', query.city); }
 
         if (query.dateFrom && query.dateTo) {
           const dateRange = query.dateFrom.toISOString().slice(0, 10) + ',' + query.dateTo.toISOString().slice(0, 10);
@@ -107,7 +56,7 @@ export class TripsService {
 
         return this.http.get<{ data: TripInterface[], links, meta: LaravelResponseMetaInterface }>(
           environment.apiURL + `trips`
-          , { params: params, headers: { Authorization: token } }
+          , { params, headers: { Authorization: token } }
         ).pipe(
           retry(1),
           catchError(this.handleError)
@@ -123,7 +72,7 @@ export class TripsService {
           resData.meta.per_page,
           resData.meta.to,
           resData.meta.total
-        )
+        );
         this._meta.next(meta);
 
         const trips = [];
@@ -154,7 +103,6 @@ export class TripsService {
           }
         }
         return trips;
-        // return [];
       }),
       switchMap(trips => {
         nextPageTrips = trips;

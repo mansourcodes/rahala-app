@@ -36,9 +36,14 @@ const routes: Routes = [
   {
     path: 'slides',
     loadChildren: () => import('./pages/slides/slides.module').then(m => m.SlidesPageModule)
-  },  {
+  },
+  {
     path: 'clients',
-    loadChildren: () => import('./pages/clients/clients.module').then( m => m.ClientsPageModule)
+    loadChildren: () => import('./pages/clients/clients.module').then(m => m.ClientsPageModule)
+  },
+  {
+    path: 'general-settings',
+    loadChildren: () => import('./pages/settings/general-settings/general-settings.module').then(m => m.GeneralSettingsPageModule)
   }
 
 ];

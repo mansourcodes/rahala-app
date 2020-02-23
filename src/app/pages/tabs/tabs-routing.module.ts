@@ -64,6 +64,17 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'clients',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../clients/clients.module').then(m => m.ClientsPageModule),
+            canLoad: [AuthGuard]
+          },
+        ]
+      },
+      {
         path: '',
         redirectTo: '/tabs/search',
         pathMatch: 'full'

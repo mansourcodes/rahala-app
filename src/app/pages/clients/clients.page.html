@@ -1,9 +1,38 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>clients</ion-title>
+  <ion-toolbar color="secondary">
+    <ion-searchbar placeholder="Search..."></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content id="content" class="ion-padding background">
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-no-padding">
+        <div *ngIf="isLoading" class="ion-text-center">
+          <ion-spinner color="primary"></ion-spinner>
+        </div>
+        <div class="ion-text-center" *ngIf="!isLoading && relevantClients.length == 0">
+          <p>No Clients found!</p>
+        </div>
 
+        <div *ngIf="!isLoading && relevantClients.length > 0">
+          <ion-virtual-scroll [items]="relevantClients " approxItemHeight="182px">
+            <ion-card button="true" *virtualItem="let client " [routerLink]="'/clients/' + client.id"
+              class="card ion-no-margin ion-margin-bottom">
+              <ion-card-content>
+                <div class="client-name">
+                  <span>{{client | json}}</span>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-virtual-scroll>
+        </div>
+
+        <ion-infinite-scroll threshold="15%" (ionInfinite)="loadMoreClients($event)">
+          <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

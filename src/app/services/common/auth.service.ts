@@ -109,7 +109,8 @@ export class AuthService implements OnDestroy {
         password
       })
       .pipe(
-        tap(this.setUserData.bind(this)));
+        tap(this.setUserData.bind(this))
+      );
   }
 
   logout() {

@@ -60,7 +60,7 @@ export class SlidesPage implements OnInit {
           errRes => {
             loadingEl.dismiss();
             const code = errRes.error.message;
-            let message = 'Could not sign you up, please try again.';
+            let message = 'لا يمكن تسجيل الدخول';
             // TODO: change message regading API update
             if (code === 'EMAIL_EXISTS') {
               message = 'This email address exists already!';
@@ -86,9 +86,9 @@ export class SlidesPage implements OnInit {
   private showAlert(message: string) {
     this.alertCtrl
       .create({
-        header: 'Authentication failed',
+        header: 'فشل تسجيل الدخول',
         message: message,
-        buttons: ['Okay']
+        buttons: ['حسنا']
       })
       .then(alertEl => alertEl.present());
   }

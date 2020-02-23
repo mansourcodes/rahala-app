@@ -1,3 +1,5 @@
+import { environment } from 'src/environments/environment';
+
 export class Client {
     constructor(
         public id: string,
@@ -11,8 +13,7 @@ export class Client {
 
 
     get logoUrl() {
-        //TODO: get full link from api
-        return "http://api.rahala-online.com/storage/images/" + this.logoImg;
+        return environment.apiURL + '/storage/images/' + this.logoImg;
     }
 }
 

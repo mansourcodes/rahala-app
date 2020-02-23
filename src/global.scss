@@ -30,7 +30,7 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 * {
-  font-family: Cairo;
+  font-family: Cairo !important;
 }
 
 ion-infinite-scroll-content {

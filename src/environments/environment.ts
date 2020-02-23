@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  version: 'Beta 0.1',
   apiURL: "http://api.rahala-online.com/api/",
   // apiURL: "http://localhost/git/rahala-api/public/api/",
 
