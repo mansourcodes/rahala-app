@@ -84,6 +84,7 @@ export class SlidesPage implements OnInit {
   }
 
   private showAlert(message: string) {
+    //TODO: add button to send feedback as email
     this.alertCtrl
       .create({
         header: 'فشل تسجيل الدخول',

@@ -54,6 +54,7 @@ export class ClientsService {
         );
       }),
       map(resData => {
+        console.log(resData);
 
         const meta = new LaravelResponseMeta(
           resData.meta.current_page,
