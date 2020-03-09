@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   version: 'Beta 0.1',
-  apiURL: "http://api.rahala-online.com/api/",
-  // apiURL: "http://localhost/git/rahala-api/public/api/",
+  // apiURL: "http://api.rahala-online.com/api/",
+  apiURL: "http://localhost/git/rahala-api/public/api/",
 
   whatsappApi: "https://api.whatsapp.com/send",
   whatsappText: "السلام عليكم \n حاب أستفسر عن الرحلة \n [trip_name] \n -عبر تطبيق رحالة-",
