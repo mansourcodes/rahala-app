@@ -39,7 +39,22 @@ const routes: Routes = [
   },
   {
     path: 'clients',
-    loadChildren: () => import('./pages/clients/clients.module').then(m => m.ClientsPageModule)
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/clients/clients.module').then(m => m.ClientsPageModule),
+        canLoad: [AuthGuard]
+      },
+      {
+        path: ':clientId',
+        loadChildren: () =>
+          import('./pages/clients/client-detail/client-detail.module').then(
+            m => m.ClientDetailPageModule
+          ),
+        canLoad: [AuthGuard]
+      }
+    ]
+
   },
   {
     path: 'general-settings',

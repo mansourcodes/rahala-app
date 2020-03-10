@@ -5,11 +5,13 @@
 export const environment = {
   production: false,
   version: 'Beta 0.1',
-  // apiURL: "http://api.rahala-online.com/api/",
-  apiURL: "http://localhost/git/rahala-api/public/api/",
 
-  whatsappApi: "https://api.whatsapp.com/send",
-  whatsappText: "السلام عليكم \n حاب أستفسر عن الرحلة \n [trip_name] \n -عبر تطبيق رحالة-",
+
+  // BaseURL: 'http://api.rahala-online.com/',
+  BaseURL: 'http://localhost/rahala-api/public/',
+  apiURL: '',
+  whatsappApi: 'https://api.whatsapp.com/send',
+  whatsappText: 'السلام عليكم \n حاب أستفسر عن الرحلة \n [trip_name] \n -عبر تطبيق رحالة-',
 
   AuthConstents: {
     AUTH: 'userDataKey'
@@ -36,6 +38,9 @@ export const environment = {
     OTHER: 'باص أو طيران',
   },
 };
+
+
+environment.apiURL = environment.BaseURL + 'api/';
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

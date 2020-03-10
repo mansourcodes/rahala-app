@@ -16,7 +16,7 @@ import { SearchFrom } from 'src/app/services/models/searchForm.model';
 })
 export class TripsService {
   private _trips = new BehaviorSubject<Trip[]>([]);
-  private _meta = new BehaviorSubject<LaravelResponseMeta>(new LaravelResponseMeta(1));
+  private _meta = new BehaviorSubject<LaravelResponseMeta>(new LaravelResponseMeta(0));
 
   get trips() {
     return this._trips.asObservable();
@@ -35,7 +35,11 @@ export class TripsService {
 
     let nextPageTrips: Trip[];
     let resMeta: LaravelResponseMeta;
-    if (!query.page) { query.page = 1; }
+    if (!query.page) {
+      query.page = 1;
+    } else {
+      query.page++;
+    }
 
     return this.authService.token.pipe(
       take(1),

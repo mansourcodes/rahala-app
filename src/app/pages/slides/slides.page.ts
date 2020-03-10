@@ -18,7 +18,7 @@ export class SlidesPage implements OnInit {
   };
 
   isLoading = false;
-  isLogin = true;
+  isLogin = false;
 
   constructor(
     private authService: AuthService,
@@ -39,6 +39,8 @@ export class SlidesPage implements OnInit {
       .then(loadingEl => {
         loadingEl.present();
         let authObs: Observable<AuthResponseData>;
+
+        //TODO: isLogin should deticit the user 
         if (this.isLogin) {
           authObs = this.authService.login(email, password);
         } else {
@@ -88,8 +90,22 @@ export class SlidesPage implements OnInit {
     this.alertCtrl
       .create({
         header: 'فشل تسجيل الدخول',
-        message: message,
-        buttons: ['حسنا']
+        // message: message,
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'المحاولة مرة أخرى',
+            handler: () => {
+              this.authService.logout();
+            }
+          }
+        ]
       })
       .then(alertEl => alertEl.present());
   }

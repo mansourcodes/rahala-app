@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, of, throwError, Observable } from 'rxjs';
-import { take, map, tap, delay, switchMap, retry, catchError } from 'rxjs/operators';
+import { BehaviorSubject, throwError } from 'rxjs';
+import { take, map, tap, switchMap, retry, catchError } from 'rxjs/operators';
 import { AuthService } from '../common/auth.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LaravelResponseMeta, LaravelResponseMetaInterface } from '../models/LaravelResponseMeta.model'
 import { Client, ClientInterface } from '../models/client.model';
-import { SearchFrom } from 'src/app/services/models/searchForm.model';
-import { AlertController } from '@ionic/angular';
 
 
 
@@ -16,7 +14,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class ClientsService {
   private _clients = new BehaviorSubject<Client[]>([]);
-  private _meta = new BehaviorSubject<LaravelResponseMeta>(new LaravelResponseMeta(1));
+  private _meta = new BehaviorSubject<LaravelResponseMeta>(new LaravelResponseMeta(0));
 
   get clients() {
     return this._clients.asObservable();
@@ -29,14 +27,17 @@ export class ClientsService {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private alertController: AlertController,
   ) { }
 
   fetchClients(query?: { page: number }) {
 
     let nextPageClients: Client[];
     let resMeta: LaravelResponseMeta;
-    if (!query.page) { query.page = 1; }
+    if (!query.page) {
+      query.page = 1;
+    } else {
+      query.page++;
+    }
 
     return this.authService.token.pipe(
       take(1),
@@ -133,33 +134,7 @@ export class ClientsService {
       errorMessage = `Error Code: ${error.status} - Message: ${error.message}`;
     }
 
-    this.alertError().then(value => {
-      console.log(`promise result: ${value}`);
-    });
-    window.alert(errorMessage);
+    window.location.href = '/slides';
     return throwError(errorMessage);
-  }
-
-  async alertError() {
-    const alert = await this.alertController.create({
-      header: 'Confirm!',
-      message: 'Message <strong>text</strong>!!!',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Okay',
-          handler: () => {
-            console.log('Confirm Okay');
-          }
-        }
-      ]
-    });
-
   }
 }

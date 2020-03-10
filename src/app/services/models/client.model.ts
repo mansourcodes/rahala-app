@@ -13,8 +13,9 @@ export class Client {
 
 
     get logoUrl() {
-        return environment.apiURL + '/storage/images/' + this.logoImg;
+        return environment.BaseURL + 'storage/images/' + this.logoImg;
     }
+
 }
 
 export interface ClientInterface {

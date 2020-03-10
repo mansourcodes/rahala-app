@@ -36,10 +36,23 @@ export class ClientsPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.clientsSub = this.clientService.clients.subscribe(clients => {
+    this.clientsSub = this.clientService.clients.pipe(map(clients => {
+
+      function chunk(array, chunkSize: number) {
+        const temporal = [];
+        for (let i = 0; i < array.length; i += chunkSize) {
+          temporal.push(array.slice(i, i + chunkSize));
+        }
+        return temporal;
+      }
+      clients = chunk(clients, 3);
+      return clients;
+    })).subscribe(clients => {
       this.loadedClients = clients;
       this.relevantClients = this.loadedClients;
     });
+
+
     this.listMetaSub = this.clientService.meta.subscribe(meta => {
       this.listMeta = meta;
     });
@@ -59,6 +72,7 @@ export class ClientsPage implements OnInit, OnDestroy {
     const query = { page: this.listMeta.currentPage };
     this.clientService.fetchClients(query).subscribe(resMeta => {
       event.target.complete();
+
       if (this.listMeta.currentPage === this.listMeta.lastPage) {
         event.target.disabled = true;
       }
