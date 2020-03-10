@@ -77,9 +77,7 @@ export class ClientsService {
                 resData.data[key].client_name,
                 resData.data[key].client_alian,
                 resData.data[key].logo_img,
-                resData.data[key].contact_wp_1,
-                resData.data[key].contact_wp_2,
-                resData.data[key].locations
+                resData.data[key].contact
 
               )
             );
@@ -115,9 +113,7 @@ export class ClientsService {
           clientResponse.data.client_name,
           clientResponse.data.client_alian,
           clientResponse.data.logo_img,
-          clientResponse.data.contact_wp_1,
-          clientResponse.data.contact_wp_2,
-          clientResponse.data.locations
+          clientResponse.data.contact
         );
       })
     );

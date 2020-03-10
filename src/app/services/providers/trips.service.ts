@@ -92,9 +92,7 @@ export class TripsService {
                   resData.data[key].client.client_name,
                   resData.data[key].client.client_alian,
                   resData.data[key].client.logo_img,
-                  resData.data[key].client.contact_wp_1,
-                  resData.data[key].client.contact_wp_2,
-                  resData.data[key].client.locations
+                  resData.data[key].client.contact
                 ),
                 resData.data[key].name,
                 resData.data[key].cities,
@@ -140,9 +138,7 @@ export class TripsService {
             tripResponse.data.client.client_name,
             tripResponse.data.client.client_alian,
             tripResponse.data.client.logo_img,
-            tripResponse.data.client.contact_wp_1,
-            tripResponse.data.client.contact_wp_2,
-            tripResponse.data.client.locations
+            tripResponse.data.client.contact
           ),
           tripResponse.data.name,
           tripResponse.data.cities,

@@ -1,17 +1,23 @@
-<ion-list>
-  <ion-item (click)="contact('whatsapp',client.contactWp1)" detail button lines="full">
-    <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
-    <ion-label>
-      <h3>{{client.contactWp1}}</h3>
-      <p>إتصال و واتساب</p>
-    </ion-label>
-  </ion-item>
-  <ion-item detail button lines="full">
-    <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
-    <ion-label>
-      <h3>{{client.contactWp2}}</h3>
-      <p>إتصال و واتساب</p>
-    </ion-label>
-  </ion-item>
+<div *ngIf="client.branchs">
+  <ion-card *ngFor="let branch of client.branchs">
 
-</ion-list>
+
+
+    <img src="https://picsum.photos/500/200" />
+    <ion-card-header>
+      <ion-card-title>{{ branch.branch }}</ion-card-title>
+    </ion-card-header>
+
+
+    <ion-item *ngFor="let contact_details of branch.contacts" (click)="contact_details.call()" class="ion-activated"
+      lines="full">
+      <ion-icon [name]="contact_details.icon" slot="start"></ion-icon>
+      <ion-label>{{contact_details.value}}</ion-label>
+      <ion-button *ngIf="contact_details.action" fill="outline" slot="end">{{contact_details.action}}</ion-button>
+    </ion-item>
+
+  </ion-card>
+
+
+
+</div>
