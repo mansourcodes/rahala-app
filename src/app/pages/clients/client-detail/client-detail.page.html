@@ -1,9 +1,21 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>client-detail</ion-title>
+<ion-header no-border>
+  <ion-toolbar class="background-dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/clients"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+<div *ngIf="isLoading" class="ion-padding background-dark ion-text-center">
+  <ion-spinner name="bubbles"></ion-spinner>
 
-<ion-content>
-
+  <br /> <br />
+</div>
+<ion-content *ngIf="!isLoading">
+  <div class="ion-padding background-dark ion-text-center">
+    <br /> <br />
+  </div>
+  <div>
+    <client-avatar [client]="client" [type]="'profile'" class="shift-up"></client-avatar>
+    <client-card [client]="client" tripName=""></client-card>
+  </div>
 </ion-content>
