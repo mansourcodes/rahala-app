@@ -9,11 +9,17 @@
     </ion-card-header>
 
 
-    <ion-item *ngFor="let contact_details of branch.contacts" (click)="contact_details.call()" class="ion-activated"
-      lines="full">
+    <ion-item *ngFor="let contact_details of branch.contacts" (click)="callClient(contact_details.call,0)"
+      class="ion-activated" lines="full">
       <ion-icon [name]="contact_details.icon" slot="start"></ion-icon>
       <ion-label>{{contact_details.value}}</ion-label>
-      <ion-button *ngIf="contact_details.action" fill="outline" slot="end">{{contact_details.action}}</ion-button>
+
+      <ion-button *ngIf="contact_details.action[0]" (click)="callClient(contact_details.call,0)" fill="outline"
+        slot="end">{{contact_details.action[0]}}</ion-button>
+      <ion-button *ngIf="contact_details.action[1]" (click)="callClient(contact_details.call,1)" fill="outline"
+        slot="end">{{contact_details.action[1]}}</ion-button>
+      <ion-button *ngIf="contact_details.action[2]" (click)="callClient(contact_details.call,2)" fill="outline"
+        slot="end">{{contact_details.action[2]}}</ion-button>
     </ion-item>
 
   </ion-card>

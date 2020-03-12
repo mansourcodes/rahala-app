@@ -10,8 +10,6 @@ export const environment = {
   // BaseURL: 'http://api.rahala-online.com/',
   BaseURL: 'http://localhost/rahala-api/public/',
   apiURL: '',
-  whatsappApi: 'https://api.whatsapp.com/send',
-  whatsappText: 'السلام عليكم \n حاب أستفسر عن الرحلة \n [trip_name] \n -عبر تطبيق رحالة-',
 
   AuthConstents: {
     AUTH: 'userDataKey'
@@ -37,6 +35,11 @@ export const environment = {
     BUS: 'باص',
     OTHER: 'باص أو طيران',
   },
+
+
+  whatsappApi: 'https://api.whatsapp.com/send',
+  whatsappQusText: 'السلام عليكم \n حاب أستفسر عن الرحلة \n [trip_name] \n -عبر تطبيق رحالة-',
+  whatsappGeneralText: 'السلام عليكم \n حاب أستفسر عن الرحلات الي عندكم \n -عبر تطبيق رحالة-',
 };
 
 
