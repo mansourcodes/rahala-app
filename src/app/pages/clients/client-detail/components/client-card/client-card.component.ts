@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { environment } from 'src/environments/environment';
 import { Client } from 'src/app/services/models/client.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'client-card',
@@ -15,18 +14,12 @@ export class ClientCardComponent implements OnInit {
 
 
   constructor(
-    private iab: InAppBrowser,
   ) { }
 
   ngOnInit() { }
 
-  contact(target: string, contact: any) {
-
-    if (target === 'whatsapp') {
-      const message = environment.whatsappText.replace('[trip_name]', this.tripName);
-      const apiCall = environment.whatsappApi + `?phone=` + contact + `&text=` + message;
-      const browser = this.iab.create(apiCall, '_blank');
-    }
+  callClient(bindFunction, index: number) {
+    bindFunction[index].apply();
   }
 
 }
