@@ -1,9 +1,11 @@
 import { environment } from 'src/environments/environment';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
+import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
+import { Platform } from '@ionic/angular';
+
 
 export class Client {
-
+    private platform: Platform;
 
     constructor(
         public id: string,
@@ -11,56 +13,55 @@ export class Client {
         public clientAlian: string,
         public logoImg: string,
         public _contact: string,
+    ) {
 
-
-        private iab: InAppBrowser,
-        private launchNavigator: LaunchNavigator
-    ) { }
+    }
 
     get contact() {
+
         const contacts = JSON.parse(this._contact);
         //TODO: add call function
         contacts.forEach(contactDetails => {
             switch (contactDetails.type) {
                 case 'map':
                     contactDetails.icon = 'md-pin';
-                    contactDetails.action = ['الخارطة'];
-                    contactDetails.call = [this.call.bind(this, contactDetails.type, contactDetails.value, '')];
+                    contactDetails.actionLabel = ['الخارطة', 'uber'];
+                    contactDetails.action = ['google_map', 'uber'];
+                    contactDetails.value = '';
                     break;
                 case 'phone':
                     contactDetails.icon = 'call';
-                    contactDetails.action = 'إتصل الآن';
+                    contactDetails.actionLabel = ['إتصل الآن'];
                     break;
 
 
                 case 'snapchat':
                     contactDetails.icon = 'logo-snapchat';
-                    contactDetails.action = 'شاهد';
+                    contactDetails.actionLabel = ['شاهد'];
                     break;
                 case 'facebook':
                     contactDetails.icon = 'logo-facebook';
-                    contactDetails.action = 'شاهد';
+                    contactDetails.actionLabel = ['شاهد'];
                     break;
                 case 'twitter':
                     contactDetails.icon = 'logo-twitter';
-                    contactDetails.action = 'شاهد';
+                    contactDetails.actionLabel = ['شاهد'];
                     break;
                 case 'youtube':
                     contactDetails.icon = 'logo-youtube';
-                    contactDetails.action = 'شاهد';
+                    contactDetails.actionLabel = ['شاهد'];
                     break;
                 case 'instagram':
                     contactDetails.icon = 'logo-instagram';
-                    contactDetails.action = 'شاهد';
+                    contactDetails.actionLabel = ['شاهد'];
                     break;
                 case 'whatsapp':
                     contactDetails.icon = 'logo-whatsapp';
-                    contactDetails.action = ['محادثة'];
-                    contactDetails.call = [this.call.bind(this, contactDetails.type, contactDetails.value, '')];
+                    contactDetails.actionLabel = ['محادثة'];
                     break;
                 case 'skype':
                     contactDetails.icon = 'logo-skype';
-                    contactDetails.action = 'محادثة';
+                    contactDetails.actionLabel = ['محادثة'];
                     break;
 
 
@@ -93,44 +94,6 @@ export class Client {
         return branchs;
     }
 
-    call(type: string, value: any, message: string) {
-
-        console.log('call started');
-        console.log(type, value, message);
-        let text;
-        if (type === 'whatsapp') {
-            if (message) {
-                text = environment.whatsappQusText.replace('[trip_name]', message);
-            } else {
-                text = environment.whatsappGeneralText;
-            }
-            const apiCall = environment.whatsappApi + `?phone=` + value + `&text=` + text;
-            const browser = this.iab.create(apiCall, '_blank');
-        }
-        if (type === 'map') {
-
-
-            console.log(value.split(','));
-
-
-            this.launchNavigator.isAppAvailable(this.launchNavigator.APP.GOOGLE_MAPS, function (isAvailable) {
-                var app;
-                if (isAvailable) {
-                    app = this.launchNavigator.APP.GOOGLE_MAPS;
-                } else {
-                    console.warn("Google Maps not available - falling back to user selection");
-                    app = this.launchNavigator.APP.USER_SELECT;
-                }
-                this.launchNavigator.navigate(value.split(','), {
-                    app: app,
-                    start: value,
-                }).then(
-                    success => console.log('Launched navigator'),
-                    error => console.log('Error launching navigator', error)
-                );
-            });
-        }
-    }
 
     get logoUrl() {
         return environment.BaseURL + 'storage/images/' + this.logoImg;

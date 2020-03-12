@@ -70,7 +70,8 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-inappbrowser": {},
-      "uk.co.workingedge.phonegap.plugin.launchnavigator": {}
+      "uk.co.workingedge.phonegap.plugin.launchnavigator": {},
+      "cordova-plugin-device": {}
     }
   }
 }
