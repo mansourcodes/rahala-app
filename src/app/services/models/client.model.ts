@@ -1,7 +1,11 @@
 import { environment } from 'src/environments/environment';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+<<<<<<< HEAD
 import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import { Platform } from '@ionic/angular';
+=======
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
+>>>>>>> 084fc29d8066ec938973728c0ff9de8616478512
 
 
 export class Client {
@@ -13,9 +17,17 @@ export class Client {
         public clientAlian: string,
         public logoImg: string,
         public _contact: string,
+<<<<<<< HEAD
     ) {
 
     }
+=======
+
+
+        private iab: InAppBrowser,
+        private launchNavigator: LaunchNavigator
+    ) { }
+>>>>>>> 084fc29d8066ec938973728c0ff9de8616478512
 
     get contact() {
 
@@ -25,9 +37,14 @@ export class Client {
             switch (contactDetails.type) {
                 case 'map':
                     contactDetails.icon = 'md-pin';
+<<<<<<< HEAD
                     contactDetails.actionLabel = ['الخارطة', 'uber'];
                     contactDetails.action = ['google_map', 'uber'];
                     contactDetails.value = '';
+=======
+                    contactDetails.action = ['الخارطة'];
+                    contactDetails.call = [this.call.bind(this, contactDetails.type, contactDetails.value, '')];
+>>>>>>> 084fc29d8066ec938973728c0ff9de8616478512
                     break;
                 case 'phone':
                     contactDetails.icon = 'call';
@@ -57,7 +74,12 @@ export class Client {
                     break;
                 case 'whatsapp':
                     contactDetails.icon = 'logo-whatsapp';
+<<<<<<< HEAD
                     contactDetails.actionLabel = ['محادثة'];
+=======
+                    contactDetails.action = ['محادثة'];
+                    contactDetails.call = [this.call.bind(this, contactDetails.type, contactDetails.value, '')];
+>>>>>>> 084fc29d8066ec938973728c0ff9de8616478512
                     break;
                 case 'skype':
                     contactDetails.icon = 'logo-skype';
@@ -94,6 +116,47 @@ export class Client {
         return branchs;
     }
 
+<<<<<<< HEAD
+=======
+    call(type: string, value: any, message: string) {
+
+        console.log('call started');
+        console.log(type, value, message);
+        let text;
+        if (type === 'whatsapp') {
+            if (message) {
+                text = environment.whatsappQusText.replace('[trip_name]', message);
+            } else {
+                text = environment.whatsappGeneralText;
+            }
+            const apiCall = environment.whatsappApi + `?phone=` + value + `&text=` + text;
+            const browser = this.iab.create(apiCall, '_blank');
+        }
+        if (type === 'map') {
+
+
+            console.log(value.split(','));
+
+
+            this.launchNavigator.isAppAvailable(this.launchNavigator.APP.GOOGLE_MAPS, function (isAvailable) {
+                var app;
+                if (isAvailable) {
+                    app = this.launchNavigator.APP.GOOGLE_MAPS;
+                } else {
+                    console.warn("Google Maps not available - falling back to user selection");
+                    app = this.launchNavigator.APP.USER_SELECT;
+                }
+                this.launchNavigator.navigate(value.split(','), {
+                    app: app,
+                    start: value,
+                }).then(
+                    success => console.log('Launched navigator'),
+                    error => console.log('Error launching navigator', error)
+                );
+            });
+        }
+    }
+>>>>>>> 084fc29d8066ec938973728c0ff9de8616478512
 
     get logoUrl() {
         return environment.BaseURL + 'storage/images/' + this.logoImg;

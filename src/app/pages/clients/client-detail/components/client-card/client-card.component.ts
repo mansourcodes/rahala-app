@@ -1,10 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Client } from 'src/app/services/models/client.model';
+<<<<<<< HEAD
 import { Platform } from '@ionic/angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { environment } from 'src/environments/environment';
 import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import { AppAvailability } from '@ionic-native/app-availability/ngx';
+=======
+import { Observable } from 'rxjs';
+>>>>>>> 084fc29d8066ec938973728c0ff9de8616478512
 
 @Component({
   selector: 'client-card',
@@ -18,14 +22,18 @@ export class ClientCardComponent implements OnInit {
 
 
   constructor(
+<<<<<<< HEAD
     public platform: Platform,
     private inAppBrowser: InAppBrowser,
     private launchNavigator: LaunchNavigator,
     private appAvailability: AppAvailability,
+=======
+>>>>>>> 084fc29d8066ec938973728c0ff9de8616478512
   ) { }
 
   ngOnInit() { }
 
+<<<<<<< HEAD
   callClient(contactDetails, index: number) {
 
     if (contactDetails.type === 'whatsapp') {
@@ -77,6 +85,10 @@ export class ClientCardComponent implements OnInit {
         );
       });
     }
+=======
+  callClient(bindFunction, index: number) {
+    bindFunction[index].apply();
+>>>>>>> 084fc29d8066ec938973728c0ff9de8616478512
   }
 
 
