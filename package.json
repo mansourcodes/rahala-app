@@ -70,12 +70,8 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-inappbrowser": {},
-<<<<<<< HEAD
       "uk.co.workingedge.phonegap.plugin.launchnavigator": {},
       "cordova-plugin-device": {}
-=======
-      "uk.co.workingedge.phonegap.plugin.launchnavigator": {}
->>>>>>> 084fc29d8066ec938973728c0ff9de8616478512
     }
   }
 }
