@@ -6,10 +6,10 @@
       <ion-card-title>{{ branch.branch }}</ion-card-title>
     </ion-card-header>
 
-    <ion-item *ngFor="let contactDetails of branch.contacts" (click)="callClient(contactDetails,0)"
-      class="ion-activated" lines="full">
+    <ion-item *ngFor="let contactDetails of branch.contacts" (click)="mainClick(contactDetails)" class="ion-activated"
+      lines="full">
       <ion-icon [name]="contactDetails.icon" slot="start"></ion-icon>
-      <ion-label>{{contactDetails.value}}</ion-label>
+      <ion-label>{{contactDetails.valueLabel}}</ion-label>
 
       <ion-button *ngIf="contactDetails.actionLabel[0]" (click)="callClient(contactDetails,0)" fill="outline"
         slot="end">{{contactDetails.actionLabel[0]}}</ion-button>

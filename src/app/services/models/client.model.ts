@@ -16,28 +16,31 @@ export class Client {
 
         const contacts = JSON.parse(this._contact);
         contacts.forEach(contactDetails => {
+            contactDetails.valueLabel = contactDetails.value;
             switch (contactDetails.type) {
+
                 case 'map':
                     contactDetails.icon = 'md-pin';
                     contactDetails.actionLabel = ['الخارطة', 'uber'];
                     contactDetails.action = ['google_map', 'uber'];
-                    contactDetails.value = '';
-
+                    contactDetails.valueLabel = '';
                     break;
+
                 case 'phone':
                     contactDetails.icon = 'call';
                     contactDetails.actionLabel = ['إتصل الآن'];
                     break;
 
-
                 case 'snapchat':
                     contactDetails.icon = 'logo-snapchat';
                     contactDetails.actionLabel = ['شاهد'];
                     break;
+
                 case 'facebook':
                     contactDetails.icon = 'logo-facebook';
                     contactDetails.actionLabel = ['شاهد'];
                     break;
+
                 case 'twitter':
                     contactDetails.icon = 'logo-twitter';
                     contactDetails.actionLabel = ['شاهد'];
@@ -46,6 +49,7 @@ export class Client {
                     contactDetails.icon = 'logo-youtube';
                     contactDetails.actionLabel = ['شاهد'];
                     break;
+
                 case 'instagram':
                     contactDetails.icon = 'logo-instagram';
                     contactDetails.actionLabel = ['شاهد'];
@@ -53,13 +57,12 @@ export class Client {
                 case 'whatsapp':
                     contactDetails.icon = 'logo-whatsapp';
                     contactDetails.actionLabel = ['محادثة'];
-
                     break;
+
                 case 'skype':
                     contactDetails.icon = 'logo-skype';
                     contactDetails.actionLabel = ['محادثة'];
                     break;
-
 
                 default:
                     contactDetails.icon = 'ios-information-circle-outline';
