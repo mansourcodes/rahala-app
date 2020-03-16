@@ -1,14 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Client } from 'src/app/services/models/client.model';
-<<<<<<< HEAD
 import { Platform } from '@ionic/angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { environment } from 'src/environments/environment';
 import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import { AppAvailability } from '@ionic-native/app-availability/ngx';
-=======
-import { Observable } from 'rxjs';
->>>>>>> 084fc29d8066ec938973728c0ff9de8616478512
+
 
 @Component({
   selector: 'client-card',
@@ -16,24 +13,19 @@ import { Observable } from 'rxjs';
   styleUrls: ['./client-card.component.scss'],
 })
 export class ClientCardComponent implements OnInit {
-
   @Input() client: Client;
   @Input() tripName: string;
 
 
   constructor(
-<<<<<<< HEAD
-    public platform: Platform,
+    private platform: Platform,
     private inAppBrowser: InAppBrowser,
     private launchNavigator: LaunchNavigator,
     private appAvailability: AppAvailability,
-=======
->>>>>>> 084fc29d8066ec938973728c0ff9de8616478512
   ) { }
 
   ngOnInit() { }
 
-<<<<<<< HEAD
   callClient(contactDetails, index: number) {
 
     if (contactDetails.type === 'whatsapp') {
@@ -85,10 +77,7 @@ export class ClientCardComponent implements OnInit {
         );
       });
     }
-=======
-  callClient(bindFunction, index: number) {
-    bindFunction[index].apply();
->>>>>>> 084fc29d8066ec938973728c0ff9de8616478512
+
   }
 
 
@@ -118,8 +107,6 @@ export class ClientCardComponent implements OnInit {
 
 
   callInstagram(contactDetails, index: number) {
-
-
     let app;
 
     if (this.platform.is('ios')) {
