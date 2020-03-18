@@ -20,12 +20,11 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'explore',
+        path: 'quicksearchs',
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('../explore/explore.module').then(m => m.ExplorePageModule),
+            loadChildren: () => import('../quicksearchs/quicksearchs.module').then(m => m.QuicksearchsPageModule),
             canLoad: [AuthGuard]
           }
         ]

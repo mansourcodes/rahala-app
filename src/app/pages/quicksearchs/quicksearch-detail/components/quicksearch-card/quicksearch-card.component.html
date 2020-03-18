@@ -1,0 +1,16 @@
+<div *ngIf="quicksearch.searchLabel">
+  <ion-card class="quicksearch-card" [ngStyle]="{
+    'background': 'url('+ quicksearch.backgroundImg + ')',
+    'background-color': quicksearch.backgroundColor
+}">
+
+    <div class="quicksearch-card-header ion-padding">
+      <ion-icon [src]='quicksearch.travelByIcon'></ion-icon>
+    </div>
+    <div class="quicksearch-card-text-holder ion-padding">
+      <div class="quicksearch-card-text-holder-label">{{quicksearch.searchLabel}}</div>
+      <div class="quicksearch-card-text-holder-cities">{{quicksearch.cities}}</div>
+    </div>
+
+  </ion-card>
+</div>

@@ -59,7 +59,11 @@ const routes: Routes = [
   {
     path: 'general-settings',
     loadChildren: () => import('./pages/settings/general-settings/general-settings.module').then(m => m.GeneralSettingsPageModule)
+  },  {
+    path: 'quicksearchs',
+    loadChildren: () => import('./pages/quicksearchs/quicksearchs.module').then( m => m.QuicksearchsPageModule)
   }
+
 
 ];
 @NgModule({

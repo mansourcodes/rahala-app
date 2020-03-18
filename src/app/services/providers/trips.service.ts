@@ -155,15 +155,17 @@ export class TripsService {
   }
 
   handleError(error) {
+
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
-      // client-side error
+      // quicksearch-side error
       errorMessage = `Error: ${error.error.message}`;
     } else {
       // server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      errorMessage = `Error Code: ${error.status} - Message: ${error.message}`;
     }
-    window.alert(errorMessage);
+
+    window.location.href = '/slides';
     return throwError(errorMessage);
   }
 }

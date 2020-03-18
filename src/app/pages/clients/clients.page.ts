@@ -4,8 +4,6 @@ import { IonInfiniteScroll, MenuController } from '@ionic/angular';
 import { LaravelResponseMeta } from 'src/app/services/models/LaravelResponseMeta.model';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { SearchFrom, SearchFromInterface } from 'src/app/services/models/searchForm.model';
-import { environment } from 'src/environments/environment';
 import { Client } from 'src/app/services/models/client.model';
 import { ClientsService } from 'src/app/services/providers/clients.service';
 

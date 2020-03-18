@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ExplorePage } from './explore.page';
+import { QuicksearchCardComponent } from './quicksearch-card.component';
 
-describe('ExplorePage', () => {
-  let component: ExplorePage;
-  let fixture: ComponentFixture<ExplorePage>;
+describe('QuicksearchCardComponent', () => {
+  let component: QuicksearchCardComponent;
+  let fixture: ComponentFixture<QuicksearchCardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExplorePage ],
+      declarations: [ QuicksearchCardComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ExplorePage);
+    fixture = TestBed.createComponent(QuicksearchCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
