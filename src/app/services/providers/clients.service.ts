@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, throwError } from 'rxjs';
-import { take, map, tap, switchMap, retry, catchError } from 'rxjs/operators';
+import { take, map, tap, switchMap, retry, catchError, delay } from 'rxjs/operators';
 import { AuthService } from '../common/auth.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -90,6 +90,7 @@ export class ClientsService {
         return this.clients;
       }),
       take(1),
+      // delay(50000),
       tap(clients => {
         this._clients.next(clients.concat(nextPageClients));
         return resMeta;

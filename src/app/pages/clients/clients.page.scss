@@ -23,3 +23,14 @@
 //     width: 50px;
 //     display: inline-block;
 // }
+
+.large-avatar{
+    
+    width: 100% !important;
+    height: 100% !important;
+    background-color:#bfbfbf;
+    min-width: 4em;
+    min-height: 4em;
+    max-width: 4em !important;
+    max-height: 4em !important;
+}

@@ -12,29 +12,24 @@
           <p>No Clients found!</p>
         </div>
         <div *ngIf="!isLoading && relevantClients.length > 0">
-          <ion-virtual-scroll [items]="relevantClients " approxItemHeight="106px">
-            <ion-row *virtualItem="let clientGroup ">
+          <ion-virtual-scroll [items]="relevantClients " approxItemHeight="80px">
 
-              <ion-col *ngIf="clientGroup[0]">
-                <div button="true" class="client-avatar" [routerLink]="'/clients/' + clientGroup[0].id">
-                  <client-avatar [client]="clientGroup[0]" [type]="'avatar'"></client-avatar>
-                </div>
-              </ion-col>
+            <ion-item lines="full" button *virtualItem="let clientGroup ">
+              <ion-avatar slot="start" class="large-avatar">
+                <ion-img [src]=" clientGroup[0].logoUrl">
+                </ion-img>
+              </ion-avatar>
+              <ion-label button="true" class="client-avatar" [routerLink]="'/clients/' + clientGroup[0].id">
+                <h2>{{clientGroup[0].clientName}}</h2>
+                <p> المزيد من التفاصيل</p>
+              </ion-label>
+              <ion-button fill="outline" slot="end" size="large">
+                <ion-icon name="logo-whatsapp">
+                  {{clientGroup[0].mainContact | json}}
+                </ion-icon>
+              </ion-button>
+            </ion-item>
 
-              <ion-col *ngIf="clientGroup[1]">
-                <div button="true" class="client-avatar" [routerLink]="'/clients/' + clientGroup[1].id">
-                  <client-avatar [client]="clientGroup[1]" [type]="'avatar'"></client-avatar>
-                </div>
-              </ion-col>
-
-
-              <ion-col *ngIf="clientGroup[2]">
-                <div button="true" class="client-avatar" [routerLink]="'/clients/' + clientGroup[2].id">
-                  <client-avatar [client]="clientGroup[2]" [type]="'avatar'"></client-avatar>
-                </div>
-              </ion-col>
-
-            </ion-row>
           </ion-virtual-scroll>
         </div>
 

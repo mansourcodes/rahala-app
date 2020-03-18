@@ -95,6 +95,11 @@ export class Client {
         return branchs;
     }
 
+    get mainContact() {
+        //TODO finish this function
+        return this.branchs[0];
+    }
+
     get logoUrl() {
         return environment.BaseURL + 'storage/images/' + this.logoImg;
     }

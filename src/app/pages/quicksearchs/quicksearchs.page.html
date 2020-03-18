@@ -5,9 +5,13 @@
 
         <h1>إستكشف</h1>
 
-        <div *ngIf="isLoading" class="ion-text-center">
-          <ion-spinner color="primary"></ion-spinner>
+        <!-- Skeleton screen -->
+        <div *ngIf="isLoading">
+          <ion-skeleton-text animated class="ion-padding ion-margin-bottom custom-skeleton"></ion-skeleton-text>
+          <ion-skeleton-text animated class="ion-padding ion-margin-bottom custom-skeleton"></ion-skeleton-text>
+          <ion-skeleton-text animated class="ion-padding ion-margin-bottom custom-skeleton"></ion-skeleton-text>
         </div>
+
         <div class="ion-text-center" *ngIf="!isLoading && relevantQuicksearchs.length == 0">
           <p>No Quicksearchs found!</p>
         </div>
@@ -27,6 +31,11 @@
           <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
           </ion-infinite-scroll-content>
         </ion-infinite-scroll>
+
+
+
+
+
       </ion-col>
     </ion-row>
   </ion-grid>

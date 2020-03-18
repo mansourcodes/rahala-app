@@ -34,18 +34,21 @@ export class ClientsPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.clientsSub = this.clientService.clients.pipe(map(clients => {
+    this.clientsSub = this.clientService.clients.pipe(
 
-      function chunk(array, chunkSize: number) {
-        const temporal = [];
-        for (let i = 0; i < array.length; i += chunkSize) {
-          temporal.push(array.slice(i, i + chunkSize));
+      map(clients => {
+        function chunk(array, chunkSize: number) {
+          const temporal = [];
+          for (let i = 0; i < array.length; i += chunkSize) {
+            temporal.push(array.slice(i, i + chunkSize));
+          }
+          return temporal;
         }
-        return temporal;
-      }
-      clients = chunk(clients, 3);
-      return clients;
-    })).subscribe(clients => {
+        clients = chunk(clients, 1);
+        return clients;
+      })
+
+    ).subscribe(clients => {
       this.loadedClients = clients;
       this.relevantClients = this.loadedClients;
     });
