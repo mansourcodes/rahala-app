@@ -48,6 +48,7 @@ export class Client {
                 case 'youtube':
                     contactDetails.icon = 'logo-youtube';
                     contactDetails.actionLabel = ['شاهد'];
+                    contactDetails.valueLabel = '';
                     break;
 
                 case 'instagram':
@@ -56,7 +57,8 @@ export class Client {
                     break;
                 case 'whatsapp':
                     contactDetails.icon = 'logo-whatsapp';
-                    contactDetails.actionLabel = ['محادثة'];
+                    contactDetails.actionLabel = ['محادثة', 'إتصال'];
+                    contactDetails.action = ['chat', 'call'];
                     break;
 
                 case 'skype':

@@ -29,55 +29,54 @@ export class ClientCardComponent implements OnInit {
   ngOnInit() { }
 
   callClient(contactDetails, index: number) {
-
-
     switch (contactDetails.type) {
 
       case 'map':
         if (contactDetails.action[index] === 'uber') {
-          this.callUber(contactDetails, index);
+          this.callUber(contactDetails);
         } else {
-          this.callGooglemap(contactDetails, index);
+          this.callGooglemap(contactDetails);
         }
         break;
 
       case 'phone':
-        this.callPhone(contactDetails, index);
+        this.callPhone(contactDetails);
         break;
 
       case 'snapchat':
-        this.callSnapchat(contactDetails, index);
+        this.callSnapchat(contactDetails);
         break;
 
       case 'facebook':
-        this.callFacebook(contactDetails, index);
+        this.callFacebook(contactDetails);
         break;
 
       case 'twitter':
-        this.callTwitter(contactDetails, index);
+        this.callTwitter(contactDetails);
         break;
 
       case 'youtube':
-        this.callYoutube(contactDetails, index);
+        this.callYoutube(contactDetails);
         break;
 
       case 'instagram':
-        this.callInstagram(contactDetails, index);
+        this.callInstagram(contactDetails);
         break;
 
       case 'whatsapp':
         if (contactDetails.action[index] === 'call') {
-          this.callPhone(contactDetails, index);
+          this.callPhone(contactDetails);
         } else {
-          this.callWhatsapp(contactDetails, index);
+          this.callWhatsapp(contactDetails);
         }
         break;
 
       case 'skype':
+        this.callSkype(contactDetails);
         break;
 
       default:
-        contactDetails.icon = 'ios-information-circle-outline';
+        this.callInAppBrowser(contactDetails.value);
     }
 
 
@@ -85,7 +84,7 @@ export class ClientCardComponent implements OnInit {
   }
 
 
-  callWhatsapp(contactDetails, index: number) {
+  callWhatsapp(contactDetails) {
     let text;
     if (contactDetails.message) {
       text = environment.whatsappQusText.replace('[trip_name]', contactDetails.message);
@@ -93,18 +92,23 @@ export class ClientCardComponent implements OnInit {
       text = environment.whatsappGeneralText;
     }
     const apiCall = environment.whatsappApi + `?phone=` + contactDetails.value + `&text=` + text;
-    const browser = this.inAppBrowser.create(apiCall, '_blank');
+    const browser = this.callInAppBrowser(apiCall, '_blank');
   }
 
-  callPhone(contactDetails, index: number) {
-    this.callNumber.callNumber(contactDetails.value, true)
-      .then(res => console.log('Launched dialer!', res))
-      .catch(err => console.log('Error launching dialer', err));
+  callPhone(contactDetails) {
+    const isMobile = this.platform.is('mobile');
+    if (isMobile) {
+      this.callNumber.callNumber(contactDetails.value, true)
+        .then(res => console.log('Launched dialer!', res))
+        .catch(err => console.log('Error launching dialer', err));
+    } else {
+      const browser = this.callInAppBrowser('tel:' + contactDetails.value, '_blank');
+    }
   }
 
 
 
-  callGooglemap(contactDetails, index: number) {
+  callGooglemap(contactDetails) {
     const isMobile = this.platform.is('mobile');
     if (isMobile) {
       this.launchNavigator.isAppAvailable(this.launchNavigator.APP.GOOGLE_MAPS).then(isAvailable => {
@@ -124,14 +128,14 @@ export class ClientCardComponent implements OnInit {
         );
       });
     } else {
-      this.callInAppBrowser('https://www.google.com/maps/search/?api=1&query=', contactDetails, index);
+      this.callInAppBrowser('https://www.google.com/maps/search/?api=1&query=' + contactDetails.value);
     }
 
   }
 
 
 
-  callUber(contactDetails, index: number) {
+  callUber(contactDetails) {
     const isMobile = this.platform.is('mobile');
     if (isMobile) {
       this.launchNavigator.isAppAvailable(this.launchNavigator.APP.GOOGLE_MAPS).then(isAvailable => {
@@ -151,13 +155,13 @@ export class ClientCardComponent implements OnInit {
         );
       });
     } else {
-      this.callInAppBrowser('https://www.google.com/maps/search/?api=1&query=', contactDetails, index);
+      this.callInAppBrowser('https://www.google.com/maps/search/?api=1&query=' + contactDetails.value);
     }
   }
 
 
 
-  callInstagram(contactDetails, index: number) {
+  callInstagram(contactDetails) {
 
     const isMobile = this.platform.is('mobile');
     if (isMobile) {
@@ -167,7 +171,7 @@ export class ClientCardComponent implements OnInit {
       } else if (this.platform.is('android')) {
         app = 'com.instagram.android';
       } else {
-        this.callInAppBrowser('https://instagram.com/', contactDetails, index);
+        this.callInAppBrowser('https://instagram.com/' + contactDetails.value);
         return;
       }
       this.appAvailability.check(app)
@@ -175,35 +179,38 @@ export class ClientCardComponent implements OnInit {
           (yes: boolean) => {
             console.log(app + ' is available');
             // App exists
-            const browser = this.inAppBrowser.create('instagram://user?username=' + contactDetails.value, '_system');
+            const browser = this.callInAppBrowser('instagram://user?username=' + contactDetails.value, '_system');
           },
           (no: boolean) => {
             // App does not exist
-            this.callInAppBrowser('https://instagram.com/', contactDetails, index);
+            this.callInAppBrowser('https://instagram.com/' + contactDetails.value);
           }
         );
     } else {
-      this.callInAppBrowser('https://instagram.com/', contactDetails, index);
+      this.callInAppBrowser('https://instagram.com/' + contactDetails.value);
     }
   }
 
   //TODO: links for each website
-  callSnapchat(contactDetails, index: number) {
-    this.callInAppBrowser('https://instagram.com/', contactDetails, index);
+  callSnapchat(contactDetails) {
+    this.callInAppBrowser('https://www.snapchat.com/add/' + contactDetails.value);
   }
-  callFacebook(contactDetails, index: number) {
-    this.callInAppBrowser('https://instagram.com/', contactDetails, index);
+  callFacebook(contactDetails) {
+    this.callInAppBrowser('https://facebook.com/' + contactDetails.value);
   }
-  callTwitter(contactDetails, index: number) {
-    this.callInAppBrowser('https://instagram.com/', contactDetails, index);
+  callTwitter(contactDetails) {
+    this.callInAppBrowser('https://twitter.com/' + contactDetails.value);
   }
-  callYoutube(contactDetails, index: number) {
-    this.callInAppBrowser('https://instagram.com/', contactDetails, index);
+  callYoutube(contactDetails) {
+    this.callInAppBrowser('https://www.youtube.com/channel/' + contactDetails.value);
+  }
+  callSkype(contactDetails) {
+    this.callInAppBrowser('skype:' + contactDetails.value);
   }
 
 
-  callInAppBrowser(website: string, contactDetails, index: number) {
-    const browser = this.inAppBrowser.create(website + contactDetails.value, '_system');
+  callInAppBrowser(url: string, target: string = '_system') {
+    const browser = this.inAppBrowser.create(url, '_system');
 
   }
 
