@@ -36,3 +36,11 @@
 ion-infinite-scroll-content {
   direction: ltr;
 }
+
+.page-title{
+  margin: 20px 0;
+  font-weight: 900;
+  font-size: xx-large;
+  letter-spacing: -1px;
+  color: var(--ion-color-dark);
+}

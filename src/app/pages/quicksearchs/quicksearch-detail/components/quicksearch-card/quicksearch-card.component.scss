@@ -5,6 +5,7 @@
     background-size: cover!important;
     position: relative;
     padding-bottom: 9em;
+    margin: 0 0 1em 0 ;
     &-header{
         text-align: left;
     }
@@ -28,4 +29,14 @@
 
 ion-icon {
     font-size: 32px;
-  }
+}
+
+
+@media only screen and (max-width: 400px) {
+    .quicksearch-card{
+    
+        min-height: 10em;
+        padding-bottom: 6em;
+
+    }
+}

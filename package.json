@@ -72,7 +72,8 @@
       "cordova-plugin-inappbrowser": {},
       "uk.co.workingedge.phonegap.plugin.launchnavigator": {},
       "cordova-plugin-device": {},
-      "mx.ferreyra.callnumber": {}
+      "mx.ferreyra.callnumber": {},
+      "cordova-plugin-email-composer": {}
     }
   }
 }
