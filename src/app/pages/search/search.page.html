@@ -1,9 +1,16 @@
 <ion-content class="ion-padding" (swiperight)="changeTravelBy('right')" (swipeleft)="changeTravelBy('left')">
   <h1 class="page-title">سافر إلى</h1>
   <form [formGroup]="searchForm">
-    <br />
-    <br />
-    <br />
+
+
+    <div class="slider">
+      <span class="bus">
+        <img class="title-image" src="asstes/slider/bus.svg" width="100px" height="100px" />
+
+      </span>
+    </div>
+
+
     <ion-list>
       <ion-radio-group #radioGroup>
         <ion-item *ngFor="let TravelByRadioItem of TravelByRadioList" lines="none" class="travel-by-radio-on-item"
