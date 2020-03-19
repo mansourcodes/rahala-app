@@ -10,6 +10,10 @@ const routes: Routes = [
   },  {
     path: 'general-settings',
     loadChildren: () => import('./general-settings/general-settings.module').then( m => m.GeneralSettingsPageModule)
+  },
+  {
+    path: 'acknowledgments',
+    loadChildren: () => import('./acknowledgments/acknowledgments.module').then( m => m.AcknowledgmentsPageModule)
   }
 
 ];
