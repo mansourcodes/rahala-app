@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Client } from 'src/app/services/models/client.model';
 import { ClientsService } from 'src/app/services/providers/clients.service';
+import { CleintContactInterface } from 'src/app/services/models/clientcontact.model';
+import { SocialService } from 'src/app/services/common/social.service';
 
 
 @Component({
@@ -28,6 +30,7 @@ export class ClientsPage implements OnInit, OnDestroy {
 
   constructor(
     private clientService: ClientsService,
+    private soicalService: SocialService,
     private menu: MenuController,
     private route: ActivatedRoute
   ) {
@@ -87,6 +90,10 @@ export class ClientsPage implements OnInit, OnDestroy {
     if (this.listMetaSub) {
       this.listMetaSub.unsubscribe();
     }
+  }
+
+  quickContact(contact: CleintContactInterface) {
+    this.soicalService.callClient(contact, 0);
   }
 
 

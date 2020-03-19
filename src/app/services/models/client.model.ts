@@ -96,8 +96,11 @@ export class Client {
     }
 
     get mainContact() {
-        //TODO finish this function
-        return this.branchs[0];
+        if (this.branchs[0].contacts) {
+            return this.branchs[0].contacts;
+        } else {
+            return false;
+        }
     }
 
     get logoUrl() {

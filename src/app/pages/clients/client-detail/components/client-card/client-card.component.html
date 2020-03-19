@@ -11,12 +11,12 @@
       <ion-icon [name]="contactDetails.icon" slot="start"></ion-icon>
       <ion-label>{{contactDetails.valueLabel}}</ion-label>
 
-      <ion-button *ngIf="contactDetails.actionLabel[0]" (click)="callClient(contactDetails,0)" fill="outline"
+      <ion-button *ngIf="contactDetails.actionLabel[0]" (click)="socialServ.callClient(contactDetails,0)" fill="outline"
         slot="end">{{contactDetails.actionLabel[0]}}</ion-button>
-      <ion-button *ngIf="contactDetails.actionLabel[1]" (click)="callClient(contactDetails,1)" fill="outline"
+      <ion-button *ngIf="contactDetails.actionLabel[1]" (click)="socialServ.callClient(contactDetails,1)" fill="outline"
         slot="end">
         {{contactDetails.actionLabel[1]}}</ion-button>
-      <ion-button *ngIf="contactDetails.actionLabel[2]" (click)="callClient(contactDetails,2)" fill="outline"
+      <ion-button *ngIf="contactDetails.actionLabel[2]" (click)="socialServ.callClient(contactDetails,2)" fill="outline"
         slot="end">
         {{contactDetails.actionLabel[2]}}</ion-button>
     </ion-item>

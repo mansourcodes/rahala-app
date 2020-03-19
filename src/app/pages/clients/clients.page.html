@@ -23,10 +23,9 @@
                 <h2>{{clientGroup[0].clientName}}</h2>
                 <p> المزيد من التفاصيل</p>
               </ion-label>
-              <ion-button fill="outline" slot="end" size="large">
-                <ion-icon name="logo-whatsapp">
-                  {{clientGroup[0].mainContact | json}}
-                </ion-icon>
+              <ion-button *ngIf="clientGroup[0].mainContact[0]" fill="outline" slot="end" size=""
+                (click)="quickContact(clientGroup[0].mainContact[0])">
+                <ion-icon [name]="clientGroup[0].mainContact[0].icon"></ion-icon>
               </ion-button>
             </ion-item>
 
