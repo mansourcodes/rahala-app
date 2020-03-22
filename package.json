@@ -75,5 +75,14 @@
       "mx.ferreyra.callnumber": {},
       "cordova-plugin-email-composer": {}
     }
+  },
+  "main": "karma.conf.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alnassre/rahala-app.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alnassre/rahala-app/issues"
   }
 }
