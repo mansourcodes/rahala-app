@@ -3,11 +3,20 @@
   <form [formGroup]="searchForm">
 
 
-    <div class="slider">
-      <span class="bus">
-        <img class="title-image" src="asstes/slider/bus.svg" width="100px" height="100px" />
-
-      </span>
+    <div class="slider" [ngClass]="selectedRadioItem.value">
+      <div class="family">
+        <ion-img src="assets\slider\family.svg"></ion-img>
+      </div>
+      <div class="bus">
+        <ion-img src="assets\slider\bus.svg"></ion-img>
+      </div>
+      <div class="airplane">
+        <ion-img src="assets\slider\airplane.svg"></ion-img>
+      </div>
+      <div class="cloud">
+        <ion-img src="assets\slider\cloud.svg"></ion-img>
+      </div>
+      <ion-img class="bg" src="assets\slider\bg.svg"></ion-img>
     </div>
 
 

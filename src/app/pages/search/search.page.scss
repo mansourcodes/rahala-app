@@ -12,3 +12,116 @@ ion-radio {
   width: 411px;
   height: 100%;
 }
+
+/*
+slider css - start
+*/
+.slider{
+  position: relative;
+  overflow: hidden;
+
+  > *{
+    width: 100%;
+    transition: left 0.5s;
+    position: absolute;
+  }
+  
+  > .bus{
+    left: 0;
+    z-index: 3;
+  }
+
+  > .airplane{
+    left: 0;
+    z-index: 2;
+  }
+
+  > .family{
+    left: 0;
+    z-index: 4;
+  }
+
+  > .cloud{
+    left: 0;
+    z-index: 1;
+  }
+
+  > .bg{
+    position: relative;
+  }
+
+}
+
+.slider.all{
+  
+  > .bus{
+    left: 0;
+  }
+
+  > .airplane{
+    left: 0;
+  }
+
+    > .family{
+    left: 0;
+  }
+
+
+  > .cloud{
+    left: 0;
+  }
+
+}
+
+
+.slider.bus{
+
+  
+  > .bus{
+    left: -5%;
+  }
+
+  
+  > .airplane{
+    left: 200%;
+  }
+
+  
+  > .family{
+    left: 4%;
+  }
+
+  
+  > .cloud{
+    left: 10%;
+  }
+
+}
+
+
+.slider.flight{
+
+  > .bus{
+    left: 200%;
+  }
+
+  
+  > .airplane{
+    left: -5%;
+  }
+
+  
+  > .family{
+    left: 1%;
+  }
+
+  
+  > .cloud{
+    left: 5%;
+  }
+
+}
+
+/*
+slider css - end
+*/

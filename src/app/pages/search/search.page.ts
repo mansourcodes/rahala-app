@@ -13,15 +13,12 @@ import { environment } from 'src/environments/environment';
 })
 export class SearchPage implements OnInit {
   searchForm: FormGroup;
-  @ViewChild('radioGroup', { static: true }) radioGroup: IonRadioGroup
+  @ViewChild('radioGroup', { static: true }) radioGroup: IonRadioGroup;
 
-  defaultSelectedRadio = "all";
-  //Get value on ionChange on IonRadioGroup
+
   selectedRadioGroup: any;
-  //Get value on ionSelect on IonRadio item
   selectedRadioItem: any;
 
-  // TODO: set right values
   TravelByRadioList = [
     {
       text: 'الكل',
@@ -80,15 +77,17 @@ export class SearchPage implements OnInit {
         city: 'Shyannetown',
         dateFrom: new Date().toISOString(),
         dateTo: new Date('2021-04-03').toISOString(),
-      })
+      });
     }
+
+
   }
 
 
   async openCityPicker() {
     let pickerAction;
 
-    let opts: PickerOptions = {
+    const opts: PickerOptions = {
       buttons: [
         {
           text: 'إلغاء',
@@ -108,7 +107,7 @@ export class SearchPage implements OnInit {
       columns: [
         {
           name: 'city',
-          options: [ // TODO: get cities from API
+          options: [ // TODO: get cities from API - quicksearch
             {
               text: 'مشهد',
               value: 'Shyannetown'
@@ -134,9 +133,9 @@ export class SearchPage implements OnInit {
       if (pickerAction === 'done') {
         this.searchForm.patchValue({
           city: city.options[city.selectedIndex].text
-        })
+        });
       }
-    })
+    });
   }
 
   onSearch() {
@@ -146,7 +145,7 @@ export class SearchPage implements OnInit {
         duration: 2000
       }).then(toastEl => {
         toastEl.present();
-      })
+      });
       return;
     }
     this.loadingCtrl
@@ -155,11 +154,11 @@ export class SearchPage implements OnInit {
       })
       .then(loadingEl => {
         loadingEl.present();
-        let navigationExtras: NavigationExtras = {
+        const navigationExtras: NavigationExtras = {
           queryParams: {
             searchTerms: JSON.stringify(this.searchForm.value)
           }
-        }
+        };
         this.searchForm.reset();
         loadingEl.dismiss();
         this.router.navigate(['/tabs/trips'], navigationExtras);
@@ -172,14 +171,14 @@ export class SearchPage implements OnInit {
 
   radioSelect(event) {
     this.selectedRadioItem = event.detail;
-    this.searchForm.patchValue({ travelBy: event.detail.value })
+    this.searchForm.patchValue({ travelBy: event.detail.value });
   }
 
   changeTravelBy(value: string) {
     let index = 0;
-    if (value == 'right' || value == 'left') {
-      let currentObject = this.TravelByRadioList.filter(list => {
-        let currentValue = this.selectedRadioItem.value;
+    if (value === 'right' || value === 'left') {
+      const currentObject = this.TravelByRadioList.filter(list => {
+        const currentValue = this.selectedRadioItem.value;
         if (list.value === currentValue) {
           return list;
         }
@@ -187,22 +186,21 @@ export class SearchPage implements OnInit {
       index = this.TravelByRadioList.indexOf(currentObject[0]);
     }
 
-    if (value == 'right') {
+    if (value === 'right') {
       if (this.TravelByRadioList[index + 1]) {
         value = this.TravelByRadioList[index + 1].value;
       } else {
         return;
       }
-    } else if (value == 'left') {
+    } else if (value === 'left') {
       if (this.TravelByRadioList[index - 1]) {
         value = this.TravelByRadioList[index - 1].value;
       } else {
         return;
       }
     }
+
     this.radioGroup.value = value;
-
-
   }
 
 }
