@@ -1,11 +1,8 @@
 <ion-content class="ion-padding" (swiperight)="changeTravelBy('right')" (swipeleft)="changeTravelBy('left')">
   <h1 class="page-title">سافر إلى</h1>
   <form [formGroup]="searchForm">
-    <p>
-      <ngb-alert [dismissible]="false">
-        <strong>Warning!</strong> Better check yourself, you're not looking too good.dd
-      </ngb-alert>
-    </p>
+
+
 
     <div class="slider" [ngClass]="selectedRadioItem.value">
       <div class="family">
@@ -58,5 +55,11 @@
       بحث
     </ion-button>
   </form>
+
+  <p>
+    <ngb-alert [type]="'info'" [dismissible]="false">
+      <strong>تنبيه</strong> توخى الحذر عند السفر للبلدان الموبوئة
+    </ngb-alert>
+  </p>
 
 </ion-content>

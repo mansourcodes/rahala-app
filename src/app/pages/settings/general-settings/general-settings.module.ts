@@ -8,13 +8,16 @@ import { GeneralSettingsPageRoutingModule } from './general-settings-routing.mod
 
 import { GeneralSettingsPage } from './general-settings.page';
 
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    GeneralSettingsPageRoutingModule
+    GeneralSettingsPageRoutingModule,
+    NgbDatepickerModule,
   ],
   declarations: [GeneralSettingsPage]
 })
-export class GeneralSettingsPageModule {}
+export class GeneralSettingsPageModule { }

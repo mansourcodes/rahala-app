@@ -14,6 +14,8 @@ import { SearchPageRoutingModule } from './search-routing.module';
 
 import { SearchPage } from './search.page';
 
+import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { SearchPage } from './search.page';
     MatDatepickerModule,
     MatNativeDateModule,
     MatMomentDateModule,
-    MatInputModule
+    MatInputModule,
+    NgbAlertModule,
   ],
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
