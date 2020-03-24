@@ -8,7 +8,8 @@ export const environment = {
 
 
   // BaseURL: 'http://api.rahala-online.com/',
-  BaseURL: 'http://localhost/rahala-api/public/',
+  // BaseURL: 'http://localhost/rahala-api/public/',
+  BaseURL: 'http://localhost/git/rahala-api/public/',
   apiURL: '',
 
   AuthConstents: {
