@@ -24,6 +24,15 @@ export class GeneralSettingsPage implements OnInit {
 
 
   ngOnInit() {
+    var widthPerDay = (window.innerWidth - 3) / 7;
+
+    // let floorElements = document.getElementsByClassName("ngb-dp-day") as HTMLCollectionOf<HTMLElement>;
+    // console.log(floorElements);
+
+    // for (var i in floorElements) {
+    //   floorElements[i].style.width = widthPerDay + 'px';
+    // }
+
   }
 
 
