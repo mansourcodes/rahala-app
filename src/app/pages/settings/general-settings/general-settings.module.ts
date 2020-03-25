@@ -8,7 +8,6 @@ import { GeneralSettingsPageRoutingModule } from './general-settings-routing.mod
 
 import { GeneralSettingsPage } from './general-settings.page';
 
-import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -16,7 +15,6 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     IonicModule,
     GeneralSettingsPageRoutingModule,
-    NgbDatepickerModule,
   ],
   declarations: [GeneralSettingsPage]
 })

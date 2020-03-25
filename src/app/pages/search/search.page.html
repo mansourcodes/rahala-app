@@ -1,9 +1,10 @@
-<ion-content class="ion-padding" (swiperight)="changeTravelBy('right')" (swipeleft)="changeTravelBy('left')">
+<ion-content
+  class="ion-padding"
+  (swiperight)="changeTravelBy('right')"
+  (swipeleft)="changeTravelBy('left')"
+>
   <h1 class="page-title">سافر إلى</h1>
   <form [formGroup]="searchForm">
-
-
-
     <div class="slider" [ngClass]="selectedRadioItem.value">
       <div class="family">
         <ion-img src="assets\slider\family.svg"></ion-img>
@@ -20,33 +21,65 @@
       <ion-img class="bg" src="assets\slider\bg.svg"></ion-img>
     </div>
 
-
     <ion-list>
       <ion-radio-group #radioGroup>
-        <ion-item *ngFor="let TravelByRadioItem of TravelByRadioList" lines="none" class="travel-by-radio-on-item"
-          (ionSelect)="radioSelect($event)" (click)="changeTravelBy(TravelByRadioItem.value)">
+        <ion-item
+          *ngFor="let TravelByRadioItem of TravelByRadioList"
+          lines="none"
+          class="travel-by-radio-on-item"
+          (ionSelect)="radioSelect($event)"
+          (click)="changeTravelBy(TravelByRadioItem.value)"
+        >
           <ion-label>{{TravelByRadioItem.text}}</ion-label>
-          <ion-radio slot="start" value="{{TravelByRadioItem.value}}" checked="{{TravelByRadioItem.checked}}">
+          <ion-radio
+            slot="start"
+            value="{{TravelByRadioItem.value}}"
+            checked="{{TravelByRadioItem.checked}}"
+          >
           </ion-radio>
         </ion-item>
       </ion-radio-group>
 
       <ion-item>
         <ion-label position="floating">الوجهة</ion-label>
-        <ion-input type="text" formControlName="city" (click)="openCityPicker()"></ion-input>
+        <ion-input
+          type="text"
+          formControlName="city"
+          (click)="openCityPicker()"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <range-date-picker></range-date-picker>
       </ion-item>
       <ion-item button="true" (click)="pickerDateFrom.open()">
-        <mat-datepicker-toggle matSuffix [for]="pickerDateFrom"></mat-datepicker-toggle>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="pickerDateFrom"
+        ></mat-datepicker-toggle>
         {{searchForm.value.dateFrom | date:'fullDate'}}
-        <input [hidden]="true" matInput (focus)="pickerDateFrom.open()" [matDatepicker]="pickerDateFrom"
-          placeholder="Choose a date" formControlName="dateFrom" />
+        <input
+          [hidden]="true"
+          matInput
+          (focus)="pickerDateFrom.open()"
+          [matDatepicker]="pickerDateFrom"
+          placeholder="Choose a date"
+          formControlName="dateFrom"
+        />
         <mat-datepicker touchUi #pickerDateFrom></mat-datepicker>
       </ion-item>
       <ion-item button="true" (click)="pickerDateTo.open()">
-        <mat-datepicker-toggle matSuffix [for]="pickerDateTo"></mat-datepicker-toggle>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="pickerDateTo"
+        ></mat-datepicker-toggle>
         {{searchForm.value.dateTo | date:'fullDate'}}
-        <input [hidden]="true" matInput [matDatepicker]="pickerDateTo" placeholder="Choose a date"
-          formControlName="dateTo" />
+        <input
+          [hidden]="true"
+          matInput
+          [matDatepicker]="pickerDateTo"
+          placeholder="Choose a date"
+          formControlName="dateTo"
+        />
         <mat-datepicker touchUi #pickerDateTo></mat-datepicker>
       </ion-item>
     </ion-list>
@@ -61,5 +94,4 @@
       <strong>تنبيه</strong> توخى الحذر عند السفر للبلدان الموبوئة
     </ngb-alert>
   </p>
-
 </ion-content>

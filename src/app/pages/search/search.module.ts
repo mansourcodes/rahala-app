@@ -15,6 +15,7 @@ import { SearchPageRoutingModule } from './search-routing.module';
 import { SearchPage } from './search.page';
 
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { ShareComponentsModule } from 'src/app/share/share.module';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
     MatMomentDateModule,
     MatInputModule,
     NgbAlertModule,
+    ShareComponentsModule,
   ],
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }

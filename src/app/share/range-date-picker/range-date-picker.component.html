@@ -1,0 +1,99 @@
+<div class="form-datepicker-group">
+  <input
+    name="datepicker"
+    class="form-control form-datepicker"
+    ngbDatepicker
+    #datepicker="ngbDatepicker"
+    [(ngModel)]="model"
+    [autoClose]="false"
+    [dayTemplate]="customdaytemplate"
+    [footerTemplate]="footerTemplate"
+    [displayMonths]="displayMonths"
+    [navigation]="navigation"
+    [outsideDays]="outsideDays"
+    [showWeekNumbers]="showWeekNumbers"
+    [startDate]="fromDate!"
+    outsideDays="hidden"
+    (dateSelect)="onDateSelection($event)"
+  />
+
+  <ng-template #customdaytemplate let-date let-focused="focused">
+    <span
+      [ngStyle]="{
+        width: widthPerDay + 'px',
+        height: heightPerDay + 'px',
+        lineHeight: heightPerDay + 'px'
+      }"
+      class="custom-day"
+      [class.focused]="focused"
+      [class.range]="isRange(date)"
+      [class.faded]="isHovered(date) || isInside(date)"
+      (mouseenter)="hoveredDate = date"
+      (mouseleave)="hoveredDate = null"
+    >
+      {{ date.day }}
+    </span>
+  </ng-template>
+</div>
+
+<div #DatepickerFooter>
+  <div
+    class="datepicker-footer"
+    *ngIf="showDatepickerFooter"
+    [ngStyle]="{
+      position: positionDatepickerFooter
+    }"
+  >
+    <!-- <button class="btn btn-primary float-left" (click)="model = today; toggle()">
+    Today
+  </button> -->
+    <button class="btn btn-primary" (click)="toggle()">
+      Done
+    </button>
+  </div>
+</div>
+
+<form class="form-inline">
+  <div class="form-group">
+    <div class="input-group">
+      <input
+        #dpFromDate
+        class="form-control"
+        placeholder="yyyy-mm-dd"
+        name="dpFromDate"
+        [value]="formatter.format(fromDate)"
+        (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
+      />
+      <div class="input-group-append">
+        <button
+          class="btn btn-outline-secondary calendar"
+          (click)="toggle()"
+          type="button"
+        >
+          <ion-icon name="home"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="input-group">
+      <input
+        #dpToDate
+        class="form-control"
+        placeholder="yyyy-mm-dd"
+        name="dpToDate"
+        [value]="formatter.format(toDate)"
+        (input)="toDate = validateInput(toDate, dpToDate.value)"
+      />
+      <div class="input-group-append">
+        <button
+          class="btn btn-outline-secondary calendar"
+          (click)="toggle()"
+          type="button"
+        >
+          <ion-icon name="home"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
