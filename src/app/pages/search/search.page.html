@@ -39,47 +39,19 @@
           </ion-radio>
         </ion-item>
       </ion-radio-group>
+    </ion-list>
 
-      <ion-item>
-        <ion-label position="floating">الوجهة</ion-label>
-        <ion-input
-          type="text"
+    <div class="form-group">
+      <div class="input-group">
+        <input
+          class="form-control"
+          placeholder="city"
+          name="city"
           formControlName="city"
           (click)="openCityPicker()"
-        ></ion-input>
-      </ion-item>
-      <!-- <ion-item button="true" (click)="pickerDateFrom.open()">
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="pickerDateFrom"
-        ></mat-datepicker-toggle>
-        {{searchForm.value.dateFrom | date:'fullDate'}}
-        <input
-          [hidden]="true"
-          matInput
-          (focus)="pickerDateFrom.open()"
-          [matDatepicker]="pickerDateFrom"
-          placeholder="Choose a date"
-          formControlName="dateFrom"
         />
-        <mat-datepicker touchUi #pickerDateFrom></mat-datepicker>
-      </ion-item>
-      <ion-item button="true" (click)="pickerDateTo.open()">
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="pickerDateTo"
-        ></mat-datepicker-toggle>
-        {{searchForm.value.dateTo | date:'fullDate'}}
-        <input
-          [hidden]="true"
-          matInput
-          [matDatepicker]="pickerDateTo"
-          placeholder="Choose a date"
-          formControlName="dateTo"
-        />
-        <mat-datepicker touchUi #pickerDateTo></mat-datepicker>
-      </ion-item> -->
-    </ion-list>
+      </div>
+    </div>
 
     <range-date-picker
       [initToDate]="searchForm.value.dateTo"
@@ -92,11 +64,6 @@
       بحث
     </ion-button>
   </form>
-
-  <p>{{searchForm.value.dateFrom | json}}</p>
-  <p>{{searchForm.value.dateTo | json }}</p>
-
-  <p>{{searchForm.value | json }}</p>
 
   <p>
     <ngb-alert [type]="'info'" [dismissible]="false">

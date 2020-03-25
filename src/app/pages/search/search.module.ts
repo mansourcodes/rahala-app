@@ -23,15 +23,8 @@ import { ShareComponentsModule } from 'src/app/share/share.module';
     ReactiveFormsModule,
     IonicModule,
     SearchPageRoutingModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatMomentDateModule,
-    MatInputModule,
     NgbAlertModule,
     ShareComponentsModule,
-  ],
-  providers: [
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
   ],
   declarations: [SearchPage]
 })

@@ -5,7 +5,6 @@ import { PickerOptions } from '@ionic/core';
 import { Router, NavigationExtras } from '@angular/router';
 import 'hammerjs';
 import { environment } from 'src/environments/environment';
-import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-search',

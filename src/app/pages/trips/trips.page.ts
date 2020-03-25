@@ -62,11 +62,7 @@ export class TripsPage implements OnInit, OnDestroy {
         };
       }
 
-      //TODO: delete this test code
-      if (!environment.production) {
-        searchTermsObj.dateFrom = '1970-01-01';
-        searchTermsObj.dateTo = '2090-01-01';
-      }
+
 
       const searchTerms = new SearchFrom(
         searchTermsObj.travelBy,
