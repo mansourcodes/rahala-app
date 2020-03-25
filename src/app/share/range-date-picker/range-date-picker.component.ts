@@ -1,4 +1,4 @@
-import { ElementRef, Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { ElementRef, Component, OnInit, Input, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { NgbDate, NgbCalendar, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -10,27 +10,48 @@ import { delay } from 'rxjs/operators';
 })
 export class RangeDatePickerComponent implements OnInit, AfterViewInit {
 
-  // Reference firstNameInput variable inside Component
+
+  @Input() initFromDate: Date | null;
+  @Input() initToDate: Date | null;
+  @Output()
+  change: EventEmitter<{ fromDate: NgbDate, toDate: NgbDate }> = new EventEmitter<{ fromDate: NgbDate, toDate: NgbDate }>();
+
+  // Reference 
   @ViewChild('datepicker', { static: true }) datepicker;
   @ViewChild('DatepickerFooter', { static: true }) DatepickerFooterElement;
 
+  // NgbDatePicker config
   model: NgbDateStruct;
   displayMonths = 2;
   navigation = 'arrows';
   showWeekNumbers = false;
   outsideDays = 'visible';
-  today = this.calendar.getToday();
   hoveredDate: NgbDate | null = null;
   fromDate: NgbDate | null;
   toDate: NgbDate | null;
 
+
+
+  // footer
   showDatepickerFooter = false;
   positionDatepickerFooter = 'relative';
 
+  // resize
   widthPerDay;
   heightPerDay;
 
   ngOnInit() {
+    if (this.initFromDate) {
+      this.fromDate.year = this.initFromDate.getFullYear();
+      this.fromDate.month = this.initFromDate.getUTCMonth() + 1;
+      this.fromDate.day = this.initFromDate.getDate();
+    }
+
+    if (this.initToDate) {
+      this.toDate.year = this.initToDate.getFullYear();
+      this.toDate.month = this.initToDate.getUTCMonth() + 1;
+      this.toDate.day = this.initToDate.getDate();
+    }
   }
 
   ngAfterViewInit() {
@@ -75,6 +96,7 @@ export class RangeDatePickerComponent implements OnInit, AfterViewInit {
     this.datepicker.toggle();
     this.showDatepickerFooter = !this.showDatepickerFooter;
     this.positionDatepickerFooter = 'absolute';
+    this.change.emit({ fromDate: this.fromDate, toDate: this.toDate });
 
   }
 

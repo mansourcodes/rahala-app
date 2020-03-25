@@ -48,10 +48,7 @@
           (click)="openCityPicker()"
         ></ion-input>
       </ion-item>
-      <ion-item>
-        <range-date-picker></range-date-picker>
-      </ion-item>
-      <ion-item button="true" (click)="pickerDateFrom.open()">
+      <!-- <ion-item button="true" (click)="pickerDateFrom.open()">
         <mat-datepicker-toggle
           matSuffix
           [for]="pickerDateFrom"
@@ -81,13 +78,25 @@
           formControlName="dateTo"
         />
         <mat-datepicker touchUi #pickerDateTo></mat-datepicker>
-      </ion-item>
+      </ion-item> -->
     </ion-list>
+
+    <range-date-picker
+      [initToDate]="searchForm.value.dateTo"
+      [initFromDate]="searchForm.value.dateFrom"
+      (change)="updateRageDate($event)"
+    ></range-date-picker>
+
     <ion-button expand="block" (click)="onSearch()">
       <ion-icon slot="end" name="search"></ion-icon>
       بحث
     </ion-button>
   </form>
+
+  <p>{{searchForm.value.dateFrom | json}}</p>
+  <p>{{searchForm.value.dateTo | json }}</p>
+
+  <p>{{searchForm.value | json }}</p>
 
   <p>
     <ngb-alert [type]="'info'" [dismissible]="false">

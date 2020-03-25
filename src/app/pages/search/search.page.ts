@@ -5,6 +5,7 @@ import { PickerOptions } from '@ionic/core';
 import { Router, NavigationExtras } from '@angular/router';
 import 'hammerjs';
 import { environment } from 'src/environments/environment';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-search',
@@ -75,14 +76,21 @@ export class SearchPage implements OnInit {
       this.searchForm.setValue({
         travelBy: 'all',
         city: 'Shyannetown',
-        dateFrom: new Date().toISOString(),
-        dateTo: new Date('2021-04-03').toISOString(),
+        dateFrom: new Date('2020-04-15'),
+        dateTo: new Date('2020-05-15'),
       });
     }
 
-
   }
 
+  updateRageDate(event) {
+    event.fromDate = new Date(event.fromDate.year + '-' + event.fromDate.month + '-' + event.fromDate.day + ' 12:01:01').toISOString();
+    event.toDate = new Date(event.toDate.year + '-' + event.toDate.month + '-' + event.toDate.day + ' 12:01:01').toISOString();
+    this.searchForm.patchValue({
+      dateFrom: event.fromDate,
+      dateTo: event.toDate
+    });
+  }
 
   async openCityPicker() {
     let pickerAction;
@@ -154,6 +162,7 @@ export class SearchPage implements OnInit {
       })
       .then(loadingEl => {
         loadingEl.present();
+
         const navigationExtras: NavigationExtras = {
           queryParams: {
             searchTerms: JSON.stringify(this.searchForm.value)
