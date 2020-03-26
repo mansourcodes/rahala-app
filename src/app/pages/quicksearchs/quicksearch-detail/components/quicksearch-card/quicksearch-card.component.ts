@@ -23,8 +23,6 @@ export class QuicksearchCardComponent implements OnInit {
 
   onSearch() {
 
-    console.log(this.quicksearch);
-
     if (!this.quicksearch.dateFrom) {
       this.quicksearch.dateFrom = new Date().toISOString();
     }

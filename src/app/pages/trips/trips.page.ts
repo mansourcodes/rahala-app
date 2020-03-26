@@ -8,17 +8,53 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { SearchFrom, SearchFromInterface } from 'src/app/services/models/searchForm.model';
 import { environment } from 'src/environments/environment';
+import { trigger, transition, animate, style, state, group } from '@angular/animations'
 
 
 @Component({
   selector: 'app-trips',
   templateUrl: './trips.page.html',
-  styleUrls: ['./trips.page.scss']
+  styleUrls: ['./trips.page.scss'],
+  animations: [
+    trigger('slideInOut', [
+      state('in', style({
+        'max-height': '500px', 'opacity': '1', 'visibility': 'visible'
+      })),
+      state('out', style({
+        'max-height': '0px', 'opacity': '0', 'visibility': 'hidden'
+      })),
+      transition('in => out', [group([
+        animate('400ms ease-in-out', style({
+          'opacity': '0'
+        })),
+        animate('600ms ease-in-out', style({
+          'max-height': '0px'
+        })),
+        animate('700ms ease-in-out', style({
+          'visibility': 'hidden'
+        }))
+      ]
+      )]),
+      transition('out => in', [group([
+        animate('5ms ease-in-out', style({
+          'visibility': 'visible'
+        })),
+        animate('600ms ease-in-out', style({
+          'max-height': '500px'
+        })),
+        animate('800ms ease-in-out', style({
+          'opacity': '1'
+        }))
+      ]
+      )])
+    ])
+  ]
 })
 export class TripsPage implements OnInit, OnDestroy {
   @ViewChild(IonInfiniteScroll, { static: true }) infiniteScroll: IonInfiniteScroll;
 
   isLoading = true;
+  AdvanceInfoAnimationState = 'out';
   loadedTrips: Trip[];
   relevantTrips: Trip[];
   listMeta: LaravelResponseMeta;
@@ -145,5 +181,10 @@ export class TripsPage implements OnInit, OnDestroy {
     }
   }
 
+
+  toggleSearchAdvanceInfo() {
+    this.AdvanceInfoAnimationState = this.AdvanceInfoAnimationState === 'out' ? 'in' : 'out';
+
+  }
 
 }
