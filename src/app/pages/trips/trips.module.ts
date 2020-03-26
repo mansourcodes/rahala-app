@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { TripsPageRoutingModule } from './trips-routing.module';
 import { TripsPage } from './trips.page';
 import { ClientComponentsModule } from '../clients/client-detail/components/components.module';
+import { TripCardComponent } from './trip-detail/components/trip-card/trip-card.component';
 
 @NgModule({
   imports: [
@@ -12,8 +13,8 @@ import { ClientComponentsModule } from '../clients/client-detail/components/comp
     FormsModule,
     IonicModule,
     ClientComponentsModule,
-    TripsPageRoutingModule
+    TripsPageRoutingModule,
   ],
-  declarations: [TripsPage]
+  declarations: [TripsPage, TripCardComponent]
 })
 export class TripsPageModule { }

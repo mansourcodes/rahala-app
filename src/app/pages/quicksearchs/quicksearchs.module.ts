@@ -8,15 +8,14 @@ import { QuicksearchsPageRoutingModule } from './quicksearchs-routing.module';
 
 import { QuicksearchsPage } from './quicksearchs.page';
 
-import { QuicksearchComponentsModule } from '../quicksearchs/quicksearch-detail/components/components.module';
+import { QuicksearchCardComponent } from './quicksearch-detail/components/quicksearch-card/quicksearch-card.component';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     QuicksearchsPageRoutingModule,
-    QuicksearchComponentsModule
   ],
-  declarations: [QuicksearchsPage]
+  declarations: [QuicksearchsPage, QuicksearchCardComponent]
 })
 export class QuicksearchsPageModule { }

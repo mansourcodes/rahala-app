@@ -33,9 +33,8 @@
           >
             <div *virtualItem="let quicksearch">
               <div button="true" class="quicksearch-card">
-                <quicksearch-card
-                  [quicksearch]="quicksearch"
-                ></quicksearch-card>
+                <quicksearch-card [quicksearch]="quicksearch">
+                </quicksearch-card>
               </div>
             </div>
           </ion-virtual-scroll>

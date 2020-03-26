@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TripDetailPageRoutingModule } from './trip-detail-routing.module';
 import { TripDetailPage } from './trip-detail.page';
-import { OptionCardComponent } from './option-card/option-card.component';
+import { OptionCardComponent } from './components/option-card/option-card.component';
 import { ClientComponentsModule } from '../../clients/client-detail/components/components.module';
 
 @NgModule({
