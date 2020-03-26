@@ -13,7 +13,7 @@
           سافر إلى
         </h3>
         <h1>
-          {{searchTerms.city}}
+          {{(searchTerms.city == 'all')? 'كل العالم': searchTerms.city}}
         </h1>
       </div>
       <div class="search-card">
@@ -42,7 +42,10 @@
               color="primary"
               [src]="getTravelByIcon(searchTerms.travelBy)"
             ></ion-icon>
-            <ion-label>{{searchTerms.travelBy}}</ion-label>
+            <ion-label
+              >{{(searchTerms.travelBy == 'all')? 'الكل' :
+              searchTerms.travelBy}}</ion-label
+            >
           </ion-item>
 
           <div [@slideInOut]="AdvanceInfoAnimationState">
@@ -118,11 +121,9 @@
         </div>
 
         <div *ngIf="!isLoading && relevantTrips.length > 0">
-          <ion-virtual-scroll [items]="relevantTrips " approxItemHeight="100px">
+          <ion-virtual-scroll [items]="relevantTrips " approxItemHeight="260px">
             <div *virtualItem="let trip">
               <trip-card [trip]="trip"></trip-card>
-              <br />
-              <hr />
             </div>
           </ion-virtual-scroll>
         </div>

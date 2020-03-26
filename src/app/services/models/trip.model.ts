@@ -62,7 +62,7 @@ export class Trip {
   get travelByIcon() {
 
     let iconName = "bus.svg";
-    switch (this.travelBy) {
+    switch (this.travelBy.toUpperCase()) {
       case 'BUS':
         iconName = "bus.svg";
         break;
@@ -78,10 +78,10 @@ export class Trip {
     return "assets/icon/" + iconName;
   }
 
-  static travelByIcon(travelBy) {
+  static travelByIcon(travelBy: string) {
 
     let iconName = "bus.svg";
-    switch (travelBy) {
+    switch (travelBy.toUpperCase()) {
       case 'BUS':
         iconName = "bus.svg";
         break;
@@ -100,7 +100,7 @@ export class Trip {
   get foodOptionIcon() {
 
     let iconName = "0meals.svg";
-    switch (this.foodOptions) {
+    switch (this.foodOptions.toUpperCase()) {
       case 'ALL':
         iconName = "3meals.svg";
         break;

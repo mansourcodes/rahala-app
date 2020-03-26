@@ -2,60 +2,10 @@ ion-content {
   --ion-background-color: #f6f7f9;
 }
 
-.card {
-  background-color: #fff;
-}
-.card ion-toolbar {
-  --ion-background-color: transparent;
-}
-
-.client-logo {
-  margin: auto;
-  --size: 85px;
-}
-
-.vertical-align-content > * {
-  display: flex !important;
-  align-content: center !important;
-  align-items: center !important;
-}
-
-.w-100 {
-  width: 100%;
-}
-
-.city-name > span {
-  font-size: 2em;
-  font-size: 4vw;
-  font-weight: bold;
-  display: block;
-  line-height: 1em;
-  color: var(--ion-color-primary);
-}
-
-.trip-name > span {
-  height: 1.5em;
-  overflow: hidden;
-}
-
-.trip-name > span {
-  white-space: nowrap;
-  width: 90%;
-  display: inline-block;
-}
-
-.trip-name::after {
-  content: '...';
-}
-
-.small-padding button.button-native {
-  padding: 8px !important;
-}
-
 /*city-header*/
 
 .city-header {
-  display: none;
+  // display: none;
   min-height: 25em;
   background-color: darkgrey;
   position: relative;
