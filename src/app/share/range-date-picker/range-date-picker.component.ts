@@ -13,6 +13,7 @@ export class RangeDatePickerComponent implements OnInit, AfterViewInit {
 
   @Input() initFromDate: Date | null;
   @Input() initToDate: Date | null;
+  @Input() icons: string;
   @Output()
   change: EventEmitter<{ fromDate: NgbDate, toDate: NgbDate }> = new EventEmitter<{ fromDate: NgbDate, toDate: NgbDate }>();
 

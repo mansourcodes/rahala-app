@@ -67,7 +67,9 @@
           (click)="toggle()"
           type="button"
         >
-          <ion-icon src="assets/icon/plane-departure-solid.svg"></ion-icon>
+          <ion-icon
+            [src]="'assets/icon/' + icons + '-departure.svg'"
+          ></ion-icon>
         </button>
       </div>
 
@@ -85,7 +87,7 @@
           (click)="toggle()"
           type="button"
         >
-          <ion-icon src="assets/icon/plane-arrival-solid.svg"></ion-icon>
+          <ion-icon [src]="'assets/icon/' + icons + '-arrival.svg'"></ion-icon>
         </button>
       </div>
     </div>
