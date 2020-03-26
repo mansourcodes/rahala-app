@@ -53,29 +53,24 @@ import { trigger, transition, animate, style, state, group } from '@angular/anim
 export class TripsPage implements OnInit, OnDestroy {
   @ViewChild(IonInfiniteScroll, { static: true }) infiniteScroll: IonInfiniteScroll;
 
-  isLoading = true;
-  AdvanceInfoAnimationState = 'out';
   loadedTrips: Trip[];
   relevantTrips: Trip[];
+  foodOptionsList = [];
   listMeta: LaravelResponseMeta;
   searchTerms: any;
-
-  private routerQueryParamsSub: Subscription;
-  private tripsSub: Subscription;
-  private listMetaSub: Subscription;
+  isLoading = true;
+  AdvanceInfoAnimationState = 'out';
 
   // TODO: apply filters on loadedTrips
-  public filtersForm = {
+  filtersForm = {
     numOfDays: { lower: 3, upper: 16 },
     foodOptions: []
   };
 
-  //TODO: get foodoptions list
-  public foodOptionsList = [
-    { id: 1, val: 'Pepperoni', selected: true },
-    { id: 2, val: 'Sausage', selected: true },
-    { id: 3, val: 'Mushroom', selected: true }
-  ];
+
+  private routerQueryParamsSub: Subscription;
+  private tripsSub: Subscription;
+  private listMetaSub: Subscription;
 
   constructor(
     private tripService: TripsService,
@@ -97,9 +92,6 @@ export class TripsPage implements OnInit, OnDestroy {
           dateTo: '2090-01-01',
         };
       }
-
-
-
       const searchTerms = new SearchFrom(
         searchTermsObj.travelBy,
         searchTermsObj.city,
@@ -107,7 +99,6 @@ export class TripsPage implements OnInit, OnDestroy {
         new Date(searchTermsObj.dateTo),
         1
       );
-
       return searchTerms;
 
     })).subscribe(searchTerms => {
@@ -120,6 +111,18 @@ export class TripsPage implements OnInit, OnDestroy {
     this.listMetaSub = this.tripService.meta.subscribe(meta => {
       this.listMeta = meta;
     });
+
+    this.initFoodOptionsList();
+  }
+
+  initFoodOptionsList() {
+    for (let [key, value] of Object.entries(environment.foodOptions)) {
+      this.foodOptionsList.push({
+        val: key,
+        label: value,
+        selected: true,
+      })
+    }
   }
 
   onFilterUpdate() {
@@ -157,13 +160,6 @@ export class TripsPage implements OnInit, OnDestroy {
     });
   }
 
-  openFiltersManu() {
-    this.menu.open('filterManu');
-  }
-
-  closeFiltersManu() {
-    this.menu.close('filterManu');
-  }
 
   getTravelByIcon(TravelBy: string) {
     return Trip.travelByIcon(TravelBy);
@@ -184,7 +180,7 @@ export class TripsPage implements OnInit, OnDestroy {
 
   toggleSearchAdvanceInfo() {
     this.AdvanceInfoAnimationState = this.AdvanceInfoAnimationState === 'out' ? 'in' : 'out';
-
+    this.onFilterUpdate();
   }
 
 }
