@@ -9,13 +9,7 @@
       <ion-icon name="person-add" slot="start" color="primary"></ion-icon>
       <ion-label>إنضم كحملة</ion-label>
     </ion-item>
-    <ion-item
-      class="ion-no-padding"
-      lines="full"
-      button
-      detail
-      [routerLink]="'/general-settings'"
-    >
+    <ion-item class="ion-no-padding" lines="full" button detail [routerLink]="'/general-settings'">
       <ion-icon name="settings" slot="start" color="primary"></ion-icon>
       <ion-label>الإعدادات</ion-label>
     </ion-item>
@@ -27,7 +21,7 @@
       <ion-icon name="share" slot="start" color="primary"></ion-icon>
       <ion-label>المشاركة مع صديق</ion-label>
     </ion-item>
-    <ion-item class="ion-no-padding" lines="full" button>
+    <ion-item class="ion-no-padding" lines="full" button (click)="feedbackEmail()">
       <ion-icon name="mail" slot="start" color="primary"></ion-icon>
       <ion-label>الإبلاغ عن خلل</ion-label>
     </ion-item>
