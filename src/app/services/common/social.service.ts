@@ -6,7 +6,7 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import { AppAvailability } from '@ionic-native/app-availability/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { CleintContactInterface } from '../models/clientcontact.model';
-// import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class SocialService {
   private launchNavigator: LaunchNavigator;
   private appAvailability: AppAvailability;
   private callNumber: CallNumber;
-  // private emailComposer: EmailComposer;
+  private emailComposer: EmailComposer;
 
   constructor(
     private platform: Platform,
@@ -187,23 +187,18 @@ export class SocialService {
 
 
   public callEmail(email: { to: string | string[], subject: string, body: string }) {
-    /*
-        this.emailComposer.isAvailable().then((available: boolean) => {
-          if (available) {
-            const emailData = {
-              to: email.to,
-              // cc: 'erika@mustermann.de',
-              // bcc: ['john@doe.com', 'jane@doe.com'],
-              // attachments: ['file://img/logo.png'],
-              subject: email.subject,
-              body: email.body,
-              isHtml: true
-            };
-    
-            this.emailComposer.open(emailData);
-          }
-        });
-    */
+
+    const emailData = {
+      to: email.to,
+      // cc: 'erika@mustermann.de',
+      // bcc: ['john@doe.com', 'jane@doe.com'],
+      // attachments: ['file://img/logo.png'],
+      subject: email.subject,
+      body: email.body,
+      isHtml: true
+    };
+    this.emailComposer.open(emailData);
+
   }
 
 
