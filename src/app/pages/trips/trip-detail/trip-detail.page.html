@@ -35,21 +35,21 @@
       <ion-row>
         <ion-col class="ion-padding">
           <option-card [optionIcon]="'assets/icon/day.svg'" [optionLabel]="'مدة الرحلة'"
-            [optionValue]="trip.numOfDays +'أيام /'+ trip.numOfNights +'ليالي'"></option-card>
+            [optionValue]="[trip.numOfDays +'أيام /'+ trip.numOfNights +'ليالي']"></option-card>
         </ion-col>
         <ion-col class="ion-padding">
           <option-card [optionIcon]="trip.foodOptionIcon" [optionLabel]="'الوجبات'"
-            [optionValue]="trip.foodOptionsLabel"></option-card>
+            [optionValue]="[trip.foodOptionsLabel]"></option-card>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col class="ion-padding">
           <option-card [optionIcon]="trip.travelByIcon" [optionLabel]="'طريقة السفر'"
-            [optionValue]="trip.travelByLabel"></option-card>
+            [optionValue]="[trip.travelByLabel]"></option-card>
         </ion-col>
         <ion-col class="ion-padding">
           <option-card [optionIcon]="'md-calendar'" [optionLabel]="'تاريخ السفر'"
-            [optionValue]="trip.travelDate+ '\n' + trip.returnDate"></option-card>
+            [optionValue]="[trip.travelDate, trip.returnDate]"></option-card>
         </ion-col>
       </ion-row>
       <ion-row>

@@ -9,7 +9,7 @@ export class OptionCardComponent {
 
   @Input() optionIcon: string;
   @Input() optionLabel: string;
-  @Input() optionValue: string;
+  @Input() optionValue: string[];
 
   constructor() { }
 

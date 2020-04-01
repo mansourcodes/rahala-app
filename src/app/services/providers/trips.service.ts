@@ -84,22 +84,14 @@ export class TripsService {
           if (resData.data.hasOwnProperty(key)) {
             trips.push(
               new Trip(
-                resData.data[key].id,
-                resData.data[key].code,
-                resData.data[key].created_date,
+                resData.data[key],
                 new Client(
                   resData.data[key].client.id,
                   resData.data[key].client.client_name,
                   resData.data[key].client.client_alian,
                   resData.data[key].client.logo_img,
                   resData.data[key].client.contact
-                ),
-                resData.data[key].name,
-                resData.data[key].cities,
-                resData.data[key].travel_by,
-                resData.data[key].food_options,
-                resData.data[key].travel_date,
-                resData.data[key].num_of_days
+                )
               )
             );
           }
@@ -130,25 +122,14 @@ export class TripsService {
       map(tripResponse => {
 
         return new Trip(
-          tripResponse.data.id,
-          tripResponse.data.code,
-          tripResponse.data.created_date,
+          tripResponse.data,
           new Client(
             tripResponse.data.client.id,
             tripResponse.data.client.client_name,
             tripResponse.data.client.client_alian,
             tripResponse.data.client.logo_img,
             tripResponse.data.client.contact
-          ),
-          tripResponse.data.name,
-          tripResponse.data.cities,
-          tripResponse.data.travel_by,
-          tripResponse.data.food_options,
-          tripResponse.data.travel_date,
-          tripResponse.data.num_of_days,
-          tripResponse.data.num_of_nights,
-          tripResponse.data.return_date,
-          tripResponse.data.desc
+          )
         );
       })
     );
