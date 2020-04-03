@@ -7,7 +7,6 @@
     [(ngModel)]="model"
     [autoClose]="false"
     [dayTemplate]="customdaytemplate"
-    [footerTemplate]="footerTemplate"
     [displayMonths]="displayMonths"
     [navigation]="navigation"
     [outsideDays]="outsideDays"
@@ -51,7 +50,7 @@
 </div>
 
 <form class="form-inline">
-  <div class="form-group">
+  <div class="form-group mb-2">
     <div class="input-group">
       <input
         #dpFromDate
@@ -63,7 +62,7 @@
       />
       <div class="input-group-append">
         <button
-          class="btn btn-outline-secondary calendar"
+          class="btn btn-outline-secondary btn-outline-center"
           (click)="toggle()"
           type="button"
         >
@@ -83,7 +82,7 @@
       />
       <div class="input-group-append">
         <button
-          class="btn btn-outline-secondary calendar"
+          class="btn btn-outline-secondary"
           (click)="toggle()"
           type="button"
         >

@@ -2,9 +2,10 @@ ion-content {
   --ion-background-color: #f6f7f9;
 }
 
-
+ion-header {
+  z-index: 99999;
+}
 ion-toolbar {
-
   --background: transparent;
   position: absolute;
   top: 0;
@@ -17,7 +18,7 @@ ion-toolbar {
   min-height: 25em;
   background-color: darkgrey;
   position: relative;
-  margin-bottom: 6em;
+  margin-bottom: 8em;
 
   .city-header-content {
     padding: 10px;

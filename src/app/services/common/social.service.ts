@@ -16,11 +16,11 @@ export class SocialService {
   private launchNavigator: LaunchNavigator;
   private appAvailability: AppAvailability;
   private callNumber: CallNumber;
-  private emailComposer: EmailComposer;
 
   constructor(
     private platform: Platform,
     private inAppBrowser: InAppBrowser,
+    private emailComposer: EmailComposer,
   ) { }
 
 

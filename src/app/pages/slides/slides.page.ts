@@ -5,6 +5,8 @@ import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { LoadingController, AlertController, ToastController } from '@ionic/angular';
 import { AuthResponseData } from 'src/app/services/models/auth-respons.interface';
+import { SocialService } from 'src/app/services/common/social.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-slides',
@@ -25,7 +27,8 @@ export class SlidesPage implements OnInit {
     private router: Router,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private socialService: SocialService,
   ) { }
 
   ngOnInit() {
@@ -89,14 +92,20 @@ export class SlidesPage implements OnInit {
     //TODO: add button to send feedback as email
     this.alertCtrl
       .create({
+        message: 'عد لنا في وقت لاحق',
         header: 'فشل تسجيل الدخول',
         // message: message,
         buttons: [
           {
-            text: 'Cancel',
+            text: 'الإبلاغ عن الخلل',
             role: 'cancel',
             handler: () => {
-              console.log('Cancel clicked');
+              const email = {
+                to: [environment.supportEmail],
+                subject: 'الإبلاغ عن تعطل تسجيل الدخول',
+                body: 'أرغب في الإبلاغ عن خلل',
+              };
+              this.socialService.callEmail(email);
             }
           },
           {

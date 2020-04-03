@@ -4,6 +4,10 @@
   border: none;
   padding: 0;
 }
+
+.btn-outline-center {
+  border-radius: 0 !important;
+}
 /* datepicker-footer */
 .datepicker-footer {
   background-color: darkgray;

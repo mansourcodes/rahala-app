@@ -1,30 +1,20 @@
 <ion-content fullscreen class="ion-padding" scroll-y="false">
   <ion-slides pager="false" [options]="slideOpts">
     <ion-slide>
-      <img src="https://ionicframework.com/docs/demos/api/slides/slide-1.png" />
-      <h2>Welcome to the <b>ICA</b></h2>
+      <ion-img src="assets\loading\1.svg"></ion-img>
+
+      <h2>
+        <ion-progress-bar
+          type="indeterminate"
+          color="secondary"
+          value="0.5"
+        ></ion-progress-bar>
+      </h2>
+      <h2>نصائح <b>السفر</b></h2>
       <p>
-        The <b>ionic conference app</b> is a practical preview of the ionic
-        framework in action, and a demonstration of proper code use.
+        تعلم العبارات الشائعة فى لغة البلد المحلية التى تود السفر اليها.
       </p>
-      <ion-button (click)="startLogin()">Next</ion-button>
-    </ion-slide>
-    <ion-slide>
-      <img src="https://ionicframework.com/docs/demos/api/slides/slide-1.png" />
-      <h2>Welcome to the <b>ICA</b></h2>
-      <p>
-        The <b>ionic conference app</b> is a practical preview of the ionic
-        framework in action, and a demonstration of proper code use.
-      </p>
-    </ion-slide>
-    <ion-slide>
-      <img src="https://ionicframework.com/docs/demos/api/slides/slide-1.png" />
-      <h2>Welcome to the <b>ICA</b></h2>
-      <p>
-        The <b>ionic conference app</b> is a practical preview of the ionic
-        framework in action, and a demonstration of proper code use.
-      </p>
-      <ion-button [routerLink]="['/','trips']">Next</ion-button>
+      <ion-button (click)="startLogin()">تخطي</ion-button>
     </ion-slide>
   </ion-slides>
 </ion-content>
