@@ -3,6 +3,8 @@ import { CanLoad, Route, UrlSegment, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { AuthService } from './auth.service';
 import { take, switchMap, tap } from 'rxjs/operators';
+import { StorageService } from './storage.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,8 @@ import { take, switchMap, tap } from 'rxjs/operators';
 export class AuthGuard implements CanLoad {
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private storageService: StorageService,
   ) { }
 
   canLoad(
@@ -29,8 +32,8 @@ export class AuthGuard implements CanLoad {
       }),
       tap(isAuthenticated => {
         if (!isAuthenticated) {
-          console.log(window.location.pathname)
-          //TODO: redirect to the targted page before auth
+          const orginalPath = location.pathname + location.search;
+          this.storageService.store(environment.OrginalPath, orginalPath);
           this.router.navigateByUrl('/slides');
         }
       })

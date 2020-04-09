@@ -9,8 +9,6 @@ const { Storage } = Plugins;
 export class StorageService {
   constructor() { }
 
-  // TODO : encrypt & decrypt value wiht ATOB
-  // https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding
   encrypt(value: any) {
     return value;
   }

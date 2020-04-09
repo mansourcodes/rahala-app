@@ -1,1 +1,11 @@
-<svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'><title>ionicons-v5-d</title><path d='M368,80h64a16,16,0,0,1,16,16v34a46,46,0,0,1-46,46H368' style='fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/><path d='M96,80H368a0,0,0,0,1,0,0V272a80,80,0,0,1-80,80H176a80,80,0,0,1-80-80V80A0,0,0,0,1,96,80Z' style='fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/><line x1='64' y1='416' x2='400' y2='416' style='fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<title>ionicons-v5-d</title>
+<path d="M402,192h-34c-8.8,0-16-7.2-16-16s7.2-16,16-16h34c16.5,0,30-13.5,30-30V96h-64c-8.8,0-16-7.2-16-16s7.2-16,16-16h64
+	c17.6,0,32,14.4,32,32v34C464,164.2,436.2,192,402,192z"/>
+<path d="M288,368H176c-52.9,0-96-43.1-96-96V80c0-8.8,7.2-16,16-16h272c8.8,0,16,7.2,16,16v192C384,324.9,340.9,368,288,368z
+	 M112,96v176c0,35.3,28.7,64,64,64h112c35.3,0,64-28.7,64-64V96H112z"/>
+<path d="M400,432H64c-8.8,0-16-7.2-16-16s7.2-16,16-16h336c8.8,0,16,7.2,16,16S408.8,432,400,432z"/>
+</svg>

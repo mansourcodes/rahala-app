@@ -10,9 +10,9 @@
     [displayMonths]="displayMonths"
     [navigation]="navigation"
     [outsideDays]="outsideDays"
+    [firstDayOfWeek]="7"
     [showWeekNumbers]="showWeekNumbers"
     [startDate]="fromDate!"
-    outsideDays="hidden"
     (dateSelect)="onDateSelection($event)"
   />
 
@@ -44,7 +44,10 @@
     }"
   >
     <button class="btn btn-primary" (click)="toggle()">
-      Done
+      تم
+    </button>
+    <button class="btn btn-outline-center float-left" (click)="anytime()">
+      كل التواريخ
     </button>
   </div>
 </div>

@@ -60,10 +60,8 @@ export class TripsPage implements OnInit, OnDestroy {
   searchTerms: any;
   isLoading = true;
   AdvanceInfoAnimationState = 'out';
-
-  // TODO: apply filters on loadedTrips
   filtersForm = {
-    numOfDays: { lower: 3, upper: 16 },
+    numOfDays: { lower: 1, upper: 60 },
     foodOptions: []
   };
 
@@ -110,8 +108,8 @@ export class TripsPage implements OnInit, OnDestroy {
     });
     this.listMetaSub = this.tripService.meta.subscribe(meta => {
       this.listMeta = meta;
-    });
 
+    });
     this.initFoodOptionsList();
   }
 
@@ -125,23 +123,31 @@ export class TripsPage implements OnInit, OnDestroy {
     }
   }
 
-  onFilterUpdate() {
+  filterLoadedTrips() {
     this.relevantTrips = this.loadedTrips.filter(
-      //TODO: filter by food options
       trip => {
-        if (trip.numOfDays >= this.filtersForm.numOfDays.lower &&
+        if (
+          trip.numOfDays >= this.filtersForm.numOfDays.lower &&
           trip.numOfDays <= this.filtersForm.numOfDays.upper
         ) {
-          return true;
+          // fine for you :)
+        } else {
+          return false;
         }
-        return false;
+
+        if (
+          this.filtersForm.foodOptions.length > 0 &&
+          this.filtersForm.foodOptions.indexOf(trip.foodOptions) < 0
+        ) {
+          return false;
+        }
+        return true;
       }
     );
   }
 
   ionViewWillEnter() {
     this.isLoading = true;
-    //TODO: apply routerQueryParams 
     const query = { ...this.searchTerms };
     query.page = this.listMeta.currentPage;
     this.tripService.fetchTrips(query).subscribe(() => {
@@ -149,11 +155,10 @@ export class TripsPage implements OnInit, OnDestroy {
     });
   }
 
-  // TODO: fix bug - when one trip only , loaded again after scralling
   loadMoreTrips(event) {
     this.tripService.fetchTrips(this.searchTerms).subscribe(resMeta => {
       event.target.complete();
-      this.onFilterUpdate();
+      this.filterLoadedTrips();
       if (this.listMeta.currentPage === this.listMeta.lastPage) {
         event.target.disabled = true;
       }
@@ -180,7 +185,15 @@ export class TripsPage implements OnInit, OnDestroy {
 
   toggleSearchAdvanceInfo() {
     this.AdvanceInfoAnimationState = this.AdvanceInfoAnimationState === 'out' ? 'in' : 'out';
-    this.onFilterUpdate();
+    this.filterLoadedTrips();
   }
+
+
+  filterChanged() {
+    this.filterLoadedTrips();
+    // this.listMeta = new LaravelResponseMeta(1);
+    this.infiniteScroll.disabled = false;
+  }
+
 
 }

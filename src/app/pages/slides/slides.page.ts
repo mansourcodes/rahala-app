@@ -3,10 +3,12 @@ import { AuthService } from 'src/app/services/common/auth.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { LoadingController, AlertController, ToastController } from '@ionic/angular';
+import { LoadingController, AlertController, ToastController, Platform } from '@ionic/angular';
 import { AuthResponseData } from 'src/app/services/models/auth-respons.interface';
 import { SocialService } from 'src/app/services/common/social.service';
 import { environment } from 'src/environments/environment';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { StorageService } from 'src/app/services/common/storage.service';
 
 @Component({
   selector: 'app-slides',
@@ -22,6 +24,7 @@ export class SlidesPage implements OnInit {
   isLoading = false;
   isLogin = false;
 
+  private uniqueDeviceID;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -29,7 +32,17 @@ export class SlidesPage implements OnInit {
     private alertCtrl: AlertController,
     private toastController: ToastController,
     private socialService: SocialService,
-  ) { }
+    public platform: Platform,
+    private storageService: StorageService,
+  ) {
+
+    try {
+      this.uniqueDeviceID = new UniqueDeviceID();
+    } catch (e) {
+
+    }
+
+  }
 
   ngOnInit() {
     this.startLogin();
@@ -43,8 +56,8 @@ export class SlidesPage implements OnInit {
         loadingEl.present();
         let authObs: Observable<AuthResponseData>;
 
-        //TODO: isLogin should deticit the user 
-        if (this.isLogin) {
+        // always using signup()
+        if (this.isLogin) { // false
           authObs = this.authService.login(email, password);
         } else {
           authObs = this.authService.signup(email, password);
@@ -54,21 +67,30 @@ export class SlidesPage implements OnInit {
             this.isLoading = false;
             loadingEl.dismiss();
             this.toastController.create({
-              message: 'Login:' + resData.email,
-              duration: 2000
+              message: 'أهلا وسهلا',
+              duration: 1000
             }).then(toastEl => {
               toastEl.present();
             });
 
-            this.router.navigateByUrl('tabs/search');
+
+            this.storageService.get(environment.OrginalPath).then(orginalPath => {
+              console.log(orginalPath);
+              if (orginalPath) {
+                this.router.navigateByUrl(orginalPath + '');
+              } else {
+                this.router.navigateByUrl('tabs/search');
+              }
+              this.storageService.removeItem(environment.OrginalPath);
+            });
+
           },
           errRes => {
             loadingEl.dismiss();
             const code = errRes.error.message;
             let message = 'لا يمكن تسجيل الدخول';
-            // TODO: change message regading API update
             if (code === 'EMAIL_EXISTS') {
-              message = 'This email address exists already!';
+              message = 'قم بالإبلاغ عن الخلل [ER-537]';
             }
             this.showAlert(message);
           }
@@ -81,15 +103,39 @@ export class SlidesPage implements OnInit {
   }
 
   startLogin() {
-    // TODO: make email related to Device info to make login next installed
-    // https://cordova.apache.org/docs/en/1.7.0/cordova/device/device.uuid.html
-    const email = 'guest1@hi.com';
-    const password = email;
-    this.authenticate(email, password);
+
+    let email = `guest` + Math.floor(Math.random() * 1000000) + `@rahala-online.com`;
+    let password = email;
+
+    const isMobile = this.platform.is('mobile');
+    if (isMobile) {
+      try {
+
+        this.uniqueDeviceID.get()
+          .then((uuid: any) => {
+            email = `guest${uuid}@rahala-online.com`;
+            password = email;
+            this.authenticate(email, password);
+          })
+          .catch((error: any) => {
+            password = email;
+            this.authenticate(email, password);
+          });
+      } catch (e) {
+
+        email = `guest` + Math.floor(Math.random() * 1000000) + `@rahala-online.com`;
+        password = email;
+        this.authenticate(email, password);
+      }
+    } else {
+
+      password = email;
+      this.authenticate(email, password);
+    }
+
   }
 
   private showAlert(message: string) {
-    //TODO: add button to send feedback as email
     this.alertCtrl
       .create({
         message: 'عد لنا في وقت لاحق',

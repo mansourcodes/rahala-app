@@ -104,7 +104,7 @@ export class Client {
     }
 
     get logoUrl() {
-        return environment.BaseURL + 'storage/images/' + this.logoImg;
+        return this.logoImg;
     }
 
 }

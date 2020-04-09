@@ -15,6 +15,12 @@ export class AuthService implements OnDestroy {
   private _user = new BehaviorSubject<User>(null);
   private activeLogoutTimer: any;
 
+  constructor(
+    private http: HttpClient,
+    private storageService: StorageService
+  ) { }
+
+
   get userIsAuthenticated(): Observable<boolean> {
     return this._user.asObservable().pipe(
       map(user => {
@@ -51,10 +57,6 @@ export class AuthService implements OnDestroy {
     );
   }
 
-  constructor(
-    private http: HttpClient,
-    private storageService: StorageService
-  ) { }
 
   autoLogin() {
     return from(

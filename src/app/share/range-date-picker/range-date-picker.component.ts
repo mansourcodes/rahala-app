@@ -1,12 +1,45 @@
-import { ElementRef, Component, OnInit, Input, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
-import { NgbDate, NgbCalendar, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { Component, OnInit, Input, ViewChild, AfterViewInit, Output, EventEmitter, Injectable } from '@angular/core';
+import { NgbDatepickerI18n, NgbDate, NgbCalendar, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+
+const I18N_VALUES = {
+  'ar': {
+    weekdays: ['الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت', 'الأحد'],
+    months: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
+  }
+  // other languages you would support
+};
+@Injectable()
+export class I18n {
+  language = 'ar';
+}
+// Define custom service providing the months and weekdays translations
+@Injectable()
+export class CustomDatepickerI18n extends NgbDatepickerI18n {
+
+  constructor(private _i18n: I18n) {
+    super();
+  }
+
+  getWeekdayShortName(weekday: number): string {
+    return I18N_VALUES[this._i18n.language].weekdays[weekday - 1];
+  }
+  getMonthShortName(month: number): string {
+    return I18N_VALUES[this._i18n.language].months[month - 1];
+  }
+  getMonthFullName(month: number): string {
+    return this.getMonthShortName(month);
+  }
+
+  getDayAriaLabel(date: NgbDateStruct): string {
+    return `${date.day}-${date.month}-${date.year}`;
+  }
+}
 
 @Component({
   selector: 'range-date-picker',
   templateUrl: './range-date-picker.component.html',
   styleUrls: ['./range-date-picker.component.scss'],
+  providers: [I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }] // define custom NgbDatepickerI18n provider
 })
 export class RangeDatePickerComponent implements OnInit, AfterViewInit {
 
@@ -60,7 +93,10 @@ export class RangeDatePickerComponent implements OnInit, AfterViewInit {
   }
 
 
-  constructor(private calendar: NgbCalendar, public formatter: NgbDateParserFormatter) {
+  constructor(
+    private calendar: NgbCalendar,
+    public formatter: NgbDateParserFormatter,
+  ) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
   }
@@ -101,14 +137,19 @@ export class RangeDatePickerComponent implements OnInit, AfterViewInit {
 
   }
 
+  anytime() {
+    // TODO : any time for all dates
+    this.toggle();
+  }
+
   resizeDatePicker() {
 
     this.widthPerDay = (window.innerWidth) / 7;
-    this.heightPerDay = (window.innerHeight) / 12 - 3;
+    this.heightPerDay = (window.innerHeight) / 12 - 10;
     this.showDatepickerFooter = true;
     this.positionDatepickerFooter = 'relative';
     setTimeout(() => {
-      this.heightPerDay = (window.innerHeight - this.DatepickerFooterElement.nativeElement.offsetHeight) / 12 - 9;
+      this.heightPerDay = (window.innerHeight - this.DatepickerFooterElement.nativeElement.offsetHeight) / 12 - 10;
       this.positionDatepickerFooter = 'absolute';
       setTimeout(() => {
         this.showDatepickerFooter = false;

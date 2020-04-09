@@ -10,6 +10,8 @@ export class GeneralSettingsPage implements OnInit {
 
 
   ngOnInit() {
+
+
   }
 
 

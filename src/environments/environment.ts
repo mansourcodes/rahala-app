@@ -17,6 +17,7 @@ export const environment = {
     AUTH: 'userDataKey'
   },
 
+  OrginalPath: 'orginalPath',
 
   foodOptions: {
     B_ONLY: 'فطور فقط',
@@ -29,8 +30,6 @@ export const environment = {
     ALL: 'ثلاث الوجبات',
     NONE: 'غير مشمولة',
   },
-
-
 
   travelBy: {
     FLIGHT: 'طيران',
